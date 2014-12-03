@@ -8,6 +8,10 @@ Reeds, Lion, Twisted,
 Viper, Water, Eye.
 ]]
 
+
+pictureR1 = 4 -- # of question with pictures instead, which should be 1a.jpg -> 1d.jpg
+picturesR1 = {love.graphics.newImage("questions/1a.jpg"),love.graphics.newImage("questions/1b.jpg"),love.graphics.newImage("questions/1c.jpg"),love.graphics.newImage("questions/1d.jpg")}
+
 selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
 selected = {false,false,false,false,false,false}
 tweening = 0 -- animations until certainly pressed
@@ -54,9 +58,21 @@ function r1.draw()
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
 			if i == 1 then
-				love.graphics.draw(rd,val(pX),val(pY),0,0.25,0.25)
-				love.graphics.setColor(0,0,0)
-				love.graphics.printf(questionsR1[selection][i],val(pX)+5,val(pY)+10,190,"center")
+				if i == numberOfClues then
+					love.graphics.draw(rd,val(pX)+5+(190*(i-1)),val(pY),0,0.25,val(s))
+				else
+					love.graphics.draw(rd,15+(190*(i-1)),230,0,0.25,0.25)
+				end
+				if pictureR1 == selection then
+					drawTheImage(i)
+					if revealedAnswer then
+						love.graphics.setColor(0,0,0)
+						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
+					end
+				else
+					love.graphics.setColor(0,0,0)
+					love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+				end
 				if i == timerPos then
 					timerLength = ((60-timer)/60)*190
 					love.graphics.setColor(colours("selected"))
@@ -79,15 +95,22 @@ function r1.draw()
 					love.graphics.setColor(colours("unselected"))
 					love.graphics.rectangle("fill",20+(190*(i-1))+timerLength,180,190-timerLength,40)
 					love.graphics.setColor(255,255,255)
-					-- BUG: timer moves...
 					if timerPos<4 then
 						love.graphics.print(points[timerPos].." Points",50+(190*(i-1)),180)
 					else
 						love.graphics.print(points[timerPos].." Point",55+(190*(i-1)),180)
 					end
 				end
-				love.graphics.setColor(0,0,0)
-				love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+				if pictureR1 == selection then
+					drawTheImage(i)
+					if revealedAnswer then
+						love.graphics.setColor(0,0,0)
+						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
+					end
+				else
+					love.graphics.setColor(0,0,0)
+					love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+				end
 			end
 		end
 		if revealedAnswer then
@@ -96,6 +119,23 @@ function r1.draw()
 			love.graphics.setColor(255,255,255)
 			love.graphics.printf(groupsR1[selection],30,385,730,"center")
 		end
+	end
+end
+
+function drawTheImage(n) -- fix for 1st, gliding image
+	if revealedAnswer then
+		love.graphics.setColor(255,255,255,100)
+	else
+		love.graphics.setColor(255,255,255,255)
+	end
+	if n ~= 1 then
+		if n == numberOfClues then
+			love.graphics.draw(picturesR1[n],42+(190*(n-1)),250,0,0.8,val(s)*3.2)
+		else
+			love.graphics.draw(picturesR1[n],42+(190*(n-1)),250,0,0.8,0.8)
+		end
+	else
+		love.graphics.draw(picturesR1[n],val(pX)+32+(190*(n-1)),val(pY)+20,0,0.8,0.8)
 	end
 end
 
