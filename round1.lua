@@ -62,15 +62,15 @@ function r1.draw()
 			love.graphics.setColor(colours("background"))
 			if i == 1 then
 				if i == numberOfClues then
-					love.graphics.draw(rd,val(pX)+5+(190*(i-1)),val(pY),0,0.25,val(s))
+					love.graphics.draw(rd,val(pX)+5,val(pY),0,0.25,val(s))
 				else
-					love.graphics.draw(rd,15+(190*(i-1)),230,0,0.25,0.25)
+					love.graphics.draw(rd,15,230,0,0.25,0.25)
 				end
 				if pictureR1 == selection then
 					drawTheImage(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
+						love.graphics.printf(questionsR1[selection][i],20,260,190,"center")
 					end
 				elseif musicR1 == selection then
 					if revealedAnswer then
@@ -78,14 +78,14 @@ function r1.draw()
 					else
 						love.graphics.setColor(255,255,255)
 					end
-					love.graphics.draw(musicNoteImageDotPng,val(pX)+5+(190*(i-1)),val(pY))
+					love.graphics.draw(musicNoteImageDotPng,val(pX)+5,val(pY))
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+						love.graphics.printf(questionsR1[selection][i],20,240,190,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+					love.graphics.printf(questionsR1[selection][i],val(pX)+5,val(pY)+9,190,"center")
 				end
 				if i == timerPos then
 					timerLength = ((60-timer)/60)*190
