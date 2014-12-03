@@ -1,7 +1,7 @@
 r1 = {}
 
-questionsR1 = {{"A","B","C","D"},{"1","2","3","4"},{"Tokaido","Carcassone","Dixit","Settlers of Catan"},{"Apple","Banana","Cherry","Pear"},{"Point","Line","Triangle","Square"},{"Alpha","Beta","Gamma","Epsilon"}}
-groupsR1 = {"Letters","Numbers","Board games","Fruit","Super Hexagon levels","Greek letters"}
+questionsR1 = {{"A","B","C","D"},{"1","2","3","4"},{"Tokaido","Carcassone","Dixit","Settlers of Catan"},{"Apple","Banana","Cherry","Pear"},{"Bird","Bird","Bird","Cricket"},{"Alpha","Beta","Gamma","Epsilon"}}
+groupsR1 = {"Letters","Numbers","Board games","Fruit","Animal Sounds","Greek letters"}
 
 --[[ NOTE TO SELF: order of heiroglyphs is
 Reeds, Lion, Twisted,
@@ -11,6 +11,9 @@ Viper, Water, Eye.
 
 pictureR1 = 4 -- # of question with pictures instead, which should be 1a.jpg -> 1d.jpg
 picturesR1 = {love.graphics.newImage("questions/1a.jpg"),love.graphics.newImage("questions/1b.jpg"),love.graphics.newImage("questions/1c.jpg"),love.graphics.newImage("questions/1d.jpg")}
+musicR1 = 5
+audioR1 = {love.audio.newSource("questions/1a.mp3"),love.audio.newSource("questions/1b.mp3"),love.audio.newSource("questions/1c.mp3"),love.audio.newSource("questions/1d.mp3")}
+musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
 
 selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
 selected = {false,false,false,false,false,false}
@@ -19,7 +22,7 @@ numberOfClues = 0 -- 1=5pts, 2=3pts...
 timerPos = 0
 revealedAnswer = false
 locs = {{150,150},{300,150},{500,150},{150,300},{300,300},{500,300}}
-timer = 60 -- I think?
+timer = 45
 
 function r1.load()
 	r = newTween(119,183,1,0)
@@ -69,6 +72,17 @@ function r1.draw()
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
 					end
+				elseif musicR1 == selection then
+					if revealedAnswer then
+						love.graphics.setColor(255,255,255,100)
+					else
+						love.graphics.setColor(255,255,255)
+					end
+					love.graphics.draw(musicNoteImageDotPng,val(pX)+5+(190*(i-1)),val(pY))
+					if revealedAnswer then
+						love.graphics.setColor(0,0,0)
+						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
+					end
 				else
 					love.graphics.setColor(0,0,0)
 					love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
@@ -106,6 +120,21 @@ function r1.draw()
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
+					end
+				elseif musicR1 == selection then
+					if revealedAnswer then
+						love.graphics.setColor(255,255,255,100)
+					else
+						love.graphics.setColor(255,255,255)
+					end
+					if i == numberOfClues then
+						love.graphics.draw(musicNoteImageDotPng,15+(190*(i-1)),230,0,1,val(s)*4)
+					else
+						love.graphics.draw(musicNoteImageDotPng,15+(190*(i-1)),230)
+					end
+					if revealedAnswer then
+						love.graphics.setColor(0,0,0)
+						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),240,190,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
@@ -180,8 +209,13 @@ function r1.keypressed(key)
 			if numberOfClues<4 then -- CHANGE THIS FOR ROUND 2
 				numberOfClues=numberOfClues+1
 				s = newTween(0,0.25,0.1)
+				if selection == musicR1 then
+					audioR1[numberOfClues-1]:stop()
+					audioR1[numberOfClues]:play()
+				end
 			elseif not revealedAnswer then
 				revealedAnswer = true
+				if musicR1 == selection then audioR1[4]:stop() end
 				--s = newTween(0,0.25,0.1)
 				answerTween = newTween(0,0.1,0.1)
 			else
@@ -200,9 +234,11 @@ function r1.keypressed(key)
 		end
 		if key=="left" and highlightingBg==0 and currentTeam == 1 then
 			highlightingBg = 1
+			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 		end
 		if key=="right" and highlightingBg==0 and currentTeam == 2 then
 			highlightingBg = 2
+			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 		end
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
@@ -219,6 +255,7 @@ function r1.keypressed(key)
 		end
 		if key=="down" and highlightingBg~=0 then
 			if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
+			if musicR1 == selection then audioR1[4]:play() end
 			numberOfClues = 4
 		end
 	end
@@ -232,6 +269,9 @@ function commenceRound(n)
 	pX = newTween(locs[n][1],15,0.4)
 	pY = newTween(locs[n][2],230,0.4)
 	timer = 60
+	if musicR1 == n then
+		audioR1[1]:play()
+	end
 end
 
 function r1.mousepressed(x,y,b)
