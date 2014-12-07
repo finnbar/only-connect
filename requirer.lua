@@ -5,6 +5,7 @@ require "round4"
 require "showscore"
 require "tiebreaker" --very serious business
 require "tween"
+require "importer"
 
 bg = love.graphics.newImage("assets/oclogo.png")
 

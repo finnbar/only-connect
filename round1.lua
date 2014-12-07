@@ -9,9 +9,7 @@ Viper, Water, Eye.
 ]]
 
 
-pictureR1 = 4 -- # of question with pictures instead, which should be 1a.jpg -> 1d.jpg
 picturesR1 = {love.graphics.newImage("questions/1a.jpg"),love.graphics.newImage("questions/1b.jpg"),love.graphics.newImage("questions/1c.jpg"),love.graphics.newImage("questions/1d.jpg")}
-musicR1 = 5
 audioR1 = {love.audio.newSource("questions/1a.mp3"),love.audio.newSource("questions/1b.mp3"),love.audio.newSource("questions/1c.mp3"),love.audio.newSource("questions/1d.mp3")}
 musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
 
@@ -247,6 +245,9 @@ function r1.keypressed(key)
 			else
 				-- team 2 gets points!
 				teamb = teamb + points[numberOfClues]
+			end
+			if musicR1 == selection then
+				audioR1[numberOfClues]:stop() 
 			end
 			numberOfClues = 4
 			revealedAnswer = true

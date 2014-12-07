@@ -1,4 +1,6 @@
 show = {}
+konamiii = {"up","up","down","down","left","right","left","right","b","a"," "}
+position = 1
 
 function show.load()
 	-- a thing
@@ -27,7 +29,15 @@ function show.update(dt)
 end
 
 function show.keypressed(key)
-	if key==" " then return true end
+	if key==konamiii[position] then
+		if position==11 then
+			roundIndex=9
+			tie.load()
+			return true
+		else
+			position = position + 1
+		end
+	elseif key==" " then return true end
 end
 
 function show.mousepressed(x,y,b)

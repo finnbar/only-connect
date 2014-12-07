@@ -9,7 +9,7 @@ teamb = 0
 teamaname = "Team A" --default
 teambname = "Team B"
 rounds = {r1,show,r2,show,r3,show,r4,show,tie}
-roundIndex = 1 -- TEMP SHOULD BE ZERO
+roundIndex = 7 -- TEMP SHOULD BE ZERO
 debug = true -- TEMP SHOULD BE FALSE
 highlightingBg = 0 -- SHOULD THE BACKGROUND BE HIGHLIGHTED??
 points = {5,3,2,1}
@@ -27,6 +27,7 @@ Round 3 is all tapping
 function love.load()
 	-- a thing
 	love.graphics.setFont(fontttt)
+	importer("exampleQuestions.txt")
 	if rounds[roundIndex] then rounds[roundIndex].load() end
 end
 
