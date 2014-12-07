@@ -4,7 +4,7 @@ round4 = love.graphics.newImage("assets/round4.png")
 questionNum = 1
 answersR4 = {}
 answered = false
-timer = 150
+timer = 150 -- check this value.
 newTopic = true
 
 function r4.load()
