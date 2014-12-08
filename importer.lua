@@ -61,9 +61,9 @@ function importer(filename) -- let's import some questions yeah
 					table.insert(groupsR4,ans)
 				end
 			else
-				tiebreakerQuestion = string.match(line,"[%s%S]+~")
-				tiebreakerAnswer = string.sub(line,#tiebreakerQuestion+1,-1)
-				tiebreakerQuestion = string.sub(tiebreakerQuestion,2,#tiebreakerQuestion-1)
+				tiebreakerTopic = string.match(line,"[%s%S]+~")
+				tiebreakerAnswer = string.sub(line,#tiebreakerTopic+1,-1)
+				tiebreakerTopic = string.sub(tiebreakerTopic,2,#tiebreakerTopic-1)
 				--error(tiebreakerQuestion..": "..tiebreakerAnswer)
 			end
 		end

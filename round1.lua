@@ -65,7 +65,7 @@ function r1.draw()
 					love.graphics.draw(rd,15,230,0,0.25,0.25)
 				end
 				if pictureR1 == selection then
-					drawTheImage(i)
+					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],20,260,190,"center")
@@ -114,7 +114,7 @@ function r1.draw()
 					end
 				end
 				if pictureR1 == selection then
-					drawTheImage(i)
+					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],20+(190*(i-1)),260,190,"center")
@@ -149,7 +149,7 @@ function r1.draw()
 	end
 end
 
-function drawTheImage(n) -- fix for 1st, gliding image
+function drawTheImage1(n) -- fix for 1st, gliding image
 	if revealedAnswer then
 		love.graphics.setColor(255,255,255,100)
 	else
@@ -262,7 +262,7 @@ function r1.keypressed(key)
 	end
 end
 
-function commenceRound(n)
+function commenceRound1(n)
 	selected[n]=true
 	selection=n
 	numberOfClues=1
@@ -280,7 +280,7 @@ function r1.mousepressed(x,y,b)
 	if selection == 0 then
 		if x>=150 and x<300 and y>=150 and y<300 and (not selected[1]) then
 			if tweening == 1 then
-				commenceRound(1)
+				commenceRound1(1)
 				--go go go!
 			else
 				tweening = 1 -- tween tween tween!
@@ -288,7 +288,7 @@ function r1.mousepressed(x,y,b)
 		end
 		if x>=300 and x<500 and y>=150 and y<300 and (not selected[2]) then
 			if tweening == 2 then
-				commenceRound(2)
+				commenceRound1(2)
 				--go go go!
 			else
 				tweening = 2 -- tween tween tween!
@@ -296,7 +296,7 @@ function r1.mousepressed(x,y,b)
 		end
 		if x>=500 and x<650 and y>=150 and y<300 and (not selected[3]) then
 			if tweening == 3 then
-				commenceRound(3)
+				commenceRound1(3)
 				--go go go!
 			else
 				tweening = 3 -- tween tween tween!
@@ -304,7 +304,7 @@ function r1.mousepressed(x,y,b)
 		end
 		if x>=150 and x<300 and y>=300 and y<450 and (not selected[4]) then
 			if tweening == 4 then
-				commenceRound(4)
+				commenceRound1(4)
 				--go go go!
 			else
 				tweening = 4 -- tween tween tween!
@@ -312,7 +312,7 @@ function r1.mousepressed(x,y,b)
 		end
 		if x>=300 and x<500 and y>=300 and y<450 and (not selected[5]) then
 			if tweening == 5 then
-				commenceRound(5)
+				commenceRound1(5)
 				--go go go!
 			else
 				tweening = 5 -- tween tween tween!
@@ -320,7 +320,7 @@ function r1.mousepressed(x,y,b)
 		end
 		if x>=500 and x<650 and y>=300 and y<450 and (not selected[6]) then
 			if tweening == 6 then
-				commenceRound(6)
+				commenceRound1(6)
 				--go go go!
 			else
 				tweening = 6 -- tween tween tween!
