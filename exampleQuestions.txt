@@ -46,11 +46,16 @@ Composite Numbers~20;21;22;24
 *Grades In Some Games~C;B;A;S
 Noble Gases~Argon;Krypton;Xenon;Radon
 Note Lengths~Crotchet;Minim;Semibreve;Breve
-| round 3 I need to add a second wall :P
+| round 3 #1
 Types of Netrunner Card~Operation;Hardware;Program;Resource
 Cold~Ice;Snow;Wind;Shoulder
-Synonyms for Situation~Problem;Predicament;Situation;Event
+Synonyms for Situation~Problem;Predic -ament;Situation;Event
 Gifts~Present;Offering;Sacrifice;Delivery
+| round 3 #2
+Programming Languages~Go;C;Python;Java
+Action Words~Stop;Wait;Run;Hop
+Letters~B;A;D;E
+Snakes~Cobra;Adder;Anaconda;Milk
 | round 4
 Parts of a building IN REVERSE~Sriats;Ynoclab;Moor;Rood
 Netrunner Cards~Ice Wall;Magnum Opus;Sure Gamble;Astroscript Pilot Program

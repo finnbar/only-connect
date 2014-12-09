@@ -4,8 +4,10 @@ function importer(filename) -- let's import some questions yeah
 	groupsR1 = {}
 	questionsR2 = {}
 	groupsR2 = {}
-	questionsR3 = {}
-	groupsR3 = {}
+	questionsR31 = {}
+	groupsR31 = {}
+	questionsR32 = {}
+	groupsR32 = {}
 	questionsR4 = {}
 	groupsR4 = {}
 	errorStr = "" -- because debugging on a school laptop means random error()s rather than serious debug console stuff
@@ -51,9 +53,12 @@ function importer(filename) -- let's import some questions yeah
 				elseif #groupsR2 < 6 then
 					table.insert(questionsR2,q)
 					table.insert(groupsR2,ans)
-				elseif #groupsR3 < 4 then
-					table.insert(questionsR3,q)
-					table.insert(groupsR3,ans)
+				elseif #groupsR31 < 4 then
+					table.insert(questionsR31,q)
+					table.insert(groupsR31,ans)
+				elseif #groupsR32 < 4 then
+					table.insert(questionsR32,q)
+					table.insert(groupsR32,ans)
 				else
 					for i=1,4 do
 						table.insert(questionsR4,q[i])

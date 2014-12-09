@@ -9,7 +9,7 @@ teamb = 0
 teamaname = "Team A" --default
 teambname = "Team B"
 rounds = {r1,show,r2,show,r3,show,r4,show,tie,show}
-roundIndex = 3 -- TEMP SHOULD BE ZERO
+roundIndex = 7 -- TEMP SHOULD BE ZERO
 debug = true -- TEMP SHOULD BE FALSE
 highlightingBg = 0 -- SHOULD THE BACKGROUND BE HIGHLIGHTED??
 points = {5,3,2,1}
@@ -34,13 +34,13 @@ end
 function love.draw()
 	love.graphics.setFont(fontttt)
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(bg,0,0)
+	love.graphics.draw(bg,0,0,0,1.2,1.2)
 	if highlightingBg == 1 then
 		love.graphics.setColor(0,0,255,50)
-		love.graphics.rectangle("fill",0,0,800,600)
+		love.graphics.rectangle("fill",0,0,love.window.getWidth(),love.window.getHeight())
 	elseif highlightingBg == 2 then
 		love.graphics.setColor(255,0,255,50)
-		love.graphics.rectangle("fill",0,0,800,600)
+		love.graphics.rectangle("fill",0,0,love.window.getWidth(),love.window.getHeight())
 	end
 	love.graphics.setColor(255,255,255)
 	if roundIndex > 0 then

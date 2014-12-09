@@ -87,6 +87,7 @@ function r4.keypressed(key)
 				end
 			else
 				answered = true
+				highlightingBg = 0
 			end
 			if questionNum > #questionsR4 then
 				return true

@@ -14,6 +14,7 @@ timer = 45
 
 function r2.load()
 	-- a thing
+	selected = {false,false,false,false,false,false}
 	r = newTween(119,183,1,0)
 	g = newTween(197,214,1,0)
 	b = newTween(215,237,1,0)
