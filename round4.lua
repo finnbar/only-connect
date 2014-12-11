@@ -47,7 +47,7 @@ function r4.update(dt)
 	timerR4 = timerR4 - dt
 	if timerR4<0 then
 		timerR4 = 10
-		if moveOn() then return true end
+		if moveOn(true) then return true end
 	end
 end
 
@@ -67,15 +67,25 @@ function r4.keypressed(key)
 		else
 			teamb = teamb + 1
 		end
+		debugScorePrint()
 		highlightingBg = 0
+		swapped = false
 	end
 	if key=="down" and highlightingBg~=0 then
-		if highlightingBg == 1 then
-			teama = teama - 1
-			highlightingBg = 2
+		if not swapped then
+			if highlightingBg == 1 then
+				teama = teama - 1
+				highlightingBg = 2
+			else
+				teamb = teamb - 1
+				highlightingBg = 1
+			end
+			debugScorePrint()
+			swapped = true
 		else
-			teamb = teamb - 1
-			highlightingBg = 1
+			swapped = false
+			highlightingBg = 0
+			answered = true
 		end
 	end
 	if key==" " then
@@ -84,7 +94,8 @@ function r4.keypressed(key)
 	end
 end
 
-function moveOn()
+function moveOn(force)
+	if force==nil then force=false end
 	if newTopic then
 		newTopic = false
 	else
@@ -94,7 +105,7 @@ function moveOn()
 			if questionNum%4 == 1 then
 				newTopic = true
 			end
-		else
+		elseif force then
 			answered = true
 			highlightingBg = 0
 		end

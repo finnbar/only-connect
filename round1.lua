@@ -210,12 +210,7 @@ function r1.keypressed(key)
 					audioR1[numberOfClues-1]:stop()
 					audioR1[numberOfClues]:play()
 				end
-			elseif not revealedAnswer then
-				revealedAnswer = true
-				if musicR1 == selection then audioR1[4]:stop() end
-				--s = newTween(0,0.25,0.1)
-				answerTween = newTween(0,0.1,0.1)
-			else
+			elseif revealedAnswer then
 				selection = 0
 				tweening = 0
 				numberOfClues = 0
@@ -245,6 +240,7 @@ function r1.keypressed(key)
 				-- team 2 gets points!
 				teamb = teamb + points[numberOfClues]
 			end
+			debugScorePrint()
 			if musicR1 == selection then
 				audioR1[numberOfClues]:stop() 
 			end
@@ -252,11 +248,25 @@ function r1.keypressed(key)
 			revealedAnswer = true
 			answerTween = newTween(0,0.1,0.1)
 			highlightingBg = 0
+			swapped = false
 		end
 		if key=="down" and highlightingBg~=0 then
-			if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
-			if musicR1 == selection then audioR1[4]:play() end
-			numberOfClues = 4
+			if not swapped then
+				if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
+				if musicR1 == selection then audioR1[4]:play() end
+				numberOfClues = 4
+				swapped = true
+			else
+				--trigger answer
+				numberOfClues = 4
+				revealedAnswer = true
+				answerTween = newTween(0,0.1,0.1)
+				highlightingBg = 0
+				swapped = false
+				if musicR1 == selection then
+					audioR1[numberOfClues]:stop() 
+				end
+			end
 		end
 	end
 end
@@ -266,8 +276,8 @@ function commenceRound1(n)
 	selection=n
 	numberOfClues=1
 	s = newTween(0,0.25,0.1)
-	pX = newTween(locs[n][1],15,0.4)
-	pY = newTween(locs[n][2],230,0.4)
+	pX = newTween(locs[n][1],15,0.2)
+	pY = newTween(locs[n][2],230,0.2)
 	timer = 60
 	if musicR1 == n then
 		audioR1[1]:play()

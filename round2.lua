@@ -205,10 +205,7 @@ function r2.keypressed(key)
 				timerPos = numberOfClues
 				s = newTween(0,0.25,0.1)
 			else
-				if not revealedAnswer then
-					revealedAnswer = true
-					answerTween = newTween(0,0.1,0.1)
-				else
+				if revealedAnswer then
 					-- something here
 					selection = 0
 					tweening = 0
@@ -238,16 +235,27 @@ function r2.keypressed(key)
 				-- team 2 gets points!
 				teamb = teamb + points[timerPos]
 			end
+			debugScorePrint()
+			numberOfClues = 3
+			revealedAnswer = true
+			answerTween = newTween(0,0.1,0.1)
+			highlightingBg = 0
+			swapped = false
+		end
+	end
+	if key=="down" and highlightingBg~=0 then
+		if not swapped then
+			if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
+			numberOfClues = 3
+			timerPos = 4
+			swapped = true
+		else
+			swapped = false
 			numberOfClues = 3
 			revealedAnswer = true
 			answerTween = newTween(0,0.1,0.1)
 			highlightingBg = 0
 		end
-	end
-	if key=="down" and highlightingBg~=0 then
-		if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
-		numberOfClues = 3
-		timerPos = 4
 	end
 end
 
@@ -256,8 +264,8 @@ function commenceRound2(n)
 	selection=n
 	numberOfClues=1
 	s = newTween(0,0.25,0.1)
-	pX = newTween(locs[n][1],15,0.4)
-	pY = newTween(locs[n][2],230,0.4)
+	pX = newTween(locs[n][1],15,0.2)
+	pY = newTween(locs[n][2],230,0.2)
 	timer = 60
 	timerPos = 1
 end

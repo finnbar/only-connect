@@ -14,6 +14,12 @@ function importer(filename) -- let's import some questions yeah
 	questionsR4 = {}
 	groupsR4 = {}
 	errorStr = "" -- because debugging on a school laptop means random error()s rather than serious debug console stuff
+	local teamNames = {}
+	for line in love.filesystem.lines(filename.."/teams.txt") do
+		table.insert(teamNames,line) 
+	end
+	teamaname = teamNames[1]
+	teambname = teamNames[2]
 	for line in love.filesystem.lines(filename.."/questions.txt") do
 		if not (string.match(line,"^%|") or line == "\n" or line == "") then
 			-- now I need to search for the tilda and grab the text before it.

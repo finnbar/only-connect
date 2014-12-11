@@ -15,6 +15,7 @@ highlightingBg = 0 -- SHOULD THE BACKGROUND BE HIGHLIGHTED??
 points = {5,3,2,1}
 currentTeam = 1 -- SHOULD BE CONTROLLED AT MENU LATER ON
 filename = "example"
+swapped = false
 
 --[[
 OK, KEYBOARD CONTROLS:
@@ -89,6 +90,11 @@ function love.keypressed(key)
 	if roundIndex > 0 then
 		if rounds[roundIndex].keypressed(key) then
 			roundIndex = roundIndex + 1
+			if roundIndex == 9 then
+				if teama ~= teamb then
+					roundIndex = 0
+				end
+			end
 			if roundIndex > #rounds then
 				roundIndex = 0
 			else
@@ -120,4 +126,8 @@ function love.mousepressed(x,y,button)
 			end
 		end
 	end
+end
+
+function debugScorePrint()
+	print(teamaname..": "..teama,teambname..": "..teamb)
 end

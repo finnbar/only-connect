@@ -173,9 +173,9 @@ end
 function r3.keypressed(key)
 	if isItDone then
 		if key==" " then
-			print(toRes)
+			--print(toRes)
 			if revealedAnswer then
-				print(resolveTheWall)
+				--print(resolveTheWall)
 				local comp = paint
 				if paint<4 then comp = comp - 1 end
 				if currentlyBeingShown < comp then
@@ -189,7 +189,7 @@ function r3.keypressed(key)
 					end
 					if currentlyBeingShown == 4 then
 						chosenWall = 0
-						print(R3Score)
+						--print(R3Score)
 						if R3Score == 8 then
 							R3Score = 0
 							if highlightingBg == 1 then
@@ -197,6 +197,7 @@ function r3.keypressed(key)
 							else
 								teamb = teamb + 2
 							end
+							debugScorePrint()
 						end
 						if (selectionR3[1]) and (selectionR3[2]) then
 							highlightingBg = 0
@@ -211,7 +212,7 @@ function r3.keypressed(key)
 					end
 				end
 				revealedAnswer = false
-			else
+			elseif (not revealedAnswer) and (currentlyBeingShown == 0 or resolveTheWall) then
 				revealedAnswer = true
 			end
 		elseif key=="up" then
@@ -220,6 +221,7 @@ function r3.keypressed(key)
 			else
 				teamb = teamb + 1
 			end
+			debugScorePrint()
 			revealedAnswer = true
 			R3Score = R3Score + 1
 		elseif key=="down" then
@@ -398,6 +400,7 @@ function r3.mousepressed(x,y,button)
 										else
 											teamb = teamb + 1
 										end
+										debugScorePrint()
 										paint = paint + 1
 										--love.graphics.draw(rd,15+(190*(i-1)),10+(145*(j-1)),0,0.25,val(s))
 									else
@@ -407,6 +410,7 @@ function r3.mousepressed(x,y,button)
 										else
 											teamb = teamb + 2
 										end
+										debugScorePrint()
 										doTheMovement(paint)
 										paint = 4
 										for z=1,16 do
