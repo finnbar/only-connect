@@ -9,11 +9,12 @@ teamb = 0
 teamaname = "Team A" --default
 teambname = "Team B"
 rounds = {r1,show,r2,show,r3,show,r4,show,tie,show}
-roundIndex = 5 -- TEMP SHOULD BE ZERO
-debug = true -- TEMP SHOULD BE FALSE
+roundIndex = 0 -- TEMP SHOULD BE ZERO
+debug = false -- TEMP SHOULD BE FALSE
 highlightingBg = 0 -- SHOULD THE BACKGROUND BE HIGHLIGHTED??
 points = {5,3,2,1}
 currentTeam = 1 -- SHOULD BE CONTROLLED AT MENU LATER ON
+filename = "example"
 
 --[[
 OK, KEYBOARD CONTROLS:
@@ -27,8 +28,13 @@ Round 3 is all tapping
 function love.load()
 	-- a thing
 	love.graphics.setFont(fontttt)
-	importer("exampleQuestions.txt")
+	if roundIndex == 0 then filename="" 
+		else importer(filename) end
 	if rounds[roundIndex] then rounds[roundIndex].load() end
+end
+
+function love.textinput(t)
+	if roundIndex == 0 then filename = filename..t end
 end
 
 function love.draw()
@@ -54,6 +60,8 @@ function love.draw()
 		end
 	else
 		--main menu jazz
+		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10,10,780,"center")
+		love.graphics.printf(filename,10,300,780,"center")
 	end
 	if debug then
 		love.graphics.setFont(font)
@@ -89,17 +97,26 @@ function love.keypressed(key)
 		end
 	else
 		--main menu jazz
+		if key=="return" then
+			importer(filename)
+			roundIndex = 1
+			if rounds[roundIndex] then rounds[roundIndex].load() end
+		elseif key=="backspace" then
+			filename = string.sub(filename,0,-2)
+		end
 	end
 end
 
 function love.mousepressed(x,y,button)
-	if rounds[roundIndex].mousepressed then
-		if rounds[roundIndex].mousepressed(x,y,button) then
-			roundIndex = roundIndex + 1
-			if roundIndex > #rounds then
-				roundIndex = 0
-			else
-				if rounds[roundIndex] then rounds[roundIndex].load() end
+	if roundIndex > 0 then
+		if rounds[roundIndex].mousepressed then
+			if rounds[roundIndex].mousepressed(x,y,button) then
+				roundIndex = roundIndex + 1
+				if roundIndex > #rounds then
+					roundIndex = 0
+				else
+					if rounds[roundIndex] then rounds[roundIndex].load() end
+				end
 			end
 		end
 	end

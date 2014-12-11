@@ -8,9 +8,6 @@ Reeds, Lion, Twisted,
 Viper, Water, Eye.
 ]]
 
-
-picturesR1 = {love.graphics.newImage("questions/1a.jpg"),love.graphics.newImage("questions/1b.jpg"),love.graphics.newImage("questions/1c.jpg"),love.graphics.newImage("questions/1d.jpg")}
-audioR1 = {love.audio.newSource("questions/1a.mp3"),love.audio.newSource("questions/1b.mp3"),love.audio.newSource("questions/1c.mp3"),love.audio.newSource("questions/1d.mp3")}
 musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
 
 selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
@@ -30,6 +27,7 @@ function r1.load()
 	s = newTween(0,0.25,0.1) -- this opens it up from the top
 	pX = newTween(locs[1][1],15,1)
 	pY = newTween(locs[1][2],230,1) --just so updateTween() doesn't panic
+	answerTween = newTween(0,0,1)
 end
 
 function r1.draw()

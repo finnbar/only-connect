@@ -3,9 +3,6 @@ r3 = {}
 -- THE BIG BIG ONE
 -- IT'S SO BIG THAT IT'S... I DUNNO
 
--- IDEAS:
--- Actually make it work (maybe important)
-
 chosenWall = 0 -- 1=lion, 2=water, 0=hmmm....
 selectionR3 = {false,false}
 tweening = 0
@@ -18,6 +15,12 @@ lives = 3
 life = love.graphics.newImage("assets/life.png")
 timer = 150
 isItDone = false
+currentlyBeingShown = 0
+local revealedAnswer = true
+answersR3 = {}
+R3Score = 0
+resolveTheWall = false
+resolutionTimer = 1
 
 function r3.load()
 	-- a thing
@@ -78,28 +81,46 @@ function r3.draw()
 		for i=1,4 do
 			for j=1,4 do
 				current = i + (j-1)*4
-				if chosen[current] == 0 then
-					love.graphics.setColor(colours("background"))
-				elseif chosen[current] == 1 then
-					love.graphics.setColor(colours("blue"))
-				elseif chosen[current] == 2 then
-					love.graphics.setColor(colours("green"))
-				elseif chosen[current] == 3 then
-					love.graphics.setColor(colours("purple"))
-				elseif chosen[current] == 4 then
-					love.graphics.setColor(colours("greenblue"))
-					--fancy bgs
+				if (not isItDone) or chosen[current]==currentlyBeingShown or currentlyBeingShown==0 or resolveTheWall then
+					if chosen[current] == 0 then
+						love.graphics.setColor(colours("background"))
+					elseif chosen[current] == 1 then
+						love.graphics.setColor(colours("blue"))
+					elseif chosen[current] == 2 then
+						love.graphics.setColor(colours("green"))
+					elseif chosen[current] == 3 then
+						love.graphics.setColor(colours("purple"))
+					elseif chosen[current] == 4 then
+						love.graphics.setColor(colours("greenblue"))
+						--fancy bgs
+					end
+					if movementTweens[current]~=0 then
+						love.graphics.draw(rd,15+(190*(i-1))+val(movementTweens[current][1]),10+(145*(j-1))+val(movementTweens[current][2]),0,0.25,val(s))
+					else
+						love.graphics.draw(rd,15+(190*(i-1)),10+(145*(j-1)),0,0.25,val(s))
+					end
+					love.graphics.setColor(0,0,0)
+					if chosenWall==1 then
+						love.graphics.printf(wall1[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
+					else
+						love.graphics.printf(wall2[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
+					end
 				end
-				if movementTweens[current]~=0 then
-					love.graphics.draw(rd,15+(190*(i-1))+val(movementTweens[current][1]),10+(145*(j-1))+val(movementTweens[current][2]),0,0.25,val(s))
-				else
-					love.graphics.draw(rd,15+(190*(i-1)),10+(145*(j-1)),0,0.25,val(s))
-				end
-				love.graphics.setColor(0,0,0)
-				if chosenWall==1 then
-					love.graphics.printf(wall1[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
-				else
-					love.graphics.printf(wall2[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
+				if currentlyBeingShown > 0 and (not resolveTheWall) then
+					love.graphics.setColor(colours("unselected"))
+					if currentlyBeingShown<4 then
+						love.graphics.draw(rd,0,10+(145*currentlyBeingShown),0,1,0.1)
+						love.graphics.setColor(255,255,255)
+						if revealedAnswer then
+							love.graphics.printf(answersR3[currentlyBeingShown],0,10+(145*currentlyBeingShown),800,"center")
+						end
+					else
+						love.graphics.draw(rd,0,10+(145*2.5),0,1,0.1)
+						love.graphics.setColor(255,255,255)
+						if revealedAnswer then
+							love.graphics.printf(answersR3[4],0,10+(145*2.5),800,"center")
+						end
+					end
 				end
 			end
 		end
@@ -112,7 +133,7 @@ function r3.draw()
 		love.graphics.setColor(colours("unselected"))
 		love.graphics.rectangle("fill",20,600,(150-timer)*(500/150),30)
 		love.graphics.setColor(colours("selected"))
-		love.graphics.rectangle("fill",20+(150-timer)*(500/150),600,20+500-((150-timer)*(400/150)),30)
+		love.graphics.rectangle("fill",20+(150-timer)*(500/150),600,500-((150-timer)*(500/150)),30)
 	end
 end
 
@@ -131,13 +152,154 @@ function r3.update(dt)
 			end
 		end
 		if not isItDone then
-			timer = timer - dt
+			if timer > 0 then
+				timer = timer - dt
+			else
+				timer = 0
+				isItDone = true
+				dealWithTheAnswers()
+			end
+		end
+	end
+	if resolveTheWall then
+		resolutionTimer = resolutionTimer + dt
+		if resolutionTimer > 1 then
+			completeItself()
+			resolutionTimer = 1
 		end
 	end
 end
 
 function r3.keypressed(key)
+	if isItDone then
+		if key==" " then
+			print(toRes)
+			if revealedAnswer then
+				print(resolveTheWall)
+				local comp = paint
+				if paint<4 then comp = comp - 1 end
+				if currentlyBeingShown < comp then
+					if resolveTheWall and toRes == 4 then
+						resolveTheWall = false
+					end
+					currentlyBeingShown = currentlyBeingShown + 1
+				else
+					if resolveTheWall and toRes == 4 then
+						resolveTheWall = false
+					end
+					if currentlyBeingShown == 4 then
+						chosenWall = 0
+						print(R3Score)
+						if R3Score == 8 then
+							R3Score = 0
+							if highlightingBg == 1 then
+								teama = teama + 2
+							else
+								teamb = teamb + 2
+							end
+						end
+						if (selectionR3[1]) and (selectionR3[2]) then
+							highlightingBg = 0
+							return true
+						end
+						if highlightingBg == 1 then currentTeam = 2 else currentTeam = 1 end
+					else
+						-- resolve the wall!
+						toRes = paint
+						resolveTheWall = true
+						paint = 4
+					end
+				end
+				revealedAnswer = false
+			else
+				revealedAnswer = true
+			end
+		elseif key=="up" then
+			if highlightingBg == 1 then
+				teama = teama + 1
+			else
+				teamb = teamb + 1
+			end
+			revealedAnswer = true
+			R3Score = R3Score + 1
+		elseif key=="down" then
+			revealedAnswer = true
+		end
+	end
+end
 
+function completeItself()
+	-- how am I going to do this?
+	-- OK, so we start with paint
+	if toRes<4 then
+		local sample = ""
+		--now let's find the group for toRes' set
+		if chosenWall == 1 then
+			sample = wall1[((toRes-1)*4)+1]
+		else
+			sample = wall2[((toRes-1)*4)+1]
+		end
+		-- now find its group
+		local location = 0
+		for i=1,4 do
+			for j=1,4 do
+				if chosenWall == 1 then
+					if questionsR31[i][j] == sample then location = i end
+				else
+					if questionsR32[i][j] == sample then location = i end
+				end
+			end
+		end
+		local thingsToSort = {}
+		for i=1,4 do
+			if chosenWall == 1 then
+				table.insert(thingsToSort,questionsR31[location][i])
+			else
+				table.insert(thingsToSort,questionsR32[location][i])
+			end
+		end
+		selectedIndexes = {}
+		for q=1,4 do
+			table.insert(selectedIndexes,0)
+		end
+		for q=1,16 do
+			for k=1,4 do
+				if chosenWall == 1 then
+					if wall1[q] == thingsToSort[k] then
+						selectedIndexes[k] = q
+					end
+				else
+					if wall2[q] == thingsToSort[k] then
+						selectedIndexes[k] = q
+					end
+				end
+			end
+		end
+		for i=1,4 do
+			chosen[selectedIndexes[i]] = toRes
+		end
+		doTheMovement(toRes)
+		toRes = toRes + 1
+	else
+		for i=1,16 do
+			if chosen[i] == 0 then chosen[i] = 4 end
+		end
+	end
+	dealWithTheAnswers()
+end
+
+function clearAll()
+	s = newTween(0,0.25,0.25)
+	lives = 3
+	isItDone = false
+	answersR3 = {}
+	revealedAnswer = false
+	currentlyBeingShown = 0
+	paint = 1
+	tweening = 0
+	R3Score = 0
+	timer =  150
+	for i=1,16 do chosen[i]=0 end
 end
 
 function r3.mousepressed(x,y,button)
@@ -147,9 +309,7 @@ function r3.mousepressed(x,y,button)
 				--ACTIVATE!
 				selectionR3[1] = true
 				chosenWall = 1
-				s = newTween(0,0.25,0.25)
-				lives = 3
-				isItDone = false
+				clearAll()
 			else
 				tweening = 1
 			end
@@ -159,8 +319,7 @@ function r3.mousepressed(x,y,button)
 				selectionR3[2] = true
 				chosenWall = 2
 				s = newTween(0,0.25,0.25)
-				lives = 3
-				isItDone = false
+				clearAll()
 			else
 				tweening = 2
 			end
@@ -232,16 +391,29 @@ function r3.mousepressed(x,y,button)
 								if yesThatsCorrect then
 									if paint < 3 then
 										-- ok, now the exciting movement! yaaaay
-										doTheMovement()
+										doTheMovement(paint)
+										R3Score = R3Score + 1
+										if highlightingBg==1 then
+											teama = teama + 1
+										else
+											teamb = teamb + 1
+										end
 										paint = paint + 1
 										--love.graphics.draw(rd,15+(190*(i-1)),10+(145*(j-1)),0,0.25,val(s))
 									else
-										doTheMovement()
+										R3Score = R3Score + 2
+										if highlightingBg==1 then
+											teama = teama + 2
+										else
+											teamb = teamb + 2
+										end
+										doTheMovement(paint)
 										paint = 4
 										for z=1,16 do
 											if chosen[z]==0 then chosen[z]=4 end
 										end
 										isItDone = true
+										dealWithTheAnswers()
 									end
 								else
 									--oh no it's wrong
@@ -252,6 +424,11 @@ function r3.mousepressed(x,y,button)
 									end
 									if paint == 3 then
 										lives = lives - 1
+										if lives == 0 then
+											timer = 0
+											isItDone = true
+											dealWithTheAnswers()
+										end
 									end
 								end
 								numberOfSelected = 0
@@ -264,12 +441,48 @@ function r3.mousepressed(x,y,button)
 	end
 end
 
-function doTheMovement()
+function dealWithTheAnswers()
+	answersR3 = {}
+	local answ = {}
+	for i=1,4 do
+		local sample = wall1[(4*(i-1))+1]
+		if chosenWall == 2 then
+			sample = wall2[(4*(i-1))+1]
+		end
+		--we have questionsR3X and groupsR3X
+		for j=1,4 do
+			for k=1,4 do
+				if chosenWall == 1 then
+					--print(sample,questionsR31[j][k])
+					if sample == questionsR31[j][k] then
+						--print(i,groupsR31[i])
+						table.insert(answ,groupsR31[j])
+					end
+				else
+					if sample == questionsR32[j][k] then
+						table.insert(answ,groupsR32[j])
+					end
+				end
+			end
+		end
+	end
+	if #answ > 4 then
+		for i=1,16,4 do
+			table.insert(answersR3,answ[i])
+		end
+	else
+		for i=1,4 do
+			table.insert(answersR3,answ[i])
+		end
+	end
+end
+
+function doTheMovement(row)
 	currentLocs = {}
 	otherLocs = {}
 	otherIndexes = {}
 	for k=1,4 do
-		table.insert(otherIndexes,((paint-1)*4)+k)
+		table.insert(otherIndexes,((row-1)*4)+k)
 	end
 	for k=1,4 do
 		local z = selectedIndexes[k]
@@ -279,7 +492,6 @@ function doTheMovement()
 		table.insert(otherLocs,{y%4,math.ceil(y/4)})
 		if otherLocs[k][1]==0 then otherLocs[k][1]=4 end
 	end
-	-- THERE IS A BUG. THAT IS ALL.
 	table.sort(selectedIndexes)
 	for k=1,4 do
 		local x1 = currentLocs[k][1]

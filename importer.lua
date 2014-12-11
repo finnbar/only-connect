@@ -1,5 +1,8 @@
 function importer(filename) -- let's import some questions yeah
 	--answers = love.filesystem.read("exampleQuestions.txt")
+	picturesR1 = {love.graphics.newImage(filename.."/1a.jpg"),love.graphics.newImage(filename.."/1b.jpg"),love.graphics.newImage(filename.."/1c.jpg"),love.graphics.newImage(filename.."/1d.jpg")}
+	audioR1 = {love.audio.newSource(filename.."/1a.mp3"),love.audio.newSource(filename.."/1b.mp3"),love.audio.newSource(filename.."/1c.mp3"),love.audio.newSource(filename.."/1d.mp3")}
+	picturesR2 = {love.graphics.newImage(filename.."/2a.jpg"),love.graphics.newImage(filename.."/2b.jpg"),love.graphics.newImage(filename.."/2c.jpg"),love.graphics.newImage(filename.."/2d.jpg")}
 	questionsR1 = {}
 	groupsR1 = {}
 	questionsR2 = {}
@@ -11,7 +14,7 @@ function importer(filename) -- let's import some questions yeah
 	questionsR4 = {}
 	groupsR4 = {}
 	errorStr = "" -- because debugging on a school laptop means random error()s rather than serious debug console stuff
-	for line in love.filesystem.lines(filename) do
+	for line in love.filesystem.lines(filename.."/questions.txt") do
 		if not (string.match(line,"^%|") or line == "\n" or line == "") then
 			-- now I need to search for the tilda and grab the text before it.
 			if string.sub(line,1,1) ~= "$" then

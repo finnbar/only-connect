@@ -1,6 +1,5 @@
 r2 = {}
 
-picturesR2 = {love.graphics.newImage("questions/2a.jpg"),love.graphics.newImage("questions/2b.jpg"),love.graphics.newImage("questions/2c.jpg"),love.graphics.newImage("questions/2d.jpg")}
 questionMark = love.graphics.newImage("assets/questionMark.png")
 
 selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
