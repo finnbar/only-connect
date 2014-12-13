@@ -16,6 +16,7 @@ points = {5,3,2,1}
 currentTeam = 1 -- SHOULD BE CONTROLLED AT MENU LATER ON
 filename = "example"
 swapped = false
+local prevTeam = 2
 
 --[[
 OK, KEYBOARD CONTROLS:
@@ -84,6 +85,7 @@ function love.update(dt)
 	else
 		--main menu jazz
 	end
+	whatTeam()
 end
 
 function love.keypressed(key)
@@ -130,4 +132,17 @@ end
 
 function debugScorePrint()
 	print(teamaname..": "..teama,teambname..": "..teamb)
+end
+
+function whatTeam()
+	if roundIndex ~= 7 and roundIndex ~= 9 then
+		if prevTeam ~= currentTeam then
+			if currentTeam == 1 then
+				print("It's "..teamaname.."'s turn!")
+			else
+				print("It's "..teambname.."'s turn!")
+			end
+		end
+	end
+	prevTeam = currentTeam
 end
