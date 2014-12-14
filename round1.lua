@@ -210,6 +210,7 @@ function r1.keypressed(key)
 					audioR1[numberOfClues-1]:stop()
 					audioR1[numberOfClues]:play()
 				end
+				slide()
 			elseif revealedAnswer then
 				selection = 0
 				tweening = 0
@@ -227,10 +228,12 @@ function r1.keypressed(key)
 		if key=="left" and highlightingBg==0 and currentTeam == 1 then
 			highlightingBg = 1
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
+			buzzIn(1)
 		end
 		if key=="right" and highlightingBg==0 and currentTeam == 2 then
 			highlightingBg = 2
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
+			buzzIn(2)
 		end
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
@@ -249,6 +252,7 @@ function r1.keypressed(key)
 			answerTween = newTween(0,0.1,0.1)
 			highlightingBg = 0
 			swapped = false
+			slide()
 		end
 		if key=="down" and highlightingBg~=0 then
 			if not swapped then
@@ -266,6 +270,7 @@ function r1.keypressed(key)
 				if musicR1 == selection then
 					audioR1[numberOfClues]:stop() 
 				end
+				slide()
 			end
 		end
 	end
@@ -279,6 +284,7 @@ function commenceRound1(n)
 	pX = newTween(locs[n][1],15,0.2)
 	pY = newTween(locs[n][2],230,0.2)
 	timer = 60
+	swoosh()
 	if musicR1 == n then
 		audioR1[1]:play()
 	end
@@ -293,6 +299,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 1 -- tween tween tween!
+				slide()
 			end
 		end
 		if x>=300 and x<500 and y>=150 and y<300 and (not selected[2]) then
@@ -301,6 +308,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 2 -- tween tween tween!
+				slide()
 			end
 		end
 		if x>=500 and x<650 and y>=150 and y<300 and (not selected[3]) then
@@ -309,6 +317,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 3 -- tween tween tween!
+				slide()
 			end
 		end
 		if x>=150 and x<300 and y>=300 and y<450 and (not selected[4]) then
@@ -317,6 +326,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 4 -- tween tween tween!
+				slide()
 			end
 		end
 		if x>=300 and x<500 and y>=300 and y<450 and (not selected[5]) then
@@ -325,6 +335,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 5 -- tween tween tween!
+				slide()
 			end
 		end
 		if x>=500 and x<650 and y>=300 and y<450 and (not selected[6]) then
@@ -333,6 +344,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 6 -- tween tween tween!
+				slide()
 			end
 		end
 	end

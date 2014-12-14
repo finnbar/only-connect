@@ -146,3 +146,23 @@ function whatTeam()
 	end
 	prevTeam = currentTeam
 end
+
+function buzzIn(a)
+	if a==1 then
+		love.audio.play(buzzer1)
+	else
+		love.audio.play(buzzer2)
+	end
+end
+
+function slide()
+	love.audio.play(slideSound)
+end
+
+function tap()
+	love.audio.play(pressSound)
+end
+
+function swoosh()
+	love.audio.play(slideLong)
+end

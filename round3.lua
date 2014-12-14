@@ -216,6 +216,7 @@ function r3.keypressed(key)
 				revealedAnswer = true
 			end
 		elseif key=="up" then
+			slide()
 			if highlightingBg == 1 then
 				teama = teama + 1
 			else
@@ -225,6 +226,7 @@ function r3.keypressed(key)
 			revealedAnswer = true
 			R3Score = R3Score + 1
 		elseif key=="down" then
+			slide()
 			revealedAnswer = true
 		end
 	end
@@ -281,6 +283,7 @@ function completeItself()
 			chosen[selectedIndexes[i]] = toRes
 		end
 		doTheMovement(toRes)
+		swoosh()
 		toRes = toRes + 1
 	else
 		for i=1,16 do
@@ -311,9 +314,12 @@ function r3.mousepressed(x,y,button)
 				--ACTIVATE!
 				selectionR3[1] = true
 				chosenWall = 1
+				s = newTween(0,0.25,0.25)
 				clearAll()
+				swoosh()
 			else
 				tweening = 1
+				slide()
 			end
 		elseif x>=390 and x<=590 and y>=200 and y<=350 then
 			if tweening == 2 then
@@ -322,13 +328,16 @@ function r3.mousepressed(x,y,button)
 				chosenWall = 2
 				s = newTween(0,0.25,0.25)
 				clearAll()
+				swoosh()
 			else
 				tweening = 2
+				slide()
 			end
 		end
 	else
 		if not isItDone then
 		--ok, clicking the things....
+			tap()
 			for i=1,4 do
 				for j=1,4 do
 					current = i + (4*(j-1))
@@ -394,6 +403,7 @@ function r3.mousepressed(x,y,button)
 									if paint < 3 then
 										-- ok, now the exciting movement! yaaaay
 										doTheMovement(paint)
+										swoosh()
 										R3Score = R3Score + 1
 										if highlightingBg==1 then
 											teama = teama + 1
@@ -412,6 +422,7 @@ function r3.mousepressed(x,y,button)
 										end
 										debugScorePrint()
 										doTheMovement(paint)
+										swoosh()
 										paint = 4
 										for z=1,16 do
 											if chosen[z]==0 then chosen[z]=4 end
@@ -432,6 +443,9 @@ function r3.mousepressed(x,y,button)
 											timer = 0
 											isItDone = true
 											dealWithTheAnswers()
+											love.audio.play(worse)
+										else
+											love.audio.play(bad)
 										end
 									end
 								end

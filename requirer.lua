@@ -34,3 +34,13 @@ Viper, Water, Eye.
 ]]
 
 heiroglyphs = {reeds=love.graphics.newImage("assets/reeds.png"),lion=love.graphics.newImage("assets/lion.png"),twisted=love.graphics.newImage("assets/twisted.png"),viper=love.graphics.newImage("assets/viper.png"),water=love.graphics.newImage("assets/water.png"),eye=love.graphics.newImage("assets/eye.png")}
+
+buzzer1 = love.audio.newSource("assets/onlyConnect1buzz.mp3")
+buzzer2 = love.audio.newSource("assets/onlyConnect2buzz.mp3")
+pressSound = love.audio.newSource("assets/click.mp3")
+slideSound = love.audio.newSource("assets/slice.mp3")
+slideLong = love.audio.newSource("assets/slicelong.mp3")
+bad = love.audio.newSource("assets/bad.mp3")
+worse = love.audio.newSource("assets/worse.mp3")
+bad:setVolume(0.1)
+worse:setVolume(0.1)

@@ -55,9 +55,11 @@ function r4.keypressed(key)
 	if not newTopic then
 		if key=="left" and highlightingBg==0 and not answered then
 			highlightingBg = 1
+			buzzIn(1)
 		end
 		if key=="right" and highlightingBg==0 and not answered then
 			highlightingBg = 2
+			buzzIn(2)
 		end
 	end
 	if key=="up" and highlightingBg~=0 then
@@ -70,6 +72,7 @@ function r4.keypressed(key)
 		debugScorePrint()
 		highlightingBg = 0
 		swapped = false
+		slide()
 	end
 	if key=="down" and highlightingBg~=0 then
 		if not swapped then
@@ -86,6 +89,7 @@ function r4.keypressed(key)
 			swapped = false
 			highlightingBg = 0
 			answered = true
+			slide()
 		end
 	end
 	if key==" " then
@@ -105,9 +109,11 @@ function moveOn(force)
 			if questionNum%4 == 1 then
 				newTopic = true
 			end
+			slide()
 		elseif force then
 			answered = true
 			highlightingBg = 0
+			slide()
 		end
 		if questionNum > #questionsR4 then
 			return true

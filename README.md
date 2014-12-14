@@ -15,3 +15,8 @@ How to actually run it:
 * Round 3: Tap for everything. Once the wall is finished, up agrees to the answer of a group's connection, or down to disagree. The rest is automated, or rather, will be as I haven't implemented it yet.
 * Round 4: Similar to round 1, space to advance whatever, left/right is a team buzzing in, up agrees, down disagrees. Plays until time is up.
 * Tiebreaker: Simple left/right buzz and up/down agree/disagree. Not implemented yet, although will probably take about five minutes to.
+
+copyright notices
+====
+
+Only Connect is the BBC's show. Most of the sound effects (both buzzer sounds and the swoosh sounds) are modified from the audio of the TV show. Please don't sue me.
