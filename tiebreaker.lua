@@ -28,13 +28,13 @@ function tie.draw()
 		--draw panic animation. probably not a thing unless I find a lot of time
 	else
 		love.graphics.setFont(fontttt)
-		love.graphics.draw(round4,0,0)
-		love.graphics.printf(tiebreakerTopic,50,130,700,"center")
+		love.graphics.draw(round4,0,0,0,scale,scale)
+		love.graphics.printf(tiebreakerTopic,50*scale,130*scale,700*scale,"center")
 		love.graphics.setFont(fonttt)
 		if state == 1 then
-			love.graphics.printf(tiebreakerQuestion,50,220,700,"center")
+			love.graphics.printf(tiebreakerQuestion,50*scale,220*scale,700*scale,"center")
 		elseif state == 2 then
-			love.graphics.printf(tiebreakerAnswer,50,220,700,"center")
+			love.graphics.printf(tiebreakerAnswer,50*scale,220*scale,700*scale,"center")
 		end
 	end
 end

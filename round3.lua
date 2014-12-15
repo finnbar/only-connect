@@ -65,7 +65,7 @@ function r3.draw()
 		else
 			love.graphics.setColor(colours("unselected"))
 		end
-		love.graphics.draw(rd,190,200,0,0.25,0.25)
+		love.graphics.draw(rd,190*scale,200*scale,0,0.25*scale,0.25*scale)
 		if tweening == 2 then
 			love.graphics.setColor(val(r),val(g),val(b))
 		elseif selectionR3[2] then
@@ -73,10 +73,10 @@ function r3.draw()
 		else
 			love.graphics.setColor(colours("unselected"))
 		end
-		love.graphics.draw(rd,390,200,0,0.25,0.25)
+		love.graphics.draw(rd,390*scale,200*scale,0,0.25*scale,0.25*scale)
 		love.graphics.setColor(255,255,255)
-		love.graphics.draw(heiroglyphs["lion"],190,200)
-		love.graphics.draw(heiroglyphs["water"],390,200)
+		love.graphics.draw(heiroglyphs["lion"],190*scale,200*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["water"],390*scale,200*scale,0,scale,scale)
 	else
 		for i=1,4 do
 			for j=1,4 do
@@ -95,30 +95,30 @@ function r3.draw()
 						--fancy bgs
 					end
 					if movementTweens[current]~=0 then
-						love.graphics.draw(rd,15+(190*(i-1))+val(movementTweens[current][1]),10+(145*(j-1))+val(movementTweens[current][2]),0,0.25,val(s))
+						love.graphics.draw(rd,(15+(190*(i-1))+val(movementTweens[current][1]))*scale,(10+(145*(j-1))+val(movementTweens[current][2]))*scale,0,0.25*scale,val(s)*scale)
 					else
-						love.graphics.draw(rd,15+(190*(i-1)),10+(145*(j-1)),0,0.25,val(s))
+						love.graphics.draw(rd,(15+(190*(i-1)))*scale,(10+(145*(j-1)))*scale,0,0.25*scale,val(s)*scale)
 					end
 					love.graphics.setColor(0,0,0)
 					if chosenWall==1 then
-						love.graphics.printf(wall1[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
+						love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
 					else
-						love.graphics.printf(wall2[current],65+(190*(i-1)),20+(145*(j-1)),100,"center")
+						love.graphics.printf(wall2[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
 					end
 				end
 				if currentlyBeingShown > 0 and (not resolveTheWall) then
 					love.graphics.setColor(colours("unselected"))
 					if currentlyBeingShown<4 then
-						love.graphics.draw(rd,0,10+(145*currentlyBeingShown),0,1,0.1)
+						love.graphics.draw(rd,0,(10+(145*currentlyBeingShown))*scale,0,scale,0.1*scale)
 						love.graphics.setColor(255,255,255)
 						if revealedAnswer then
-							love.graphics.printf(answersR3[currentlyBeingShown],0,10+(145*currentlyBeingShown),800,"center")
+							love.graphics.printf(answersR3[currentlyBeingShown],0,(10+(145*currentlyBeingShown))*scale,800*scale,"center")
 						end
 					else
-						love.graphics.draw(rd,0,10+(145*2.5),0,1,0.1)
+						love.graphics.draw(rd,0,(10+(145*2.5))*scale,0,scale,0.1*scale)
 						love.graphics.setColor(255,255,255)
 						if revealedAnswer then
-							love.graphics.printf(answersR3[4],0,10+(145*2.5),800,"center")
+							love.graphics.printf(answersR3[4],0,(10+(145*2.5))*scale,800*scale,"center")
 						end
 					end
 				end
@@ -127,13 +127,13 @@ function r3.draw()
 		love.graphics.setColor(255,255,255)
 		if paint==3 then
 			for i=1,lives do
-				love.graphics.draw(life,540+(i*60),590,0,0.75,0.75)
+				love.graphics.draw(life,(540+(i*60))*scale,590*scale,0,0.75*scale,0.75*scale)
 			end
 		end
 		love.graphics.setColor(colours("unselected"))
-		love.graphics.rectangle("fill",20,600,(150-timer)*(500/150),30)
+		love.graphics.rectangle("fill",20*scale,600*scale,((150-timer)*(500/150))*scale,30*scale)
 		love.graphics.setColor(colours("selected"))
-		love.graphics.rectangle("fill",20+(150-timer)*(500/150),600,500-((150-timer)*(500/150)),30)
+		love.graphics.rectangle("fill",(20+(150-timer)*(500/150))*scale,600*scale,(500-((150-timer)*(500/150)))*scale,30*scale)
 	end
 end
 
@@ -309,7 +309,7 @@ end
 
 function r3.mousepressed(x,y,button)
 	if chosenWall == 0 then
-		if x>=190 and x<=390 and y>=200 and y<=350 then
+		if x>=190*scale and x<=390*scale and y>=200*scale and y<=350*scale then
 			if tweening == 1 then
 				--ACTIVATE!
 				selectionR3[1] = true
@@ -321,7 +321,7 @@ function r3.mousepressed(x,y,button)
 				tweening = 1
 				slide()
 			end
-		elseif x>=390 and x<=590 and y>=200 and y<=350 then
+		elseif x>=390*scale and x<=590*scale and y>=200*scale and y<=350*scale then
 			if tweening == 2 then
 				--ACTIVATE
 				selectionR3[2] = true
@@ -341,7 +341,7 @@ function r3.mousepressed(x,y,button)
 			for i=1,4 do
 				for j=1,4 do
 					current = i + (4*(j-1))
-					if x>=15+(190*(i-1)) and x<=15+(190*(i)) and y>=10+(145*(j-1)) and y<=10+(145*(j)) then
+					if x>=(15+(190*(i-1)))*scale and x<=(15+(190*(i)))*scale and y>=(10+(145*(j-1)))*scale and y<=(10+(145*(j)))*scale then
 						if chosen[current]==paint then
 							chosen[current] = 0
 							numberOfSelected = numberOfSelected - 1

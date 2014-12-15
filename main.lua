@@ -2,6 +2,9 @@
 -- THE ONLY SHOW ABOUT CONNECTING
 -- YEAH
 
+scale = love.window.getHeight()/650
+-- The scale is got from the height and done squarely, OK?
+
 require "requirer" -- the requirer requires everything that needs to be required requiringly
 
 teama = 0
@@ -28,7 +31,6 @@ Round 3 is all tapping
 ]]
 
 function love.load()
-	print("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.")
 	-- a thing
 	love.graphics.setFont(fontttt)
 	if roundIndex == 0 then filename="" 
@@ -63,10 +65,10 @@ function love.draw()
 		end
 	else
 		--main menu jazz
-		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10,10,780,"center")
-		love.graphics.printf(filename,10,300,780,"center")
+		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale,10*scale,780*scale,"center")
+		love.graphics.printf(filename,10*scale,300*scale,780*scale,"center")
 		love.graphics.setFont(font)
-		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.",10,590,780,"left")
+		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.",10*scale,590*scale,780*scale,"left")
 	end
 	if debug then
 		love.graphics.setFont(font)

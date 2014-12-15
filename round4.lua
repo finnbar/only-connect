@@ -34,12 +34,12 @@ end
 
 function r4.draw()
 	love.graphics.setFont(fontttt)
-	love.graphics.draw(round4,0,0)
-	love.graphics.printf(groupsR4[math.ceil((questionNum)/4)],50,130,700,"center")
+	love.graphics.draw(round4,0,0,0,scale,scale)
+	love.graphics.printf(groupsR4[math.ceil((questionNum)/4)],50*scale,130*scale,700*scale,"center")
 	if answered then
-		love.graphics.printf(answersR4[questionNum],50,210,700,"center")
+		love.graphics.printf(answersR4[questionNum],50*scale,210*scale,700*scale,"center")
 	elseif not newTopic then
-		love.graphics.printf(questionsR4[questionNum],50,210,700,"center")
+		love.graphics.printf(questionsR4[questionNum],50*scale,210*scale,700*scale,"center")
 	end
 end
 

@@ -23,10 +23,10 @@ function colours(name,alpha)
 	return {colList[name][1],colList[name][2],colList[name][3],alpha}
 end
 
-font = love.graphics.newFont("assets/RopaSans-Regular.ttf",12)
-fonttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",40)
-fontttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",50)
-fonttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",100) -- aka big font
+font = love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)
+fonttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)
+fontttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)
+fonttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale) -- aka big font
 
 --[[ NOTE TO SELF: order of heiroglyphs is
 Reeds, Lion, Twisted,
