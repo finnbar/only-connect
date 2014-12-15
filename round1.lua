@@ -291,6 +291,14 @@ function commenceRound1(n)
 	end
 end
 
+function playTheChosenSound(r)
+	if r == musicR1 then
+		love.audio.play(musicRoundGo)
+	else
+		slide()
+	end
+end
+
 function r1.mousepressed(x,y,b)
 	-- bounding boxes time! yaaaaaaaay.
 	if selection == 0 then
@@ -300,7 +308,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 1 -- tween tween tween!
-				slide()
+				playTheChosenSound(1)
 			end
 		end
 		if x>=300*scale and x<500*scale and y>=150*scale and y<300*scale and (not selected[2]) then
@@ -309,7 +317,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 2 -- tween tween tween!
-				slide()
+				playTheChosenSound(2)
 			end
 		end
 		if x>=500*scale and x<650*scale and y>=150*scale and y<300*scale and (not selected[3]) then
@@ -318,7 +326,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 3 -- tween tween tween!
-				slide()
+				playTheChosenSound(3)
 			end
 		end
 		if x>=150*scale and x<300*scale and y>=300*scale and y<450*scale and (not selected[4]) then
@@ -327,7 +335,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 4 -- tween tween tween!
-				slide()
+				playTheChosenSound(4)
 			end
 		end
 		if x>=300*scale and x<500*scale and y>=300*scale and y<450*scale and (not selected[5]) then
@@ -336,7 +344,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 5 -- tween tween tween!
-				slide()
+				playTheChosenSound(5)
 			end
 		end
 		if x>=500*scale and x<650*scale and y>=300*scale and y<450*scale and (not selected[6]) then
@@ -345,7 +353,7 @@ function r1.mousepressed(x,y,b)
 				--go go go!
 			else
 				tweening = 6 -- tween tween tween!
-				slide()
+				playTheChosenSound(6)
 			end
 		end
 	end
