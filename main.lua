@@ -28,6 +28,7 @@ Round 3 is all tapping
 ]]
 
 function love.load()
+	print("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.")
 	-- a thing
 	love.graphics.setFont(fontttt)
 	if roundIndex == 0 then filename="" 
@@ -64,6 +65,8 @@ function love.draw()
 		--main menu jazz
 		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10,10,780,"center")
 		love.graphics.printf(filename,10,300,780,"center")
+		love.graphics.setFont(font)
+		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.",10,590,780,"left")
 	end
 	if debug then
 		love.graphics.setFont(font)
