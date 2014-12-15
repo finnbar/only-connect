@@ -191,6 +191,7 @@ function r1.update(dt)
 			if timer < 0 then
 				if currentTeam == 1 then highlightingBg=2 else highlightingBg=1 end
 				numberOfClues = 4
+				swapped = true
 			end
 		end
 	end
