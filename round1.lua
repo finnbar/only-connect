@@ -258,7 +258,7 @@ function r1.keypressed(key)
 		if key=="down" and highlightingBg~=0 then
 			if not swapped then
 				if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
-				if musicR1 == selection then audioR1[4]:play() end
+				if musicR1 == selection and numberOfClues < 4 then audioR1[4]:play() end
 				numberOfClues = 4
 				swapped = true
 			else

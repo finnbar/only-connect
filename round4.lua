@@ -44,10 +44,12 @@ function r4.draw()
 end
 
 function r4.update(dt)
-	timerR4 = timerR4 - dt
-	if timerR4<0 then
-		timerR4 = 10
-		if moveOn(true) then return true end
+	if not swapped then
+		timerR4 = timerR4 - dt
+		if timerR4<0 then
+			timerR4 = 10
+			if moveOn(true) then return true end
+		end
 	end
 end
 
