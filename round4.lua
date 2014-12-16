@@ -45,7 +45,7 @@ function r4.draw()
 end
 
 function r4.update(dt)
-	if not swapped then
+	if highlightingBg==0 and (not answered) then
 		timerR4 = timerR4 - dt
 		if timerR4<0 then
 			timerR4 = 10
@@ -56,11 +56,11 @@ end
 
 function r4.keypressed(key)
 	if not newTopic then
-		if key=="left" and highlightingBg==0 and not answered then
+		if key=="left" and highlightingBg==0 and (not answered) then
 			highlightingBg = 1
 			buzzIn(1)
 		end
-		if key=="right" and highlightingBg==0 and not answered then
+		if key=="right" and highlightingBg==0 and (not answered) then
 			highlightingBg = 2
 			buzzIn(2)
 		end
@@ -97,7 +97,9 @@ function r4.keypressed(key)
 	end
 	if key==" " then
 		if moveOn() then return true end
-		timerR4 = 10
+		if highlightingBg==0 and (not answered) then
+			timerR4 = 10
+		end
 	end
 end
 

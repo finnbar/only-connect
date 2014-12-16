@@ -49,10 +49,10 @@ function tie.keypressed(key)
 			if state==2 then return true end
 			state = 1
 		end
-		if key=="left" and highlightingBg==0 then
+		if key=="left" and highlightingBg==0 and state==1 then
 			highlightingBg = 1
 		end
-		if key=="right" and highlightingBg==0 then
+		if key=="right" and highlightingBg==0 and state==1 then
 			highlightingBg = 2
 		end
 		if key=="up" and highlightingBg~=0 then

@@ -58,7 +58,8 @@ function love.draw()
 		if rounds[roundIndex].draw() then
 			roundIndex = roundIndex + 1
 			if roundIndex > #rounds then
-				roundIndex = 0
+				print("bye")
+				love.event.quit()
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
@@ -82,7 +83,8 @@ function love.update(dt)
 			-- the round has ended IT HAS RETURNED TRUE
 			roundIndex = roundIndex + 1
 			if roundIndex > #rounds then
-				roundIndex = 0
+				print("bye")
+				love.event.quit()
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
@@ -103,10 +105,24 @@ function love.keypressed(key)
 				end
 			end
 			if roundIndex > #rounds then
-				roundIndex = 0
+				print("bye")
+				love.event.quit()
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
+		end
+		if key=="q" then
+			teama = teama + 1
+			debugScorePrint()
+		elseif key=="w" then
+			teama = teama - 1
+			debugScorePrint()
+		elseif key=="o" then
+			teamb = teamb + 1
+			debugScorePrint()
+		elseif key=="p" then
+			teamb = teamb - 1
+			debugScorePrint()
 		end
 	else
 		--main menu jazz
@@ -126,7 +142,8 @@ function love.mousepressed(x,y,button)
 			if rounds[roundIndex].mousepressed(x,y,button) then
 				roundIndex = roundIndex + 1
 				if roundIndex > #rounds then
-					roundIndex = 0
+					print("bye")
+					love.event.quit()
 				else
 					if rounds[roundIndex] then rounds[roundIndex].load() end
 				end
@@ -140,7 +157,7 @@ function debugScorePrint()
 end
 
 function whatTeam()
-	if roundIndex ~= 7 and roundIndex ~= 9 then
+	if roundIndex ~= 7 and roundIndex ~= 9 and roundIndex ~= 0 then
 		if prevTeam ~= currentTeam then
 			if currentTeam == 1 then
 				print("It's "..teamaname.."'s turn!")
@@ -148,8 +165,8 @@ function whatTeam()
 				print("It's "..teambname.."'s turn!")
 			end
 		end
+		prevTeam = currentTeam
 	end
-	prevTeam = currentTeam
 end
 
 function buzzIn(a)

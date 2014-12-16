@@ -29,6 +29,7 @@ function r1.load()
 	pX = newTween(locs[1][1],15,1)
 	pY = newTween(locs[1][2],230,1) --just so updateTween() doesn't panic
 	answerTween = newTween(0,0,1)
+	whatTeam()
 end
 
 function r1.draw()
@@ -230,12 +231,12 @@ function r1.keypressed(key)
 				if allSel then return allSel end
 			end
 		end
-		if key=="left" and highlightingBg==0 and currentTeam == 1 then
+		if key=="left" and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer) then
 			highlightingBg = 1
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(1)
 		end
-		if key=="right" and highlightingBg==0 and currentTeam == 2 then
+		if key=="right" and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
 			highlightingBg = 2
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(2)
@@ -307,7 +308,7 @@ end
 function r1.mousepressed(x,y,b)
 	-- bounding boxes time! yaaaaaaaay.
 	if selection == 0 then
-		if x>=150*scale and x<300*scale and y>=150*scale and y<300*scale and (not selected[1]) then
+		if x>=100*scale and x<300*scale and y>=100*scale and y<300*scale and (not selected[1]) then
 			if tweening == 1 then
 				commenceRound1(1)
 				--go go go!
@@ -316,7 +317,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(1)
 			end
 		end
-		if x>=300*scale and x<500*scale and y>=150*scale and y<300*scale and (not selected[2]) then
+		if x>=300*scale and x<500*scale and y>=100*scale and y<300*scale and (not selected[2]) then
 			if tweening == 2 then
 				commenceRound1(2)
 				--go go go!
@@ -325,7 +326,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(2)
 			end
 		end
-		if x>=500*scale and x<650*scale and y>=150*scale and y<300*scale and (not selected[3]) then
+		if x>=500*scale and x<700*scale and y>=150*scale and y<300*scale and (not selected[3]) then
 			if tweening == 3 then
 				commenceRound1(3)
 				--go go go!
@@ -334,7 +335,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(3)
 			end
 		end
-		if x>=150*scale and x<300*scale and y>=300*scale and y<450*scale and (not selected[4]) then
+		if x>=100*scale and x<300*scale and y>=300*scale and y<450*scale and (not selected[4]) then
 			if tweening == 4 then
 				commenceRound1(4)
 				--go go go!
@@ -352,7 +353,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(5)
 			end
 		end
-		if x>=500*scale and x<650*scale and y>=300*scale and y<450*scale and (not selected[6]) then
+		if x>=500*scale and x<700*scale and y>=300*scale and y<450*scale and (not selected[6]) then
 			if tweening == 6 then
 				commenceRound1(6)
 				--go go go!

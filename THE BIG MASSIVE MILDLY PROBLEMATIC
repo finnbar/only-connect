@@ -1,16 +1,20 @@
 THE BIG MASSIVE MILDLY PROBLEMATIC
 BUG LIST!!!!!!!
 
-> The opponents can buzz in once the question has been answered. Huh.
+> The opponents can buzz in once the question has been answered. Huh. (r4, r1/2/3 same team can buzz in again?!) SOLVED, BUT SHOULD BE CHECKED
 > HARDWARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! IS! PROBLEMATIC!
 > Text wrap for very long clues fails -> maybe if clue is too big swap to font or fontt?
+> Team names size may miss box...
 > SCORING, although that might be hardware. Actually, it probably is. I should run through with keyboard, attempting to mess it up as much as possible. Check the scoring sequence for 1/2/4 - see if the team swap occurs too early. Maybe research love.run() and mess with that to get the desired stuff to happen in the right order?
-> Connecting wall will add currently selected ones to the first unsolved group if the team runs out of time.
-> "Out of time" sound effect
-> If the buzzer has been pressed, the round 4 timer should pause
-> Mousearea for rounds 1/2 for top-right heiro are a bit iffy. Are they scaled?
-> Irritating: debug goes with default team name for the first one. Make it run AFTER importer, please.
+> Connecting wall will add currently selected ones to the first unsolved group if the team runs out of time. SOLVED
+> "Out of time" sound effect SOLVED
+> If the buzzer has been pressed, the round 4 timer should pause SOLVED
+> Mousearea for rounds 1/2 for top-right heiro are a bit iffy. Are they scaled? SOLVED
+> Irritating: debug goes with default team name for the first one. Make it run AFTER importer, please. SOLVED
 > Check hardware for double-presses (accidently pressing down twice to reveal clue...)
-> CHECK KONAMI CODE PLEASE
-> At the end of the game, force quit as to reset.
-> FIND A WAY TO WIN NEXT TIME PERHAPS
+> CHECK KONAMI CODE PLEASE - SOLVED, because B comes before A (fffffff)
+> At the end of the game, force quit as to reset. SOLVED
+> THE INFAMOUS APOSTROPHE (and other odd characters) BUG - I've found the source. Windows-encoded files have odd special characters so LOVE2D panics. I will alert Mr Robson and suggest Sublime Text.
+> Would be nice: once fourth WRONG clue is pressed in r3, colour it but then quickly fade them all away (perhaps colourTweens = {}?)
+> The host needs a way to manually change score in emergencies. IMPLEMENTED - q,w for teama +,- score; o,p for teamb +,- score
+> FIND A WAY TO WIN NEXT TIME PERHAPS (WILL PROBABLY NOT BE SOLVED FOR A LONG TIME)

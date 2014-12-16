@@ -158,6 +158,12 @@ function r3.update(dt)
 				timer = 0
 				isItDone = true
 				dealWithTheAnswers()
+				love.audio.play(worse)
+				for i=1,16 do
+					if chosen[i] == paint then
+						chosen[i] = 0
+					end
+				end
 			end
 		end
 	end
@@ -444,6 +450,11 @@ function r3.mousepressed(x,y,button)
 											isItDone = true
 											dealWithTheAnswers()
 											love.audio.play(worse)
+											for i=1,16 do
+												if chosen[i] == paint then
+													chosen[i] = 0
+												end
+											end
 										else
 											love.audio.play(bad)
 										end

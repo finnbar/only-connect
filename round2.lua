@@ -227,11 +227,11 @@ function r2.keypressed(key)
 				end
 			end
 		end
-		if key=="left" and highlightingBg==0 and currentTeam == 1 then
+		if key=="left" and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer)then
 			highlightingBg = 1
 			buzzIn(1)
 		end
-		if key=="right" and highlightingBg==0 and currentTeam == 2 then
+		if key=="right" and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
 			highlightingBg = 2
 			buzzIn(2)
 		end

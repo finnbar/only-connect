@@ -1,9 +1,11 @@
 show = {}
 konamiii = {"up","up","down","down","left","right","left","right","b","a"," "}
 position = 1
+konamiiiString = ""
 
 function show.load()
 	-- a thing
+	position = 1
 end
 
 function show.draw()
@@ -22,22 +24,28 @@ function show.draw()
 	love.graphics.print(teama,600*scale,130*scale)
 	love.graphics.print(teambname,50*scale,330*scale)
 	love.graphics.print(teamb,600*scale,330*scale)
+	love.graphics.setFont(fonttt)
+	love.graphics.printf(konamiiiString,200*scale,500*scale,400*scale,"center")
 end
 
 function show.update(dt)
-
+	konamiiiString = string.sub("KONAMICODE!",0,position-1)
 end
 
 function show.keypressed(key)
 	if key==konamiii[position] then
 		if position==11 then
+			print("KCODE ACTIVATED")
 			roundIndex=9
 			tie.load()
-			return true
+			position = 1
 		else
 			position = position + 1
 		end
-	elseif key==" " then return true end
+	else
+		position = 1
+		if key==" " then return true end
+	end
 end
 
 function show.mousepressed(x,y,b)
