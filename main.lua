@@ -45,13 +45,13 @@ end
 function love.draw()
 	love.graphics.setFont(fontttt)
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(bg,0,0,0,1.2,1.2)
+	love.graphics.draw(bg,0,0,0,1.2*scale,1.2*scale)
 	if highlightingBg == 1 then
 		love.graphics.setColor(0,0,255,50)
-		love.graphics.rectangle("fill",0,0,love.window.getWidth(),love.window.getHeight())
+		love.graphics.rectangle("fill",0,0,800*scale,600*scale)
 	elseif highlightingBg == 2 then
 		love.graphics.setColor(255,0,255,50)
-		love.graphics.rectangle("fill",0,0,love.window.getWidth(),love.window.getHeight())
+		love.graphics.rectangle("fill",0,0,800*scale,600*scale)
 	end
 	love.graphics.setColor(255,255,255)
 	if roundIndex > 0 then
