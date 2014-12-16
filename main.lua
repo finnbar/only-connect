@@ -48,10 +48,10 @@ function love.draw()
 	love.graphics.draw(bg,0,0,0,1.2*scale,1.2*scale)
 	if highlightingBg == 1 then
 		love.graphics.setColor(0,0,255,50)
-		love.graphics.rectangle("fill",0,0,800*scale,600*scale)
+		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
 	elseif highlightingBg == 2 then
 		love.graphics.setColor(255,0,255,50)
-		love.graphics.rectangle("fill",0,0,800*scale,600*scale)
+		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
 	end
 	love.graphics.setColor(255,255,255)
 	if roundIndex > 0 then

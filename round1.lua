@@ -76,7 +76,7 @@ function r1.draw()
 					else
 						love.graphics.setColor(255,255,255)
 					end
-					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale)
+					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale,0,scale,scale)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],20*scale,240*scale,190*scale,"center")
@@ -128,7 +128,7 @@ function r1.draw()
 					if i == numberOfClues then
 						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale,230*scale,0,1*scale,(val(s)*4)*scale)
 					else
-						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale,230*scale)
+						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale,230*scale,0,scale,scale)
 					end
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
