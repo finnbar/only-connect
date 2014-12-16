@@ -10,6 +10,7 @@ timerPos = 0
 revealedAnswer = false
 locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}}
 timer = 45
+alert = false
 
 function r2.load()
 	-- a thing
@@ -67,7 +68,7 @@ function r2.draw()
 					love.graphics.printf(questionsR2[selection][i],(val(pX)+5)*scale,(val(pY)+9)*scale,190*scale,"center")
 				end
 				if i == timerPos then
-					timerLength = ((60-timer)/60)*190
+					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale,(val(pY)-50)*scale,timerLength*scale,40*scale)
 					love.graphics.setColor(colours("unselected"))
@@ -82,7 +83,7 @@ function r2.draw()
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
-					timerLength = ((60-timer)/60)*190
+					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale,180*scale,timerLength*scale,40*scale)
 					love.graphics.setColor(colours("unselected"))
@@ -124,7 +125,7 @@ function r2.draw()
 			end
 		end
 		if 4 == timerPos then
-			timerLength = ((60-timer)/60)*190
+			timerLength = ((45-timer)/45)*190
 			love.graphics.setColor(colours("selected"))
 			love.graphics.rectangle("fill",(20+(190*(3)))*scale,180*scale,timerLength*scale,40*scale)
 			love.graphics.setColor(colours("unselected"))
@@ -184,7 +185,10 @@ function r2.update(dt)
 		updateTween(pY,dt)
 		if highlightingBg==0 and not revealedAnswer then
 			timer = timer - dt
-			if timer < 0 then
+			if timer < 3 and (not alert) then
+				print("Three seconds left")
+				alert = true
+			elseif timer < 0 then
 				if currentTeam == 1 then highlightingBg=2 else highlightingBg=1 end
 				numberOfClues = 4
 				swapped = true
@@ -272,9 +276,10 @@ function commenceRound2(n)
 	s = newTween(0,0.25,0.1)
 	pX = newTween(locs[n][1],15,0.2)
 	pY = newTween(locs[n][2],230,0.2)
-	timer = 60
+	timer = 45
 	timerPos = 1
 	swoosh()
+	alert = false
 end
 
 
