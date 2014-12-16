@@ -40,8 +40,8 @@ function r4.draw()
 		love.graphics.printf(answersR4[questionNum],50*scale,210*scale,700*scale,"center")
 	elseif not newTopic then
 		love.graphics.printf(questionsR4[questionNum],50*scale,210*scale,700*scale,"center")
+		love.graphics.printf(math.ceil(timerR4),375*scale,400*scale,50*scale,"center")
 	end
-	love.graphics.printf(math.floor(timerR4),375*scale,400*scale,50*scale)
 end
 
 function r4.update(dt)
