@@ -21,6 +21,13 @@ answersR3 = {}
 R3Score = 0
 resolveTheWall = false
 resolutionTimer = 1
+colourTweens = {}
+colourList = {"blue","green","purple","greenblue"}
+local colourSpeed = 0.15
+
+function returnSeparateColours(name)
+	return {colours(name)[1],colours(name)[2],colours(name)[3]}
+end
 
 function r3.load()
 	-- a thing
@@ -28,6 +35,8 @@ function r3.load()
 	g = newTween(197,214,1,0)
 	b = newTween(215,237,1,0)
 	s = newTween(0,0.25,0.25)
+	local cb = returnSeparateColours("background")
+	for i=1,16 do table.insert(colourTweens,{newTween(cb[1],cb[1],1),newTween(cb[2],cb[2],1),newTween(cb[3],cb[3],1)}) end
 	movementTweens = {}
 	for i=1,16 do table.insert(movementTweens,0) end
 	-- now mix up the groups into tables of their own...
@@ -82,18 +91,8 @@ function r3.draw()
 			for j=1,4 do
 				current = i + (j-1)*4
 				if (not isItDone) or chosen[current]==currentlyBeingShown or currentlyBeingShown==0 or resolveTheWall then
-					if chosen[current] == 0 then
-						love.graphics.setColor(colours("background"))
-					elseif chosen[current] == 1 then
-						love.graphics.setColor(colours("blue"))
-					elseif chosen[current] == 2 then
-						love.graphics.setColor(colours("green"))
-					elseif chosen[current] == 3 then
-						love.graphics.setColor(colours("purple"))
-					elseif chosen[current] == 4 then
-						love.graphics.setColor(colours("greenblue"))
-						--fancy bgs
-					end
+					local cb = colourTweens[current]
+					love.graphics.setColor(val(cb[1]),val(cb[2]),val(cb[3]))
 					if movementTweens[current]~=0 then
 						love.graphics.draw(rd,(15+(190*(i-1))+val(movementTweens[current][1]))*scale,(10+(145*(j-1))+val(movementTweens[current][2]))*scale,0,0.25*scale,val(s)*scale)
 					else
@@ -101,9 +100,17 @@ function r3.draw()
 					end
 					love.graphics.setColor(0,0,0)
 					if chosenWall==1 then
-						love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+						if movementTweens[current]~=0 then
+							love.graphics.printf(wall1[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
+						else
+							love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+						end
 					else
-						love.graphics.printf(wall2[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+						if movementTweens[current]~=0 then
+							love.graphics.printf(wall2[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
+						else
+							love.graphics.printf(wall2[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+						end
 					end
 				end
 				if currentlyBeingShown > 0 and (not resolveTheWall) then
@@ -149,6 +156,11 @@ function r3.update(dt)
 			if movementTweens[i]~=0 then
 				updateTween(movementTweens[i][1],dt)
 				updateTween(movementTweens[i][2],dt)
+			end
+			if colourTweens[i]~=0 then
+				updateTween(colourTweens[i][1],dt)
+				updateTween(colourTweens[i][2],dt)
+				updateTween(colourTweens[i][3],dt)
 			end
 		end
 		if not isItDone then
@@ -287,13 +299,21 @@ function completeItself()
 		end
 		for i=1,4 do
 			chosen[selectedIndexes[i]] = toRes
+			local cb = colours(colourList[toRes])
+			local ca = colours("background")
+			colourTweens[selectedIndexes[i]] = {newTween(ca[1],cb[1],colourSpeed),newTween(ca[2],cb[2],colourSpeed),newTween(ca[3],cb[3],colourSpeed)}
 		end
 		doTheMovement(toRes)
 		swoosh()
 		toRes = toRes + 1
 	else
 		for i=1,16 do
-			if chosen[i] == 0 then chosen[i] = 4 end
+			if chosen[i] == 0 then
+				chosen[i] = 4
+				local cb = colours("greenblue")
+				local ca = colours("background")
+				colourTweens[i] = {newTween(ca[1],cb[1],colourSpeed),newTween(ca[2],cb[2],colourSpeed),newTween(ca[3],cb[3],colourSpeed)}
+			end
 		end
 	end
 	dealWithTheAnswers()
@@ -311,6 +331,8 @@ function clearAll()
 	R3Score = 0
 	timer =  150
 	for i=1,16 do chosen[i]=0 end
+	local cb = returnSeparateColours("background")
+	for i=1,16 do colourTweens[i] = {newTween(cb[1],cb[1],1),newTween(cb[2],cb[2],1),newTween(cb[3],cb[3],1)} end
 end
 
 function r3.mousepressed(x,y,button)
@@ -350,9 +372,15 @@ function r3.mousepressed(x,y,button)
 					if x>=(15+(190*(i-1)))*scale and x<=(15+(190*(i)))*scale and y>=(10+(145*(j-1)))*scale and y<=(10+(145*(j)))*scale then
 						if chosen[current]==paint then
 							chosen[current] = 0
+							local ca = colours(colourList[paint])
+							local cb = colours("background")
+							colourTweens[current] = {newTween(ca[1],cb[1],colourSpeed),newTween(ca[2],cb[2],colourSpeed),newTween(ca[3],cb[3],colourSpeed)}
 							numberOfSelected = numberOfSelected - 1
 						elseif chosen[current]==0 then
 							chosen[current] = paint
+							local cb = colours(colourList[paint])
+							local ca = colours("background")
+							colourTweens[current] = {newTween(ca[1],cb[1],colourSpeed),newTween(ca[2],cb[2],colourSpeed),newTween(ca[3],cb[3],colourSpeed)}
 							numberOfSelected = numberOfSelected + 1
 							if numberOfSelected == 4 then
 								local selectedItems = {}
@@ -408,6 +436,8 @@ function r3.mousepressed(x,y,button)
 								if yesThatsCorrect then
 									if paint < 3 then
 										-- ok, now the exciting movement! yaaaay
+										local ca = colours(colourList[paint])
+										colourTweens[current] = {newTween(ca[1],ca[1],1),newTween(ca[2],ca[2],1),newTween(ca[3],ca[3],1)}
 										doTheMovement(paint)
 										swoosh()
 										R3Score = R3Score + 1
@@ -426,12 +456,18 @@ function r3.mousepressed(x,y,button)
 										else
 											teamb = teamb + 2
 										end
+										local ca = colours(colourList[paint])
+										colourTweens[current] = {newTween(ca[1],ca[1],1),newTween(ca[2],ca[2],1),newTween(ca[3],ca[3],1)}
 										debugScorePrint()
 										doTheMovement(paint)
 										swoosh()
 										paint = 4
 										for z=1,16 do
-											if chosen[z]==0 then chosen[z]=4 end
+											local ca = colours(colourList[4])
+											if chosen[z]==0 then
+												chosen[z]=4
+												colourTweens[z] = {newTween(ca[1],ca[1],1),newTween(ca[2],ca[2],1),newTween(ca[3],ca[3],1)}
+											end
 										end
 										isItDone = true
 										dealWithTheAnswers()
@@ -441,6 +477,9 @@ function r3.mousepressed(x,y,button)
 									for i=1,16 do
 										if chosen[i] == paint then
 											chosen[i]=0
+											local ca = colours(colourList[paint])
+											local cb = colours("background")
+											colourTweens[i] = {newTween(ca[1],cb[1],colourSpeed),newTween(ca[2],cb[2],colourSpeed),newTween(ca[3],cb[3],colourSpeed)}
 										end
 									end
 									if paint == 3 then
@@ -539,5 +578,6 @@ function doTheMovement(row)
 			wall2[selectedIndexes[k]],wall2[otherIndexes[k]] = wall2[otherIndexes[k]],wall2[selectedIndexes[k]]
 		end
 		chosen[selectedIndexes[k]],chosen[otherIndexes[k]] = chosen[otherIndexes[k]],chosen[selectedIndexes[k]]
+		colourTweens[selectedIndexes[k]][1],colourTweens[selectedIndexes[k]][2],colourTweens[selectedIndexes[k]][3],colourTweens[otherIndexes[k]][1],colourTweens[otherIndexes[k]][2],colourTweens[otherIndexes[k]][3] = colourTweens[otherIndexes[k]][1],colourTweens[otherIndexes[k]][2],colourTweens[otherIndexes[k]][3],colourTweens[selectedIndexes[k]][1],colourTweens[selectedIndexes[k]][2],colourTweens[selectedIndexes[k]][3] -- wow that's a whole lotta swapping
 	end
 end
