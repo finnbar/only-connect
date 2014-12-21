@@ -2,12 +2,13 @@ THE BIG MASSIVE MILDLY PROBLEMATIC
 BUG LIST!!!!!!!
 
 TODO
-> Check hardware for double-presses (accidently pressing down twice to reveal clue...)
+> Comment code. Not a bug, but could be really useful to other Lua programmers. All two of them.
+> Check hardware for double-presses (accidently pressing down twice to reveal answer...)
 > HARDWARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! IS! PROBLEMATIC!
-> Text wrap for very long clues fails -> maybe if clue is too big swap to font or fontt?
-> Team names size may miss box...
-> SCORING, although that might be hardware. Actually, it probably is. I should run through with keyboard, attempting to mess it up as much as possible. Check the scoring sequence for 1/2/4 - see if the team swap occurs too early. Maybe research love.run() and mess with that to get the desired stuff to happen in the right order?
+> SCORING, although that might be hardware. Actually, it probably is. I should run through with keyboard, attempting to mess it up as much as possible. Check the scoring sequence for 1/2/4 - see if the team swap occurs too early. Maybe research love.run() and mess with that to get the desired stuff to happen in the right order? FURTHER TESTING HAS BASICALLY PROVED THAT IT'S HARDWARE
 > FIND A WAY TO WIN NEXT TIME PERHAPS (WILL PROBABLY NOT BE SOLVED FOR A LONG TIME)
+
+So, in summary: HARDWARE
 
 COMPLETE
 > The opponents can buzz in once the question has been answered. Huh. (r4, r1/2/3 same team can buzz in again?!) SOLVED, BUT SHOULD BE CHECKED
@@ -21,3 +22,5 @@ COMPLETE
 > THE INFAMOUS APOSTROPHE (and other odd characters) BUG - I've found the source. Windows-encoded files have odd special characters so LOVE2D panics. I will alert Mr Robson and suggest Sublime Text.
 > Would be nice: once fourth WRONG clue is pressed in r3, colour it but then quickly fade them all away (perhaps colourTweens = {}?) SOLVED, IMPROVED IN GENERAL! :D
 > The host needs a way to manually change score in emergencies. IMPLEMENTED - q,w for teama +,- score; o,p for teamb +,- score
+> Text wrap for very long clues fails -> maybe if clue is too big swap to font or fontt? SOLVED, DOES EXACTLY THAT.
+> Team names size may miss box... SOLVED THROUGH SAME SOLUTION AS ABOVE

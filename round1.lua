@@ -1,8 +1,5 @@
 r1 = {}
 
-questionsR1 = {{"A","B","C","D"},{"1","2","3","4"},{"Tokaido","Carcassone","Dixit","Settlers of Catan"},{"Apple","Banana","Cherry","Pear"},{"Bird","Bird","Bird","Cricket"},{"Alpha","Beta","Gamma","Epsilon"}}
-groupsR1 = {"Letters","Numbers","Board games","Fruit","Animal Sounds","Greek letters"}
-
 --[[ NOTE TO SELF: order of heiroglyphs is
 Reeds, Lion, Twisted,
 Viper, Water, Eye.
@@ -33,7 +30,6 @@ function r1.load()
 end
 
 function r1.draw()
-	love.graphics.setFont(fonttt)
 	if selection==0 then
 		highlighting(1)
 		love.graphics.draw(rd,100*scale,150*scale,0,0.25*scale,0.25*scale)
@@ -59,9 +55,16 @@ function r1.draw()
 		-- a question has been selected!
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
+			if #(questionsR1[selection][i])<=25 then
+				love.graphics.setFont(fonttt)
+			elseif #(questionsR1[selection][i])<=45 then
+				love.graphics.setFont(fontt)
+			else
+				love.graphics.setFont(font)
+			end
 			if i == 1 then
 				if i == numberOfClues then
-					love.graphics.draw(rd,(val(pX)+5)*scale,val(pY)*scale,0,0.25*scale,val(s)*scale)
+					love.graphics.draw(rd,val(pX)*scale,val(pY)*scale,0,0.25*scale,val(s)*scale)
 				else
 					love.graphics.draw(rd,15*scale,230*scale,0,0.25*scale,0.25*scale)
 				end
@@ -69,7 +72,7 @@ function r1.draw()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],20*scale,260*scale,190*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],25*scale,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					if revealedAnswer then
@@ -80,13 +83,14 @@ function r1.draw()
 					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale,0,scale,scale)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],20*scale,240*scale,190*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],25*scale,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(val(pX)+5)*scale,(val(pY)+9)*scale,190*scale,"center")
+					love.graphics.printf(questionsR1[selection][i],(val(pX)+10)*scale,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
+					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale,(val(pY)-50)*scale,timerLength*scale,40*scale)
@@ -102,6 +106,7 @@ function r1.draw()
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
+					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale,180*scale,timerLength*scale,40*scale)
@@ -114,11 +119,18 @@ function r1.draw()
 						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale,180*scale)
 					end
 				end
+				if #(questionsR1[selection][i])<=25 then
+					love.graphics.setFont(fonttt)
+				elseif #(questionsR1[selection][i])<=45 then
+					love.graphics.setFont(fontt)
+				else
+					love.graphics.setFont(font)
+				end
 				if pictureR1 == selection then
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(20+(190*(i-1)))*scale,260*scale,190*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					if revealedAnswer then
@@ -133,14 +145,15 @@ function r1.draw()
 					end
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(20+(190*(i-1)))*scale,240*scale,190*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(20+(190*(i-1)))*scale,240*scale,190*scale,"center")
+					love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,240*scale,180*scale,"center")
 				end
 			end
 		end
+		love.graphics.setFont(fonttt)
 		if revealedAnswer then
 			love.graphics.setColor(colours("blue"))
 			love.graphics.draw(rd,5*scale,380*scale,0,0.98*scale,val(answerTween)*scale)

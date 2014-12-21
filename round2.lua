@@ -50,6 +50,13 @@ function r2.draw()
 	else
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
+			if #(questionsR2[selection][i])<=25 then
+				love.graphics.setFont(fonttt)
+			elseif #(questionsR2[selection][i])<=45 then
+				love.graphics.setFont(fontt)
+			else
+				love.graphics.setFont(font)
+			end
 			if i==1 then
 				if i == numberOfClues then
 					love.graphics.draw(rd,(val(pX)+5)*scale,val(pY)*scale,0,0.25*scale,val(s)*scale)
@@ -60,14 +67,15 @@ function r2.draw()
 					drawTheImage2(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR2[selection][i],20*scale,260*scale,190*scale,"center")
+						love.graphics.printf(questionsR2[selection][i],25*scale,260*scale,180*scale,"center")
 					end
 				else
 					--normal question
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR2[selection][i],(val(pX)+5)*scale,(val(pY)+9)*scale,190*scale,"center")
+					love.graphics.printf(questionsR2[selection][i],(val(pX)+10)*scale,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
+					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale,(val(pY)-50)*scale,timerLength*scale,40*scale)
@@ -83,6 +91,7 @@ function r2.draw()
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
+					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale,180*scale,timerLength*scale,40*scale)
@@ -95,16 +104,23 @@ function r2.draw()
 						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale,180*scale)
 					end
 				end
+				if #(questionsR2[selection][i])<=25 then
+					love.graphics.setFont(fonttt)
+				elseif #(questionsR2[selection][i])<=45 then
+					love.graphics.setFont(fontt)
+				else
+					love.graphics.setFont(font)
+				end
 				if pictureR2 == selection then
 					drawTheImage2(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR2[selection][i],(20+(190*(i-1)))*scale,260*scale,190*scale,"center")
+						love.graphics.printf(questionsR2[selection][i],(25+(190*(i-1)))*scale,260*scale,180*scale,"center")
 					end
 				else
 					-- normal question
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR2[selection][i],(20+(190*(i-1)))*scale,240*scale,190*scale,"center")
+					love.graphics.printf(questionsR2[selection][i],(25+(190*(i-1)))*scale,240*scale,180*scale,"center")
 				end
 				--if i==3 then show p4
 				love.graphics.setColor(colours("background"))
@@ -124,6 +140,7 @@ function r2.draw()
 				end
 			end
 		end
+		love.graphics.setFont(fonttt)
 		if 4 == timerPos then
 			timerLength = ((45-timer)/45)*190
 			love.graphics.setColor(colours("selected"))

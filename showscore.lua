@@ -19,12 +19,25 @@ function show.draw()
 	love.graphics.setColor(colours("purple",150))
 	love.graphics.draw(rd,10*scale,315*scale,0,0.65*scale,0.25*scale)
 	love.graphics.setColor(255,255,255)
+	if #teamaname<=8 then
+		love.graphics.setFont(fonttttt)
+		love.graphics.print(teamaname,50*scale,130*scale)
+	else
+		love.graphics.setFont(fontttttS)
+		love.graphics.print(teamaname,50*scale,150*scale)
+	end
 	love.graphics.setFont(fonttttt)
-	love.graphics.print(teamaname,50*scale,130*scale)
 	love.graphics.print(teama,600*scale,130*scale)
-	love.graphics.print(teambname,50*scale,330*scale)
+	if #teambname<=8 then
+		love.graphics.setFont(fonttttt)
+		love.graphics.print(teambname,50*scale,330*scale)
+	else
+		love.graphics.setFont(fontttttS)
+		love.graphics.print(teambname,50*scale,350*scale)
+	end
+	love.graphics.setFont(fonttttt)
 	love.graphics.print(teamb,600*scale,330*scale)
-	love.graphics.setFont(fonttt)
+	love.graphics.setFont(fontttt)
 	love.graphics.printf(konamiiiString,200*scale,500*scale,400*scale,"center")
 end
 

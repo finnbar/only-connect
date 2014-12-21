@@ -55,7 +55,7 @@ function r3.load()
 	end
 end
 
-function randSort(t) -- THANKS THE INTERNET!
+function randSort(t) -- THANKS THE INTERNET! ("no problem" - The Internet)
 	for i = #t, 2, -1 do -- backwards
 	    local r = love.math.random(i) -- select a random number between 1 and i
 	    t[i], t[r] = t[r], t[i] -- swap the randomly selected item to position i
@@ -100,12 +100,26 @@ function r3.draw()
 					end
 					love.graphics.setColor(0,0,0)
 					if chosenWall==1 then
+						if #(wall1[current])<=25 then
+							love.graphics.setFont(fonttt)
+						elseif #(wall1[current])<=45 then
+							love.graphics.setFont(fontt)
+						else
+							love.graphics.setFont(font)
+						end
 						if movementTweens[current]~=0 then
 							love.graphics.printf(wall1[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
 						else
 							love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
 						end
 					else
+						if #(wall2[current])<=25 then
+							love.graphics.setFont(fonttt)
+						elseif #(wall2[current])<=45 then
+							love.graphics.setFont(fontt)
+						else
+							love.graphics.setFont(font)
+						end
 						if movementTweens[current]~=0 then
 							love.graphics.printf(wall2[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
 						else

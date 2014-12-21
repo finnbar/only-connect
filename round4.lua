@@ -18,6 +18,7 @@ function r4.load()
 		questionsR4[q] = string.gsub(questionsR4[q],"O","")
 		questionsR4[q] = string.gsub(questionsR4[q],"U","")
 		questionsR4[q] = string.gsub(questionsR4[q],"%b()","")
+		questionsR4[q] = string.gsub(questionsR4[q],"%W+","")
 		finalFormat = {}
 		for i=1,#questionsR4[q],3 do
 			table.insert(finalFormat,questionsR4[q]:sub(i,i+2))

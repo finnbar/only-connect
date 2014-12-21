@@ -67,8 +67,9 @@ function love.draw()
 	else
 		--main menu jazz
 		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale,10*scale,780*scale,"center")
-		love.graphics.printf(filename,10*scale,300*scale,780*scale,"center")
-		love.graphics.setFont(font)
+		love.graphics.setFont(fonttttt)
+		love.graphics.printf(filename,10*scale,250*scale,780*scale,"center")
+		love.graphics.setFont(fon)
 		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.",10*scale,590*scale,780*scale,"left")
 	end
 	if debug then
