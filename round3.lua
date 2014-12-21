@@ -4,8 +4,8 @@ r3 = {}
 -- IT'S SO BIG THAT IT'S... I DUNNO
 
 chosenWall = 0 -- 1=lion, 2=water, 0=hmmm....
-selectionR3 = {false,false}
-tweening = 0
+selectionR3 = {false,false} -- already done?
+tweening = 0 -- animating selection?
 wall1 = {}
 wall2 = {}
 chosen = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}

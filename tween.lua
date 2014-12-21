@@ -1,4 +1,11 @@
---tween like you've never tweened before! ...how do you tween?
+-- Tween.lua, a very basic tween library, written by Finnbar Keating
+
+-- tween like you've never tweened before! ...how do you tween?
+-- In all seriousness, this library helps smooth movement.
+-- You give it a set of values to move through in a certain time, and it does that.
+-- newTween() creates a new tween
+-- updateTween() MUST be run during the update loop otherwise it will not move.
+-- val() just returns the value of the tween at this given point in time.
 
 function newTween(start,stop,dur,reverse)
 	if reverse==nil then reverse = false end

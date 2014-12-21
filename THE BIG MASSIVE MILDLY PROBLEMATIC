@@ -3,12 +3,14 @@ BUG LIST!!!!!!!
 
 TODO
 > Comment code. Not a bug, but could be really useful to other Lua programmers. All two of them.
+> Images in round 1 and 2 should zoom in dramatically then zoom back out.
+> Mess with MakeyMakey source to reduce sensitivity significantly
 > Check hardware for double-presses (accidently pressing down twice to reveal answer...)
 > HARDWARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! IS! PROBLEMATIC!
 > SCORING, although that might be hardware. Actually, it probably is. I should run through with keyboard, attempting to mess it up as much as possible. Check the scoring sequence for 1/2/4 - see if the team swap occurs too early. Maybe research love.run() and mess with that to get the desired stuff to happen in the right order? FURTHER TESTING HAS BASICALLY PROVED THAT IT'S HARDWARE
 > FIND A WAY TO WIN NEXT TIME PERHAPS (WILL PROBABLY NOT BE SOLVED FOR A LONG TIME)
 
-So, in summary: HARDWARE
+So, in summary: HARDWARE and IMAGES
 
 COMPLETE
 > The opponents can buzz in once the question has been answered. Huh. (r4, r1/2/3 same team can buzz in again?!) SOLVED, BUT SHOULD BE CHECKED

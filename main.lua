@@ -2,24 +2,29 @@
 -- THE ONLY SHOW ABOUT CONNECTING
 -- YEAH
 
+--[[ RIGHT.
+I'm going to try and explain everything I've done in this code, in an attempt to understand it better myself. Also, it means other coders can learn what (not) to do!
+]]
+
 scale = love.window.getHeight()/650
 -- The scale is got from the height and done squarely, OK?
+-- This multiplies all the coordinates I measured at 800x650 by some scale factor defined by the dimensions in love.conf
 
-require "requirer" -- the requirer requires everything that needs to be required requiringly
+require "requirer" -- The requirer requires everything that needs to be required requiringly
 
 teama = 0
-teamb = 0
-teamaname = "Team A" --default
-teambname = "Team B"
-rounds = {r1,show,r2,show,r3,show,r4,show,tie,show}
-roundIndex = 0 -- TEMP SHOULD BE ZERO
-debug = false -- TEMP SHOULD BE FALSE
-highlightingBg = 0 -- SHOULD THE BACKGROUND BE HIGHLIGHTED??
-points = {5,3,2,1}
-currentTeam = 1 -- SHOULD BE CONTROLLED AT MENU LATER ON
-filename = "example"
-swapped = false
-local prevTeam = 2
+teamb = 0 -- Scores!
+teamaname = "Team A"
+teambname = "Team B" -- Names!
+rounds = {r1,show,r2,show,r3,show,r4,show,tie,show} -- What order are the rounds in?
+roundIndex = 0 -- What round we're currently on. Remember, Lua starts arrays at 1, so 0 is shorthand for "we're not there yet"
+debug = false -- Should debug coordinates appear in the top left corner?
+highlightingBg = 0 -- Should the background be highlighted? (aka has a team buzzed in?)
+points = {5,3,2,1} -- What is the point value of each question?
+currentTeam = 1 -- What team is currently answering?
+filename = "example" -- Where are the questions located?
+swapped = false -- Has the question been passed over yet (so if after this they still get it wrong, reveal the answer)
+local prevTeam = 2 -- This keeps tabs on what team should go and alerts the host accordingly.
 
 --[[
 OK, KEYBOARD CONTROLS:
@@ -34,18 +39,22 @@ function love.load()
 	-- a thing
 	love.graphics.setFont(fontttt)
 	if roundIndex == 0 then filename="" 
-		else importer(filename) end
+		else importer(filename) end -- the importer is Important.
 	if rounds[roundIndex] then rounds[roundIndex].load() end
+	print("Welcome host.")
+	print("I am your debug console, here to tell you the score and what team should be answering now!")
+	print("I hope I am useful.")
 end
 
 function love.textinput(t)
-	if roundIndex == 0 then filename = filename..t end
+	if roundIndex == 0 then filename = filename..t end -- take the filename input
 end
 
 function love.draw()
 	love.graphics.setFont(fontttt)
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(bg,0,0,0,1.2*scale,1.2*scale)
+	love.graphics.draw(bg,0,0,0,1.2*scale,1.2*scale) -- standard background stuff. Set to 1.2 scale (despite the size of the image) because it wasn't working last minute.
+	-- some translucent rectangles to draw the highlighting:
 	if highlightingBg == 1 then
 		love.graphics.setColor(0,0,255,50)
 		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
@@ -54,6 +63,7 @@ function love.draw()
 		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
 	end
 	love.graphics.setColor(255,255,255)
+	-- if the round returns true, move on!
 	if roundIndex > 0 then
 		if rounds[roundIndex].draw() then
 			roundIndex = roundIndex + 1
@@ -70,7 +80,7 @@ function love.draw()
 		love.graphics.setFont(fonttttt)
 		love.graphics.printf(filename,10*scale,250*scale,780*scale,"center")
 		love.graphics.setFont(fon)
-		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project has only been in development for less than three weeks so could therefore act problematically in some cases. Please don't sue me.",10*scale,590*scale,780*scale,"left")
+		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is quite new so could therefore act problematically in some cases. Please don't sue me.",10*scale,590*scale,780*scale,"left")
 	end
 	if debug then
 		love.graphics.setFont(font)
@@ -112,6 +122,7 @@ function love.keypressed(key)
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
 		end
+		-- manual score editing, for bonus points!
 		if key=="q" then
 			teama = teama + 1
 			debugScorePrint()
@@ -169,6 +180,8 @@ function whatTeam()
 		prevTeam = currentTeam
 	end
 end
+
+-- these exist purely so that I can mess with their global volume without editing every individual love.audio.play() call
 
 function buzzIn(a)
 	if a==1 then

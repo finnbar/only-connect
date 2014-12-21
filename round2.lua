@@ -12,6 +12,10 @@ locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*s
 timer = 45
 alert = false
 
+--[[
+THIS IS PRETTY MUCH THE SAME AS ROUND 1, SO I'M GONNA LEAVE IT FOR NOW. As James Robson - my Mechanics teacher - would say: whatevs.
+]]
+
 function r2.load()
 	-- a thing
 	selected = {false,false,false,false,false,false}
@@ -82,7 +86,7 @@ function r2.draw()
 					love.graphics.setColor(colours("unselected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1))+timerLength)*scale,(val(pY)-50)*scale,(190-timerLength)*scale,40*scale)
 					love.graphics.setColor(255,255,255)
-					love.graphics.print("5 Points",(val(pX)+35)*scale,(val(pY)-50)*scale)
+					love.graphics.print(points[1].." Points",(val(pX)+35)*scale,(val(pY)-50)*scale)
 				end
 			elseif i<4 then
 				if i == numberOfClues then
@@ -222,7 +226,7 @@ function r2.keypressed(key)
 	--temp
 	if selection~=0 then
 		if key==" " then
-			if numberOfClues<3 then
+			if numberOfClues<3 and highlightingBg == 0 then
 				numberOfClues = numberOfClues + 1
 				timerPos = numberOfClues
 				s = newTween(0,0.25,0.1)

@@ -8,16 +8,20 @@ Viper, Water, Eye.
 musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
 
 selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
-selected = {false,false,false,false,false,false}
+selected = {false,false,false,false,false,false} -- which questions are done?
 tweening = 0 -- animations until certainly pressed
 numberOfClues = 0 -- 1=5pts, 2=3pts...
-timerPos = 0
-revealedAnswer = false
-locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}}
-timer = 45
-alert = false
+timerPos = 0 -- what clue is the timer hovering over?
+revealedAnswer = false -- as the name suggests, is the answer revealed?
+locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}} -- where clues glide from
+timer = 45 -- TIMER, duh.
+alert = false -- tells the host that there's only THREE SECONDS LEFT WHAT
 
 function r1.load()
+	--[[ As you might have noticed, a new library has appeared!
+		*pokemon encounter music plays*
+		See tween.lua for more details.
+	]]
 	selected = {false,false,false,false,false,false}
 	r = newTween(119,183,1,0)
 	g = newTween(197,214,1,0)
@@ -31,6 +35,7 @@ end
 
 function r1.draw()
 	if selection==0 then
+		-- draw the boxes, heiroglyphs etc.
 		highlighting(1)
 		love.graphics.draw(rd,100*scale,150*scale,0,0.25*scale,0.25*scale)
 		highlighting(2)
@@ -55,32 +60,33 @@ function r1.draw()
 		-- a question has been selected!
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
-			if #(questionsR1[selection][i])<=25 then
+			if #(questionsR1[selection][i])<=25 then -- word wrap, shrink the clue if it's too long.
 				love.graphics.setFont(fonttt)
 			elseif #(questionsR1[selection][i])<=45 then
 				love.graphics.setFont(fontt)
 			else
 				love.graphics.setFont(font)
 			end
-			if i == 1 then
+			if i == 1 then -- a special case for the first clue as it glides in, so the val()s of the tweens need to be taken into account
 				if i == numberOfClues then
 					love.graphics.draw(rd,val(pX)*scale,val(pY)*scale,0,0.25*scale,val(s)*scale)
 				else
 					love.graphics.draw(rd,15*scale,230*scale,0,0.25*scale,0.25*scale)
 				end
-				if pictureR1 == selection then
+				if pictureR1 == selection then --for picture rounds, don't print the clue unless the answer's appeared, and drawTheImage1()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],25*scale,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
+					-- same rules apply
 					if revealedAnswer then
 						love.graphics.setColor(255,255,255,100)
 					else
 						love.graphics.setColor(255,255,255)
 					end
-					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale,0,scale,scale)
+					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale,0,scale,scale) -- draw that clef thing (treble clef, I know)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
 						love.graphics.printf(questionsR1[selection][i],25*scale,240*scale,180*scale,"center")
@@ -90,6 +96,7 @@ function r1.draw()
 					love.graphics.printf(questionsR1[selection][i],(val(pX)+10)*scale,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
+					-- THIS DRAWS THE TIMER
 					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
@@ -97,9 +104,11 @@ function r1.draw()
 					love.graphics.setColor(colours("unselected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1))+timerLength)*scale,(val(pY)-50)*scale,(190-timerLength)*scale,40*scale)
 					love.graphics.setColor(255,255,255)
-					love.graphics.print("5 Points",(val(pX)+35)*scale,(val(pY)-50)*scale)
+					love.graphics.print(points[1].." Points",(val(pX)+35)*scale,(val(pY)-50)*scale)
 				end
 			else
+				-- now for clues 2-4
+				-- (it's the same as above, essentially)
 				if i == numberOfClues then
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,val(s)*scale)
 				else
@@ -119,7 +128,7 @@ function r1.draw()
 						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale,180*scale)
 					end
 				end
-				if #(questionsR1[selection][i])<=25 then
+				if #(questionsR1[selection][i])<=25 then -- WORD WRAP
 					love.graphics.setFont(fonttt)
 				elseif #(questionsR1[selection][i])<=45 then
 					love.graphics.setFont(fontt)
@@ -163,7 +172,7 @@ function r1.draw()
 	end
 end
 
-function drawTheImage1(n) -- fix for 1st, gliding image
+function drawTheImage1(n) -- guess what this does!
 	if revealedAnswer then
 		love.graphics.setColor(255,255,255,100)
 	else
@@ -180,7 +189,7 @@ function drawTheImage1(n) -- fix for 1st, gliding image
 	end
 end
 
-function highlighting(p)
+function highlighting(p) -- fill it in (the heiroglyphs at the main screen)
 	if selected[p] then
 		love.graphics.setColor(colours("selected"))
 	else
@@ -193,6 +202,7 @@ end
 
 function r1.update(dt)
 	if not revealedAnswer then timerPos = numberOfClues end
+	-- update ALL THE TWEENS
 	if tweening ~= 0 then
 		updateTween(r,dt)
 		updateTween(g,dt)
@@ -201,6 +211,7 @@ function r1.update(dt)
 	if selection ~= 0 then
 		updateTween(pX,dt)
 		updateTween(pY,dt)
+		-- deal with the timer
 		if highlightingBg==0 and not revealedAnswer then
 			timer = timer - dt
 			if timer < 3 and (not alert) then
@@ -220,9 +231,10 @@ function r1.update(dt)
 end
 
 function r1.keypressed(key)
+	-- Accept standard keypresses, space to move on etc.
 	if selection ~= 0 then
 		if key==" " then
-			if numberOfClues<4 then -- CHANGE THIS FOR ROUND 2
+			if numberOfClues<4 and highlightingBg == 0 then
 				numberOfClues=numberOfClues+1
 				s = newTween(0,0.25,0.1)
 				if selection == musicR1 then
@@ -241,19 +253,22 @@ function r1.keypressed(key)
 				for i=1,6 do
 					if not selected[i] then allSel = false end
 				end
-				if allSel then return allSel end
-			end
+				if allSel then return true end
+			end -- if the answer's not revealed then do nothing space. We want a buzz in.
 		end
+		-- buzz!
 		if key=="left" and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer) then
 			highlightingBg = 1
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(1)
 		end
+		-- buzz!
 		if key=="right" and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
 			highlightingBg = 2
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(2)
 		end
+		-- they got it right!
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
 				-- team 1 gets points!
@@ -266,6 +281,7 @@ function r1.keypressed(key)
 			if musicR1 == selection then
 				audioR1[numberOfClues]:stop() 
 			end
+			-- reveal it all!
 			numberOfClues = 4
 			revealedAnswer = true
 			answerTween = newTween(0,0.1,0.1)
@@ -273,6 +289,7 @@ function r1.keypressed(key)
 			swapped = false
 			slide()
 		end
+		-- they got it wrong...
 		if key=="down" and highlightingBg~=0 then
 			if not swapped then
 				if highlightingBg==2 then highlightingBg=1 else highlightingBg=2 end
@@ -295,6 +312,7 @@ function r1.keypressed(key)
 	end
 end
 
+--reset for the next round
 function commenceRound1(n)
 	selected[n]=true
 	selection=n
@@ -310,7 +328,9 @@ function commenceRound1(n)
 	end
 end
 
+
 function playTheChosenSound(r)
+	-- when selected, chime or slide (sfx)
 	if r == musicR1 then
 		love.audio.play(musicRoundGo)
 	else

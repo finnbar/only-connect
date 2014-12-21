@@ -16,6 +16,13 @@ How to actually run it:
 * Round 4: Similar to round 1, space to advance whatever, left/right is a team buzzing in, up agrees, down disagrees. Plays until time is up.
 * Tiebreaker: Simple left/right buzz and up/down agree/disagree. Not implemented yet, although will probably take about five minutes to.
 
+
+debug/host console
+====
+
+There is a useful debug console that appears only if you are under Windows (I'm a Linux developer so this makes me sad). However, it only outputs useful print() statements so Sublime Text's (or other text editors) debug console, or a Terminal window, will output these too!
+
+
 copyright notices
 ====
 
