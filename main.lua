@@ -16,8 +16,9 @@ teama = 0
 teamb = 0 -- Scores!
 teamaname = "Team A"
 teambname = "Team B" -- Names!
-rounds = {r1,show,r2,show,r3,show,r4,show,tie,show} -- What order are the rounds in?
+rounds = {show,r1,show,r2,show,r3,show,r4,show,tie,show} -- What order are the rounds in?
 roundIndex = 0 -- What round we're currently on. Remember, Lua starts arrays at 1, so 0 is shorthand for "we're not there yet"
+tiebreakerIndex = 10 -- This is for the showscore KONAMICODE easter egg. This should be the roundIndex that the tie is contained in.
 debug = false -- Should debug coordinates appear in the top left corner?
 highlightingBg = 0 -- Should the background be highlighted? (aka has a team buzzed in?)
 points = {5,3,2,1} -- What is the point value of each question?
@@ -169,7 +170,7 @@ function debugScorePrint()
 end
 
 function whatTeam()
-	if roundIndex ~= 7 and roundIndex ~= 9 and roundIndex ~= 0 then
+	if rounds[roundIndex] ~= r3 and rounds[roundIndex] ~= r4 and roundIndex ~= 0 then
 		if prevTeam ~= currentTeam then
 			if currentTeam == 1 then
 				print("It's "..teamaname.."'s turn!")

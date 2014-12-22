@@ -2,7 +2,6 @@ THE BIG MASSIVE MILDLY PROBLEMATIC
 BUG LIST!!!!!!!
 
 TODO
-> Comment code. Not a bug, but could be really useful to other Lua programmers. All two of them.
 > Images in round 1 and 2 should zoom in dramatically then zoom back out.
 > Mess with MakeyMakey source to reduce sensitivity significantly
 > Check hardware for double-presses (accidently pressing down twice to reveal answer...)
@@ -14,6 +13,7 @@ So, in summary: HARDWARE and IMAGES
 
 COMPLETE
 > The opponents can buzz in once the question has been answered. Huh. (r4, r1/2/3 same team can buzz in again?!) SOLVED, BUT SHOULD BE CHECKED
+> Found purely by chance, but the host can move the clues along even after someone has buzzed in (r1/2) SOLVED AS SOON AS IT WAS FOUND
 > Connecting wall will add currently selected ones to the first unsolved group if the team runs out of time. SOLVED
 > "Out of time" sound effect SOLVED
 > If the buzzer has been pressed, the round 4 timer should pause SOLVED
@@ -26,3 +26,4 @@ COMPLETE
 > The host needs a way to manually change score in emergencies. IMPLEMENTED - q,w for teama +,- score; o,p for teamb +,- score
 > Text wrap for very long clues fails -> maybe if clue is too big swap to font or fontt? SOLVED, DOES EXACTLY THAT.
 > Team names size may miss box... SOLVED THROUGH SAME SOLUTION AS ABOVE
+> Comment code. Not a bug, but could be really useful to other Lua programmers. All two of them.
