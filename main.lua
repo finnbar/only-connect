@@ -7,8 +7,12 @@ I'm going to try and explain everything I've done in this code, in an attempt to
 ]]
 
 scale = love.window.getHeight()/650
+xscale = love.window.getWidth()/800 -- this is purely for large background elements, just to make sure they fit in the event of odd proportions
 -- The scale is got from the height and done squarely, OK?
 -- This multiplies all the coordinates I measured at 800x650 by some scale factor defined by the dimensions in love.conf
+local originalX = love.window.getWidth()
+local originalY = love.window.getHeight()
+local shouldResize = true
 
 require "requirer" -- The requirer requires everything that needs to be required requiringly
 
@@ -18,7 +22,7 @@ teamaname = "Team A"
 teambname = "Team B" -- Names!
 rounds = {show,r1,show,r2,show,r3,show,r4,show,tie,show} -- What order are the rounds in?
 roundIndex = 0 -- What round we're currently on. Remember, Lua starts arrays at 1, so 0 is shorthand for "we're not there yet"
-tiebreakerIndex = 10 -- This is for the showscore KONAMICODE easter egg. This should be the roundIndex that the tie is contained in.
+whereAreTheRounds = {2,4,6,8,10} -- This is for the showscore KONAMICODE easter egg. This should be the roundIndex that each separate is contained in.
 debug = false -- Should debug coordinates appear in the top left corner?
 highlightingBg = 0 -- Should the background be highlighted? (aka has a team buzzed in?)
 points = {5,3,2,1} -- What is the point value of each question?
@@ -26,6 +30,14 @@ currentTeam = 1 -- What team is currently answering?
 filename = "example" -- Where are the questions located?
 swapped = false -- Has the question been passed over yet (so if after this they still get it wrong, reveal the answer)
 local prevTeam = 2 -- This keeps tabs on what team should go and alerts the host accordingly.
+xshift = (love.window.getWidth()-(scale*800))/2 -- This centres the interface when fullscreened.
+
+function love.resize(w,h)
+	scale = love.window.getHeight()/650
+	xscale = love.window.getWidth()/800
+	xshift = (love.window.getWidth()-(scale*800))/2
+	if w~=originalX or h~=originalY then shouldResize = true end
+end
 
 --[[
 OK, KEYBOARD CONTROLS:
@@ -45,6 +57,7 @@ function love.load()
 	print("Welcome host.")
 	print("I am your debug console, here to tell you the score and what team should be answering now!")
 	print("I hope I am useful.")
+	print(xshift)
 end
 
 function love.textinput(t)
@@ -54,14 +67,14 @@ end
 function love.draw()
 	love.graphics.setFont(fontttt)
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(bg,0,0,0,1.2*scale,1.2*scale) -- standard background stuff. Set to 1.2 scale (despite the size of the image) because it wasn't working last minute.
+	love.graphics.draw(bg,0,0,0,1.2*xscale,1.2*scale) -- standard background stuff. Set to 1.2 scale (despite the size of the image) because it wasn't working last minute.
 	-- some translucent rectangles to draw the highlighting:
 	if highlightingBg == 1 then
 		love.graphics.setColor(0,0,255,50)
-		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
+		love.graphics.rectangle("fill",0,0,1000*xscale,1000*scale)
 	elseif highlightingBg == 2 then
 		love.graphics.setColor(255,0,255,50)
-		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
+		love.graphics.rectangle("fill",0,0,1000*xscale,1000*scale)
 	end
 	love.graphics.setColor(255,255,255)
 	-- if the round returns true, move on!
@@ -77,11 +90,11 @@ function love.draw()
 		end
 	else
 		--main menu jazz
-		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale,10*scale,780*scale,"center")
+		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale+xshift,10*scale,780*scale,"center")
 		love.graphics.setFont(fonttttt)
-		love.graphics.printf(filename,10*scale,250*scale,780*scale,"center")
+		love.graphics.printf(filename,10*scale+xshift,250*scale,780*scale,"center")
 		love.graphics.setFont(fon)
-		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is quite new so could therefore act problematically in some cases. Please don't sue me.",10*scale,590*scale,780*scale,"left")
+		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is quite new so could therefore act problematically in some cases. Please don't sue me.",10*scale+xshift,590*scale,780*scale,"left")
 	end
 	if debug then
 		love.graphics.setFont(font)
@@ -114,6 +127,7 @@ function love.keypressed(key)
 			if roundIndex == 9 then
 				if teama ~= teamb then
 					roundIndex = 0
+					love.event.quit()
 				end
 			end
 			if roundIndex > #rounds then
@@ -145,6 +159,22 @@ function love.keypressed(key)
 			if rounds[roundIndex] then rounds[roundIndex].load() end
 		elseif key=="backspace" then
 			filename = string.sub(filename,0,-2)
+		end
+	end
+	if key=="escape" then
+		if shouldResize then
+			f = love.window.getFullscreen()
+			love.window.setFullscreen(false)
+			love.window.setMode(originalX,originalY,{resizable=true})
+			if f then
+				originalY = love.window.getHeight()
+				originalX = love.window.getWidth()
+			end
+			love.resize(love.window.getWidth(),love.window.getHeight())
+			shouldResize = false
+		else
+			print("bye")
+			love.event.quit()
 		end
 	end
 end

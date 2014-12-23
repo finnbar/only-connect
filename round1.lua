@@ -37,25 +37,25 @@ function r1.draw()
 	if selection==0 then
 		-- draw the boxes, heiroglyphs etc.
 		highlighting(1)
-		love.graphics.draw(rd,100*scale,150*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,100*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
 		highlighting(2)
-		love.graphics.draw(rd,300*scale,150*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,300*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
 		highlighting(3)
-		love.graphics.draw(rd,500*scale,150*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,500*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
 		highlighting(4)
-		love.graphics.draw(rd,100*scale,300*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,100*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
 		highlighting(5)
-		love.graphics.draw(rd,300*scale,300*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,300*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
 		highlighting(6)
-		love.graphics.draw(rd,500*scale,300*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,500*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
 		-- then after all of the squares are drawn
 		love.graphics.setColor(255,255,255)
-		love.graphics.draw(heiroglyphs["reeds"],100*scale,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["lion"],300*scale,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["twisted"],500*scale,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["viper"],100*scale,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["water"],300*scale,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["eye"],500*scale,300*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["reeds"],100*scale+xshift,150*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["lion"],300*scale+xshift,150*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["twisted"],500*scale+xshift,150*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["viper"],100*scale+xshift,300*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["water"],300*scale+xshift,300*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["eye"],500*scale+xshift,300*scale,0,scale,scale)
 	else
 		-- a question has been selected!
 		for i=1,numberOfClues do
@@ -69,15 +69,15 @@ function r1.draw()
 			end
 			if i == 1 then -- a special case for the first clue as it glides in, so the val()s of the tweens need to be taken into account
 				if i == numberOfClues then
-					love.graphics.draw(rd,val(pX)*scale,val(pY)*scale,0,0.25*scale,val(s)*scale)
+					love.graphics.draw(rd,val(pX)*scale+xshift,val(pY)*scale,0,0.25*scale,val(s)*scale)
 				else
-					love.graphics.draw(rd,15*scale,230*scale,0,0.25*scale,0.25*scale)
+					love.graphics.draw(rd,15*scale+xshift,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if pictureR1 == selection then --for picture rounds, don't print the clue unless the answer's appeared, and drawTheImage1()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],25*scale,260*scale,180*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],25*scale+xshift,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					-- same rules apply
@@ -86,46 +86,46 @@ function r1.draw()
 					else
 						love.graphics.setColor(255,255,255)
 					end
-					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale,val(pY)*scale,0,scale,scale) -- draw that clef thing (treble clef, I know)
+					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale+xshift,val(pY)*scale,0,scale,scale) -- draw that clef thing (treble clef, I know)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],25*scale,240*scale,180*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],25*scale+xshift,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(val(pX)+10)*scale,(val(pY)+9)*scale,180*scale,"center")
+					love.graphics.printf(questionsR1[selection][i],(val(pX)+10)*scale+xshift,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
 					-- THIS DRAWS THE TIMER
 					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
-					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale,(val(pY)-50)*scale,timerLength*scale,40*scale)
+					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale+xshift,(val(pY)-50)*scale,timerLength*scale,40*scale)
 					love.graphics.setColor(colours("unselected"))
-					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1))+timerLength)*scale,(val(pY)-50)*scale,(190-timerLength)*scale,40*scale)
+					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1))+timerLength)*scale+xshift,(val(pY)-50)*scale,(190-timerLength)*scale,40*scale)
 					love.graphics.setColor(255,255,255)
-					love.graphics.print(points[1].." Points",(val(pX)+35)*scale,(val(pY)-50)*scale)
+					love.graphics.print(points[1].." Points",(val(pX)+35)*scale+xshift,(val(pY)-50)*scale)
 				end
 			else
 				-- now for clues 2-4
 				-- (it's the same as above, essentially)
 				if i == numberOfClues then
-					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,val(s)*scale)
+					love.graphics.draw(rd,(15+(190*(i-1)))*scale+xshift,230*scale,0,0.25*scale,val(s)*scale)
 				else
-					love.graphics.draw(rd,(15+(190*(i-1)))*scale,230*scale,0,0.25*scale,0.25*scale)
+					love.graphics.draw(rd,(15+(190*(i-1)))*scale+xshift,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
 					love.graphics.setFont(fonttt)
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
-					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale,180*scale,timerLength*scale,40*scale)
+					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale+xshift,180*scale,timerLength*scale,40*scale)
 					love.graphics.setColor(colours("unselected"))
-					love.graphics.rectangle("fill",(20+(190*(i-1))+timerLength)*scale,180*scale,(190-timerLength)*scale,40*scale)
+					love.graphics.rectangle("fill",(20+(190*(i-1))+timerLength)*scale+xshift,180*scale,(190-timerLength)*scale,40*scale)
 					love.graphics.setColor(255,255,255)
 					if timerPos<4 then
-						love.graphics.print(points[timerPos].." Points",(50+(190*(i-1)))*scale,180*scale)
+						love.graphics.print(points[timerPos].." Points",(50+(190*(i-1)))*scale+xshift,180*scale)
 					else
-						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale,180*scale)
+						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale+xshift,180*scale)
 					end
 				end
 				if #(questionsR1[selection][i])<=25 then -- WORD WRAP
@@ -139,7 +139,7 @@ function r1.draw()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,260*scale,180*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					if revealedAnswer then
@@ -148,26 +148,26 @@ function r1.draw()
 						love.graphics.setColor(255,255,255)
 					end
 					if i == numberOfClues then
-						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale,230*scale,0,1*scale,(val(s)*4)*scale)
+						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale+xshift,230*scale,0,1*scale,(val(s)*4)*scale)
 					else
-						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale,230*scale,0,scale,scale)
+						love.graphics.draw(musicNoteImageDotPng,(15+(190*(i-1)))*scale+xshift,230*scale,0,scale,scale)
 					end
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,240*scale,180*scale,"center")
+						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale,240*scale,180*scale,"center")
+					love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
 				end
 			end
 		end
 		love.graphics.setFont(fonttt)
 		if revealedAnswer then
 			love.graphics.setColor(colours("blue"))
-			love.graphics.draw(rd,5*scale,380*scale,0,0.98*scale,val(answerTween)*scale)
+			love.graphics.draw(rd,5*scale+xshift,380*scale,0,0.98*scale,val(answerTween)*scale)
 			love.graphics.setColor(255,255,255)
-			love.graphics.printf(groupsR1[selection],30*scale,385*scale,730*scale,"center")
+			love.graphics.printf(groupsR1[selection],30*scale+xshift,385*scale,730*scale,"center")
 		end
 	end
 end
@@ -180,12 +180,12 @@ function drawTheImage1(n) -- guess what this does!
 	end
 	if n ~= 1 then
 		if n == numberOfClues then
-			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale,250*scale,0,0.8*scale,val(s)*3.2*scale)
+			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,val(s)*3.2*scale)
 		else
-			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale,250*scale,0,0.8*scale,0.8*scale)
+			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,0.8*scale)
 		end
 	else
-		love.graphics.draw(picturesR1[n],(val(pX)+32+(190*(n-1)))*scale,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
+		love.graphics.draw(picturesR1[n],(val(pX)+32+(190*(n-1)))*scale+xshift,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
 	end
 end
 
@@ -341,7 +341,7 @@ end
 function r1.mousepressed(x,y,b)
 	-- bounding boxes time! yaaaaaaaay.
 	if selection == 0 then
-		if x>=100*scale and x<300*scale and y>=100*scale and y<300*scale and (not selected[1]) then
+		if x>=100*scale+xshift and x<300*scale+xshift and y>=100*scale and y<300*scale and (not selected[1]) then
 			if tweening == 1 then
 				commenceRound1(1)
 				--go go go!
@@ -350,7 +350,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(1)
 			end
 		end
-		if x>=300*scale and x<500*scale and y>=100*scale and y<300*scale and (not selected[2]) then
+		if x>=300*scale+xshift and x<500*scale+xshift and y>=100*scale and y<300*scale and (not selected[2]) then
 			if tweening == 2 then
 				commenceRound1(2)
 				--go go go!
@@ -359,7 +359,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(2)
 			end
 		end
-		if x>=500*scale and x<700*scale and y>=150*scale and y<300*scale and (not selected[3]) then
+		if x>=500*scale+xshift and x<700*scale+xshift and y>=150*scale and y<300*scale and (not selected[3]) then
 			if tweening == 3 then
 				commenceRound1(3)
 				--go go go!
@@ -368,7 +368,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(3)
 			end
 		end
-		if x>=100*scale and x<300*scale and y>=300*scale and y<450*scale and (not selected[4]) then
+		if x>=100*scale+xshift and x<300*scale+xshift and y>=300*scale and y<450*scale and (not selected[4]) then
 			if tweening == 4 then
 				commenceRound1(4)
 				--go go go!
@@ -377,7 +377,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(4)
 			end
 		end
-		if x>=300*scale and x<500*scale and y>=300*scale and y<450*scale and (not selected[5]) then
+		if x>=300*scale+xshift and x<500*scale+xshift and y>=300*scale and y<450*scale and (not selected[5]) then
 			if tweening == 5 then
 				commenceRound1(5)
 				--go go go!
@@ -386,7 +386,7 @@ function r1.mousepressed(x,y,b)
 				playTheChosenSound(5)
 			end
 		end
-		if x>=500*scale and x<700*scale and y>=300*scale and y<450*scale and (not selected[6]) then
+		if x>=500*scale+xshift and x<700*scale+xshift and y>=300*scale and y<450*scale and (not selected[6]) then
 			if tweening == 6 then
 				commenceRound1(6)
 				--go go go!

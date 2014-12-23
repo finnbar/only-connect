@@ -87,7 +87,7 @@ function r3.draw()
 			love.graphics.setColor(colours("unselected"))
 		end
 		-- draw in the box
-		love.graphics.draw(rd,190*scale,200*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,190*scale+xshift,200*scale,0,0.25*scale,0.25*scale)
 		-- same again, this time with heiroglyph 2
 		if tweening == 2 then
 			love.graphics.setColor(val(r),val(g),val(b))
@@ -96,10 +96,10 @@ function r3.draw()
 		else
 			love.graphics.setColor(colours("unselected"))
 		end
-		love.graphics.draw(rd,390*scale,200*scale,0,0.25*scale,0.25*scale)
+		love.graphics.draw(rd,390*scale+xshift,200*scale,0,0.25*scale,0.25*scale)
 		love.graphics.setColor(255,255,255)
-		love.graphics.draw(heiroglyphs["lion"],190*scale,200*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["water"],390*scale,200*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["lion"],190*scale+xshift,200*scale,0,scale,scale)
+		love.graphics.draw(heiroglyphs["water"],390*scale+xshift,200*scale,0,scale,scale)
 	else
 		for i=1,4 do
 			for j=1,4 do
@@ -109,9 +109,9 @@ function r3.draw()
 					local cb = colourTweens[current]
 					love.graphics.setColor(val(cb[1]),val(cb[2]),val(cb[3]))
 					if movementTweens[current]~=0 then
-						love.graphics.draw(rd,(15+(190*(i-1))+val(movementTweens[current][1]))*scale,(10+(145*(j-1))+val(movementTweens[current][2]))*scale,0,0.25*scale,val(s)*scale)
+						love.graphics.draw(rd,(15+(190*(i-1))+val(movementTweens[current][1]))*scale+xshift,(10+(145*(j-1))+val(movementTweens[current][2]))*scale,0,0.25*scale,val(s)*scale)
 					else
-						love.graphics.draw(rd,(15+(190*(i-1)))*scale,(10+(145*(j-1)))*scale,0,0.25*scale,val(s)*scale)
+						love.graphics.draw(rd,(15+(190*(i-1)))*scale+xshift,(10+(145*(j-1)))*scale,0,0.25*scale,val(s)*scale)
 					end
 					love.graphics.setColor(0,0,0)
 					if chosenWall==1 then
@@ -125,9 +125,9 @@ function r3.draw()
 						end
 						-- if it should be moving, then move it! Also print the clue itself
 						if movementTweens[current]~=0 then
-							love.graphics.printf(wall1[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
+							love.graphics.printf(wall1[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale+xshift,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
 						else
-							love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+							love.graphics.printf(wall1[current],(65+(190*(i-1)))*scale+xshift,(20+(145*(j-1)))*scale,100*scale,"center")
 						end
 					else
 						--same as for wall1, except for the second wall, duh
@@ -139,9 +139,9 @@ function r3.draw()
 							love.graphics.setFont(font)
 						end
 						if movementTweens[current]~=0 then
-							love.graphics.printf(wall2[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
+							love.graphics.printf(wall2[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale+xshift,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")
 						else
-							love.graphics.printf(wall2[current],(65+(190*(i-1)))*scale,(20+(145*(j-1)))*scale,100*scale,"center")
+							love.graphics.printf(wall2[current],(65+(190*(i-1)))*scale+xshift,(20+(145*(j-1)))*scale,100*scale,"center")
 						end
 					end
 				end
@@ -149,16 +149,16 @@ function r3.draw()
 				if currentlyBeingShown > 0 and (not resolveTheWall) then
 					love.graphics.setColor(colours("unselected"))
 					if currentlyBeingShown<4 then
-						love.graphics.draw(rd,0,(10+(145*currentlyBeingShown))*scale,0,scale,0.1*scale)
+						love.graphics.draw(rd,xshift,(10+(145*currentlyBeingShown))*scale,0,scale,0.1*scale)
 						love.graphics.setColor(255,255,255)
 						if revealedAnswer then
-							love.graphics.printf(answersR3[currentlyBeingShown],0,(10+(145*currentlyBeingShown))*scale,800*scale,"center")
+							love.graphics.printf(answersR3[currentlyBeingShown],xshift,(10+(145*currentlyBeingShown))*scale,800*scale,"center")
 						end
 					else
-						love.graphics.draw(rd,0,(10+(145*2.5))*scale,0,scale,0.1*scale)
+						love.graphics.draw(rd,xshift,(10+(145*2.5))*scale,0,scale,0.1*scale)
 						love.graphics.setColor(255,255,255)
 						if revealedAnswer then
-							love.graphics.printf(answersR3[4],0,(10+(145*2.5))*scale,800*scale,"center")
+							love.graphics.printf(answersR3[4],xshift,(10+(145*2.5))*scale,800*scale,"center")
 						end
 					end
 				end
@@ -168,14 +168,14 @@ function r3.draw()
 		if paint==3 then
 			-- draw in their remaining lives for the third group
 			for i=1,lives do
-				love.graphics.draw(life,(540+(i*60))*scale,590*scale,0,0.75*scale,0.75*scale)
+				love.graphics.draw(life,(540+(i*60))*scale+xshift,590*scale,0,0.75*scale,0.75*scale)
 			end
 		end
 		-- and finally, the big scary timer
 		love.graphics.setColor(colours("unselected"))
-		love.graphics.rectangle("fill",20*scale,600*scale,((150-timer)*(500/150))*scale,30*scale)
+		love.graphics.rectangle("fill",20*scale+xshift,600*scale,((150-timer)*(500/150))*scale,30*scale)
 		love.graphics.setColor(colours("selected"))
-		love.graphics.rectangle("fill",(20+(150-timer)*(500/150))*scale,600*scale,(500-((150-timer)*(500/150)))*scale,30*scale)
+		love.graphics.rectangle("fill",(20+(150-timer)*(500/150))*scale+xshift,600*scale,(500-((150-timer)*(500/150)))*scale,30*scale)
 	end
 end
 
@@ -386,7 +386,7 @@ end
 function r3.mousepressed(x,y,button)
 	if chosenWall == 0 then
 		-- bounding boxes for the heiroglyphs
-		if x>=190*scale and x<=390*scale and y>=200*scale and y<=350*scale then
+		if x>=190*scale+xshift and x<=390*scale+xshift and y>=200*scale and y<=350*scale then
 			if tweening == 1 then
 				--ACTIVATE!
 				selectionR3[1] = true
@@ -398,7 +398,7 @@ function r3.mousepressed(x,y,button)
 				tweening = 1
 				slide()
 			end
-		elseif x>=390*scale and x<=590*scale and y>=200*scale and y<=350*scale then
+		elseif x>=390*scale+xshift and x<=590*scale+xshift and y>=200*scale and y<=350*scale then
 			if tweening == 2 then
 				--ACTIVATE
 				selectionR3[2] = true
@@ -418,7 +418,7 @@ function r3.mousepressed(x,y,button)
 			for i=1,4 do
 				for j=1,4 do
 					current = i + (4*(j-1))
-					if x>=(15+(190*(i-1)))*scale and x<=(15+(190*(i)))*scale and y>=(10+(145*(j-1)))*scale and y<=(10+(145*(j)))*scale then
+					if x>=(15+(190*(i-1)))*scale+xshift and x<=(15+(190*(i)))*scale+xshift and y>=(10+(145*(j-1)))*scale and y<=(10+(145*(j)))*scale then
 						if chosen[current]==paint then
 							-- clear it!
 							chosen[current] = 0
@@ -612,6 +612,7 @@ function doTheMovement(row)
 	currentLocs = {}
 	otherLocs = {}
 	otherIndexes = {}
+	table.sort(selectedIndexes) -- sort them for easy swapping! (seems to fix a weird bug so it's staying RIGHT THERE OK)
 	-- find out where they're swapping to in terms of a 1-dimensional array
 	for k=1,4 do
 		table.insert(otherIndexes,((row-1)*4)+k)
@@ -625,7 +626,6 @@ function doTheMovement(row)
 		table.insert(otherLocs,{y%4,math.ceil(y/4)})
 		if otherLocs[k][1]==0 then otherLocs[k][1]=4 end
 	end
-	table.sort(selectedIndexes) -- sort them for easy swapping! (seems to fix a weird bug so it's staying RIGHT THERE OK)
 	for k=1,4 do
 		-- grab the exact pixel-based positions of these
 		local x1 = currentLocs[k][1]

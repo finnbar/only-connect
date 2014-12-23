@@ -31,6 +31,7 @@ function tie.draw()
 	if panic then
 		--draw panic animation. probably not a thing unless I find a lot of time
 		--SCRATCH THAT IT'S A THING
+		--I don't need to do xshift stuff to this as it scrolls across the whole screen anyway
 		love.graphics.setColor(0,0,0)
 		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
 		love.graphics.setColor(255,255,255)
@@ -51,13 +52,13 @@ function tie.draw()
 		--above: directly messing with the tween lib there as tween[2] == end of tween
 	else
 		love.graphics.setFont(fontttt)
-		love.graphics.draw(round4,0,0,0,scale,scale)
-		love.graphics.printf(tiebreakerTopic,50*scale,130*scale,700*scale,"center")
+		love.graphics.draw(round4,xshift,0,0,scale,scale)
+		love.graphics.printf(tiebreakerTopic,50*scale+xshift,130*scale,700*scale,"center")
 		love.graphics.setFont(fonttt)
 		if state == 1 then
-			love.graphics.printf(tiebreakerQuestion,50*scale,220*scale,700*scale,"center")
+			love.graphics.printf(tiebreakerQuestion,50*scale+xshift,220*scale,700*scale,"center")
 		elseif state == 2 then
-			love.graphics.printf(tiebreakerAnswer,50*scale,220*scale,700*scale,"center")
+			love.graphics.printf(tiebreakerAnswer,50*scale+xshift,220*scale,700*scale,"center")
 		end
 	end
 end
