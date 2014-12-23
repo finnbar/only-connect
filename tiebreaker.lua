@@ -33,7 +33,7 @@ function tie.draw()
 		--SCRATCH THAT IT'S A THING
 		--I don't need to do xshift stuff to this as it scrolls across the whole screen anyway
 		love.graphics.setColor(0,0,0)
-		love.graphics.rectangle("fill",0,0,1000*scale,1000*scale)
+		love.graphics.rectangle("fill",0,0,1000*xscale,1000*scale)
 		love.graphics.setColor(255,255,255)
 		love.graphics.setFont(fonttttttttt)
 		love.graphics.print("TIEBREAKER!!!",(300-val(panicTween))*scale,10*scale)
