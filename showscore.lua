@@ -53,27 +53,27 @@ function show.keypressed(key)
 		position = position + 1
 	elseif position==11 then
 		if key==" " then
-			print("KCODE ACTIVATED")
+			print("KONAMICODE ACTIVATED")
 			roundIndex=whereAreTheRounds[5]
 			tie.load()
 			position = 1
 		elseif key=="1" and roundIndex<whereAreTheRounds[1] then
-			print("KCODE ACTIVATED")
+			print("KONAMICODE ACTIVATED")
 			roundIndex=whereAreTheRounds[1]
 			r1.load()
 			position = 1
 		elseif key=="2" and roundIndex<whereAreTheRounds[2] then
-			print("KCODE ACTIVATED")
+			print("KONAMICODE ACTIVATED")
 			roundIndex=whereAreTheRounds[2]
 			r2.load()
 			position = 1
 		elseif key=="3" and roundIndex<whereAreTheRounds[3] then
-			print("KCODE ACTIVATED")
+			print("KONAMICODE ACTIVATED")
 			roundIndex=whereAreTheRounds[3]
 			r3.load()
 			position = 1
 		elseif key=="4" and roundIndex<whereAreTheRounds[4] then
-			print("KCODE ACTIVATED")
+			print("KONAMICODE ACTIVATED")
 			roundIndex=whereAreTheRounds[4]
 			r4.load()
 			position = 1

@@ -73,11 +73,11 @@ end
 function r4.keypressed(key)
 	-- buzzing!
 	if not newTopic then
-		if key=="left" and highlightingBg==0 and (not answered) then
+		if key==teamakey and highlightingBg==0 and (not answered) then
 			highlightingBg = 1
 			buzzIn(1)
 		end
-		if key=="right" and highlightingBg==0 and (not answered) then
+		if key==teambkey and highlightingBg==0 and (not answered) then
 			highlightingBg = 2
 			buzzIn(2)
 		end

@@ -74,12 +74,15 @@ function tie.keypressed(key)
 		if key==" " then
 			if state==2 then return true end
 			state = 1
+			slide()
 		end
-		if key=="left" and highlightingBg==0 and state==1 then
+		if key==teamakey and highlightingBg==0 and state==1 then
 			highlightingBg = 1
+			buzzIn(1)
 		end
-		if key=="right" and highlightingBg==0 and state==1 then
+		if key==teambkey and highlightingBg==0 and state==1 then
 			highlightingBg = 2
+			buzzIn(2)
 		end
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
@@ -89,6 +92,7 @@ function tie.keypressed(key)
 			end
 			state = 2
 			highlightingBg = 0
+			slide()
 		end
 		if key=="down" and highlightingBg~=0 then
 			if highlightingBg == 1 then
@@ -98,6 +102,7 @@ function tie.keypressed(key)
 			end
 			state = 2
 			highlightingBg = 0
+			slide()
 		end
 	end
 end

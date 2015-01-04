@@ -257,13 +257,13 @@ function r1.keypressed(key)
 			end -- if the answer's not revealed then do nothing space. We want a buzz in.
 		end
 		-- buzz!
-		if key=="left" and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer) then
+		if key==teamakey and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer) then
 			highlightingBg = 1
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(1)
 		end
 		-- buzz!
-		if key=="right" and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
+		if key==teambkey and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
 			highlightingBg = 2
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
 			buzzIn(2)

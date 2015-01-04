@@ -20,6 +20,8 @@ teama = 0
 teamb = 0 -- Scores!
 teamaname = "Team A"
 teambname = "Team B" -- Names!
+teamakey = "left"
+teambkey = "right" -- What's their buzzer?
 rounds = {show,r1,show,r2,show,r3,show,r4,show,tie,show} -- What order are the rounds in?
 roundIndex = 0 -- What round we're currently on. Remember, Lua starts arrays at 1, so 0 is shorthand for "we're not there yet"
 whereAreTheRounds = {2,4,6,8,10} -- This is for the showscore KONAMICODE easter egg. This should be the roundIndex that each separate is contained in.
@@ -31,6 +33,8 @@ filename = "example" -- Where are the questions located?
 swapped = false -- Has the question been passed over yet (so if after this they still get it wrong, reveal the answer)
 local prevTeam = 2 -- This keeps tabs on what team should go and alerts the host accordingly.
 xshift = (love.window.getWidth()-(scale*800))/2 -- This centres the interface when fullscreened.
+local calibrating = 0 -- 0: get filename, 1: ask for teama key, 2: got it!, 3: ask for teamb key, 4: got it!
+local switchTimer = 1
 
 function love.resize(w,h)
 	scale = love.window.getHeight()/650
@@ -42,7 +46,7 @@ end
 --[[
 OK, KEYBOARD CONTROLS:
 Space advances clues in rounds 1,2 and 4.
-Left/Right are buzzers for blue/purple teams, also sets starting team at menu (TODO)
+Set buzzing keys at the menu screen.
 Up accepts the answer given
 Down rejects the answer given
 Round 3 is all tapping
@@ -57,7 +61,6 @@ function love.load()
 	print("Welcome host.")
 	print("I am your debug console, here to tell you the score and what team should be answering now!")
 	print("I hope I am useful.")
-	print(xshift)
 end
 
 function love.textinput(t)
@@ -89,12 +92,24 @@ function love.draw()
 			end
 		end
 	else
-		--main menu jazz
-		love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale+xshift,10*scale,780*scale,"center")
-		love.graphics.setFont(fonttttt)
-		love.graphics.printf(filename,10*scale+xshift,250*scale,780*scale,"center")
+		if calibrating == 0 then
+			--main menu jazz
+			love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale+xshift,10*scale,780*scale,"center")
+			love.graphics.setFont(fonttttt)
+			love.graphics.printf(filename,10*scale+xshift,250*scale,780*scale,"center")
+		elseif calibrating == 1 or calibrating == 2 then
+			love.graphics.printf(teamaname..", please buzz in now.",10*scale+xshift,100*scale,780*scale,"center")
+			if calibrating == 2 then
+				love.graphics.printf("Thanks! \""..teamakey.."\" has been selected.",10*scale+xshift,300*scale,780*scale,"center")
+			end
+		elseif calibrating == 3 or calibrating == 4 then
+			love.graphics.printf(teambname..", please buzz in now.",10*scale+xshift,100*scale,780*scale,"center")
+			if calibrating == 4 then
+				love.graphics.printf("Thanks! \""..teambkey.."\" has been selected.",10*scale+xshift,300*scale,780*scale,"center")
+			end
+		end
 		love.graphics.setFont(fon)
-		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is quite new so could therefore act problematically in some cases. Please don't sue me.",10*scale+xshift,590*scale,780*scale,"left")
+		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is written by one student without a lot of testing so it could be problematic. Please don't sue me.",10*scale+xshift,590*scale,780*scale,"left")
 	end
 	if debug then
 		love.graphics.setFont(font)
@@ -116,6 +131,17 @@ function love.update(dt)
 		end
 	else
 		--main menu jazz
+		if calibrating == 5 then
+			roundIndex = 1
+			if rounds[roundIndex] then rounds[roundIndex].load() end
+			calibrating = 0
+		elseif calibrating == 2 or calibrating == 4 then
+			switchTimer = switchTimer - dt
+			if switchTimer <= 0 then
+				switchTimer = 1
+				calibrating = calibrating + 1
+			end
+		end
 	end
 	whatTeam()
 end
@@ -153,12 +179,29 @@ function love.keypressed(key)
 		end
 	else
 		--main menu jazz
-		if key=="return" then
-			importer(filename)
-			roundIndex = 1
-			if rounds[roundIndex] then rounds[roundIndex].load() end
-		elseif key=="backspace" then
-			filename = string.sub(filename,0,-2)
+		if calibrating == 0 then
+			if key=="return" then
+				if importer(filename) then
+					calibrating = 1
+				else
+					filename = ""
+					print("Bad game name / game contents!")
+				end
+			elseif key=="backspace" then
+				filename = string.sub(filename,0,-2)
+			end
+		elseif calibrating == 1 then
+			if not (key==" " or key=="up" or key=="down" or key=="q" or key=="w" or key=="o" or key=="p" or key=="escape") then
+				teamakey = key
+				calibrating = 2
+				print(teamaname.."'s key is "..teamakey)
+			end
+		elseif calibrating == 3 then
+			if not (key==" " or key=="up" or key=="down" or key=="q" or key=="w" or key=="o" or key=="p" or key=="escape") then
+				teambkey = key
+				calibrating = 4
+				print(teambname.."'s key is "..teambkey)
+			end
 		end
 	end
 	if key=="escape" then

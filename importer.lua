@@ -1,5 +1,26 @@
 function importer(filename) -- let's import some questions yeah
 	--answers = love.filesystem.read("exampleQuestions.txt")
+	if not love.filesystem.exists(filename) then
+		return false
+	else
+		if not love.filesystem.exists(filename.."/teams.txt") then
+			return false
+		else
+			if not love.filesystem.exists(filename.."/questions.txt") then
+				return false
+			end
+		end
+	end
+	local tableoflettersbecauseImlazy = {"a","b","c","d"}
+	for i=1,4 do
+		if not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".jpg") then
+			return false
+		elseif not love.filesystem.exists(filename.."/2"..tableoflettersbecauseImlazy[i]..".jpg") then
+			return false
+		elseif not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".mp3") then
+			return false
+		end
+	end
 	picturesR1 = {love.graphics.newImage(filename.."/1a.jpg"),love.graphics.newImage(filename.."/1b.jpg"),love.graphics.newImage(filename.."/1c.jpg"),love.graphics.newImage(filename.."/1d.jpg")}
 	audioR1 = {love.audio.newSource(filename.."/1a.mp3"),love.audio.newSource(filename.."/1b.mp3"),love.audio.newSource(filename.."/1c.mp3"),love.audio.newSource(filename.."/1d.mp3")}
 	picturesR2 = {love.graphics.newImage(filename.."/2a.jpg"),love.graphics.newImage(filename.."/2b.jpg"),love.graphics.newImage(filename.."/2c.jpg"),love.graphics.newImage(filename.."/2d.jpg")}
@@ -84,4 +105,5 @@ function importer(filename) -- let's import some questions yeah
 	end
 	-- and some more stuff
 	-- error(errorStr)
+	return true
 end

@@ -7,14 +7,17 @@ Love2D Application for running your own Only Connect shows! Because why not.
 how to use
 ====
 
-Read exampleQuestions.txt to find out how to write your own questions! Currently you can only use questions from that file, however, SOON THAT WILL CHANGE.
+Look through the example folder to find out how to write your own questions!
 
 How to actually run it:
-* Round 1: Tap/Click on a heiroglyph to highlight it, tap again to choose it. Space advances to the next clue. Left/Right buzzes in for the relevant team. Up agrees with their answer, giving them the points, down disagrees, passing it to the other team. Space quits once someone has answered the question or if everyone's stuck. Continue until all heiroglyphs are answered/panicked about.
-* Round 2: See round 1. Not implemented yet.
-* Round 3: Tap for everything. Once the wall is finished, up agrees to the answer of a group's connection, or down to disagree. The rest is automated, or rather, will be as I haven't implemented it yet.
-* Round 4: Similar to round 1, space to advance whatever, left/right is a team buzzing in, up agrees, down disagrees. Plays until time is up.
-* Tiebreaker: Simple left/right buzz and up/down agree/disagree. Not implemented yet, although will probably take about five minutes to.
+* Round 1: Tap/Click on a heiroglyph to highlight it, tap again to choose it. Space advances to the next clue. Up agrees with a team's answer, giving them the points, down disagrees, passing it to the other team. Pressing down again when it's been passed over will mean that both teams got it wrong, so the answer is revealed. Continue until all heiroglyphs are answered/panicked about.
+* Round 2: See round 1.
+* Round 3: Tap for everything. Up agrees to the answer of a group's connection, or down to disagree. The rest is automated!
+* Round 4: Similar to round 1, space to advance whatever, up agrees, down disagrees. Plays until time is up.
+* Tiebreaker: Simple up/down agree/disagree.
+
+Buzzing in:
+* At the start of the game there will be a short "calibration" phase where each team should buzz in once. This will define the keys that buzz in for each team. Please note that UP, DOWN, Q, W, O, P, Esc and SPACE will not be accepted as keys, as they are already reserved by the program.
 
 
 debug/host console
