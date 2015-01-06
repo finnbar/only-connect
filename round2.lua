@@ -211,6 +211,7 @@ function r2.update(dt)
 				alert = true
 			elseif timer < 0 then
 				if currentTeam == 1 then highlightingBg=2 else highlightingBg=1 end
+				love.audio.play(worse)
 				numberOfClues = 4
 				swapped = true
 			end
