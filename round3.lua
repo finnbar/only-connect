@@ -167,7 +167,13 @@ function r3.draw()
 		love.graphics.setColor(255,255,255)
 		if paint==3 then
 			-- draw in their remaining lives for the third group
-			for i=1,lives do
+			local cheatconst = 1
+			if highlightingBg == 1 and teamacheats[1] then
+				cheatconst = 10
+			elseif highlightingBg == 2 and teambcheats[1] then
+				cheatconst = 10
+			end
+			for i=1,lives*cheatconst do
 				love.graphics.draw(life,(540+(i*60))*scale+xshift,590*scale,0,0.75*scale,0.75*scale)
 			end
 		end
@@ -412,6 +418,15 @@ function r3.mousepressed(x,y,button)
 			end
 		end
 	else
+		if highlightingBg == 1 and teamacheats[2] then
+			if love.math.random()>0.8 then
+				return false
+			end
+		elseif highlightingBg == 2 and teambcheats[2] then
+			if love.math.random()>0.8 then
+				return false
+			end
+		end
 		if not isItDone then
 		--ok, clicking the things....
 			tap()

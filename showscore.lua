@@ -1,7 +1,10 @@
 show = {}
 konamiii = {"up","up","down","down","left","right","left","right","b","a"," "}
+infinity = {"i","n","f","i","n","i","t","y"," "} --infinity
+glitch = {"g","l","t","h","r"," "} --glthr
+currentCode = konamiii
 position = 1
-konamiiiString = ""
+codeString = ""
 
 function show.load()
 	-- a thing
@@ -40,47 +43,103 @@ function show.draw()
 	love.graphics.print(teamb,600*scale+xshift,330*scale)
 	love.graphics.setFont(fontttt)
 	-- KONAMICODE! see below
-	love.graphics.printf(konamiiiString,200*scale+xshift,500*scale,400*scale,"center")
+	love.graphics.printf(codeString,200*scale+xshift,500*scale,400*scale,"center")
 end
 
 function show.update(dt)
-	konamiiiString = string.sub("KONAMICODE!",0,position-1)
+	if currentCode == konamiii then
+		codeString = string.sub("KONAMICODE!",0,position-1)
+	elseif currentCode == infinity then
+		codeString = string.sub("INFINITY!",0,position-1)
+	elseif currentCode == glitch then
+		codeString = string.sub("WALLS!",0,position-1)
+	end
 end
 
 function show.keypressed(key)
 	-- if the full KONAMI CODE is entered, skip to the tiebreaker
-	if key==konamiii[position] and position<11 then
-		position = position + 1
-	elseif position==11 then
-		if key==" " then
-			print("KONAMICODE ACTIVATED")
-			roundIndex=whereAreTheRounds[5]
-			tie.load()
-			position = 1
-		elseif key=="1" and roundIndex<whereAreTheRounds[1] then
-			print("KONAMICODE ACTIVATED")
-			roundIndex=whereAreTheRounds[1]
-			r1.load()
-			position = 1
-		elseif key=="2" and roundIndex<whereAreTheRounds[2] then
-			print("KONAMICODE ACTIVATED")
-			roundIndex=whereAreTheRounds[2]
-			r2.load()
-			position = 1
-		elseif key=="3" and roundIndex<whereAreTheRounds[3] then
-			print("KONAMICODE ACTIVATED")
-			roundIndex=whereAreTheRounds[3]
-			r3.load()
-			position = 1
-		elseif key=="4" and roundIndex<whereAreTheRounds[4] then
-			print("KONAMICODE ACTIVATED")
-			roundIndex=whereAreTheRounds[4]
-			r4.load()
+	if key=="up" then
+		if currentCode ~= konamiii then
 			position = 1
 		end
-	else
-		position = 1
-		if key==" " then return true end
+		currentCode = konamiii
+	elseif key=="i" then
+		if currentCode ~= infinity then
+			position = 1
+		end
+		currentCode = infinity
+	elseif key=="g" then
+		if currentCode ~= glitch then
+			position = 1
+		end
+		currentCode = glitch
+	end
+	if currentCode == konamiii then
+		if key==konamiii[position] and position<11 then
+			position = position + 1
+		elseif position==11 then
+			if key==" " then
+				print("KONAMICODE ACTIVATED")
+				roundIndex=whereAreTheRounds[5]
+				tie.load()
+				position = 1
+			elseif key=="1" and roundIndex<whereAreTheRounds[1] then
+				print("KONAMICODE ACTIVATED")
+				roundIndex=whereAreTheRounds[1]
+				r1.load()
+				position = 1
+			elseif key=="2" and roundIndex<whereAreTheRounds[2] then
+				print("KONAMICODE ACTIVATED")
+				roundIndex=whereAreTheRounds[2]
+				r2.load()
+				position = 1
+			elseif key=="3" and roundIndex<whereAreTheRounds[3] then
+				print("KONAMICODE ACTIVATED")
+				roundIndex=whereAreTheRounds[3]
+				r3.load()
+				position = 1
+			elseif key=="4" and roundIndex<whereAreTheRounds[4] then
+				print("KONAMICODE ACTIVATED")
+				roundIndex=whereAreTheRounds[4]
+				r4.load()
+				position = 1
+			end
+		else
+			position = 1
+			if key==" " then return true end
+		end
+	elseif currentCode == infinity then
+		if key==infinity[position] and position < 9 then
+			position = position + 1
+		elseif position == 9 then
+			if key=="1" then
+				print("Infinity lives for "..teamaname)
+				teamacheats[1] = true
+			elseif key=="2" then
+				print("Infinity lives for "..teambname)
+				teambcheats[1] = true
+			end
+			position = 1
+		else
+			position = 1
+			if key==" " then return true end
+		end
+	elseif currentCode == glitch then
+		if key==glitch[position] and position < 6 then
+			position = position + 1
+		elseif position == 6 then
+			if key=="1" then
+				print("Glitch through walls for "..teamaname)
+				teamacheats[2] = true
+			elseif key=="2" then
+				print("Glitch through walls for "..teambname)
+				teambcheats[2] = true
+			end
+			position = 1
+		else
+			position = 1
+			if key==" " then return true end
+		end
 	end
 end
 
