@@ -167,13 +167,7 @@ function r3.draw()
 		love.graphics.setColor(255,255,255)
 		if paint==3 then
 			-- draw in their remaining lives for the third group
-			local cheatconst = 1
-			if highlightingBg == 1 and teamacheats[1] then
-				cheatconst = 10
-			elseif highlightingBg == 2 and teambcheats[1] then
-				cheatconst = 10
-			end
-			for i=1,lives*cheatconst do
+			for i=1,lives do
 				love.graphics.draw(life,(540+(i*60))*scale+xshift,590*scale,0,0.75*scale,0.75*scale)
 			end
 		end
@@ -187,6 +181,11 @@ end
 
 function r3.update(dt)
 	-- ALL OF THE TWEENS
+	if highlightingBg == 1 and teamacheats[1] then
+		lives = 10
+	elseif highlightingBg == 2 and teambcheats[1] then
+		lives = 10
+	end
 	if tweening~=0 then
 		updateTween(r,dt)
 		updateTween(g,dt)
