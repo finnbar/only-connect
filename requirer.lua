@@ -49,3 +49,7 @@ worse = love.audio.newSource("assets/worse.mp3")
 bad:setVolume(0.1)
 worse:setVolume(0.1)
 musicRoundGo = love.audio.newSource("assets/musicRound.mp3")
+
+musicR1 = 0
+pictureR1 = 0
+pictureR2 = 0

@@ -11,19 +11,6 @@ function importer(filename) -- let's import some questions yeah
 			end
 		end
 	end
-	local tableoflettersbecauseImlazy = {"a","b","c","d"}
-	for i=1,4 do
-		if not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".jpg") then
-			return false
-		elseif not love.filesystem.exists(filename.."/2"..tableoflettersbecauseImlazy[i]..".jpg") then
-			return false
-		elseif not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".mp3") then
-			return false
-		end
-	end
-	picturesR1 = {love.graphics.newImage(filename.."/1a.jpg"),love.graphics.newImage(filename.."/1b.jpg"),love.graphics.newImage(filename.."/1c.jpg"),love.graphics.newImage(filename.."/1d.jpg")}
-	audioR1 = {love.audio.newSource(filename.."/1a.mp3"),love.audio.newSource(filename.."/1b.mp3"),love.audio.newSource(filename.."/1c.mp3"),love.audio.newSource(filename.."/1d.mp3")}
-	picturesR2 = {love.graphics.newImage(filename.."/2a.jpg"),love.graphics.newImage(filename.."/2b.jpg"),love.graphics.newImage(filename.."/2c.jpg"),love.graphics.newImage(filename.."/2d.jpg")}
 	questionsR1 = {}
 	groupsR1 = {}
 	questionsR2 = {}
@@ -104,6 +91,20 @@ function importer(filename) -- let's import some questions yeah
 		end
 	end
 	-- and some more stuff
+	-- let's import the files!
+	local tableoflettersbecauseImlazy = {"a","b","c","d"}
+	for i=1,4 do
+		if not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".jpg") and pictureR1 ~= 0 then
+			return false
+		elseif not love.filesystem.exists(filename.."/2"..tableoflettersbecauseImlazy[i]..".jpg") and pictureR2 ~= 0 then
+			return false
+		elseif not love.filesystem.exists(filename.."/1"..tableoflettersbecauseImlazy[i]..".mp3") and musicR1 ~= 0 then
+			return false
+		end
+	end
+	if pictureR1 ~= 0 then picturesR1 = {love.graphics.newImage(filename.."/1a.jpg"),love.graphics.newImage(filename.."/1b.jpg"),love.graphics.newImage(filename.."/1c.jpg"),love.graphics.newImage(filename.."/1d.jpg")} end
+	if musicR1 ~= 0 then audioR1 = {love.audio.newSource(filename.."/1a.mp3"),love.audio.newSource(filename.."/1b.mp3"),love.audio.newSource(filename.."/1c.mp3"),love.audio.newSource(filename.."/1d.mp3")} end
+	if pictureR2 ~= 0 then picturesR2 = {love.graphics.newImage(filename.."/2a.jpg"),love.graphics.newImage(filename.."/2b.jpg"),love.graphics.newImage(filename.."/2c.jpg"),love.graphics.newImage(filename.."/2d.jpg")} end
 	-- error(errorStr)
 	return true
 end
