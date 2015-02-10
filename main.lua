@@ -42,6 +42,7 @@ function love.resize(w,h)
 	scale = love.window.getHeight()/650
 	xscale = love.window.getWidth()/800
 	xshift = (love.window.getWidth()-(scale*800))/2
+	deffonts()
 	if w~=originalX or h~=originalY then shouldResize = true end
 end
 
@@ -87,8 +88,7 @@ function love.draw()
 		if rounds[roundIndex].draw() then
 			roundIndex = roundIndex + 1
 			if roundIndex > #rounds then
-				print("bye")
-				love.event.quit()
+				roundIndex = #rounds
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
@@ -125,8 +125,7 @@ function love.update(dt)
 			-- the round has ended IT HAS RETURNED TRUE
 			roundIndex = roundIndex + 1
 			if roundIndex > #rounds then
-				print("bye")
-				love.event.quit()
+				roundIndex = #rounds
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
@@ -154,13 +153,11 @@ function love.keypressed(key)
 			roundIndex = roundIndex + 1
 			if roundIndex == 9 then
 				if teama ~= teamb then
-					roundIndex = 0
-					love.event.quit()
+					roundIndex = 8
 				end
 			end
 			if roundIndex > #rounds then
-				print("bye")
-				love.event.quit()
+				roundIndex = #rounds
 			else
 				if rounds[roundIndex] then rounds[roundIndex].load() end
 			end
@@ -218,7 +215,6 @@ function love.keypressed(key)
 			love.resize(love.window.getWidth(),love.window.getHeight())
 			shouldResize = false
 		else
-			print("bye")
 			love.event.quit()
 		end
 	end
@@ -230,8 +226,7 @@ function love.mousepressed(x,y,button)
 			if rounds[roundIndex].mousepressed(x,y,button) then
 				roundIndex = roundIndex + 1
 				if roundIndex > #rounds then
-					print("bye")
-					love.event.quit()
+					roundIndex = #rounds
 				else
 					if rounds[roundIndex] then rounds[roundIndex].load() end
 				end

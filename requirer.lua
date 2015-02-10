@@ -23,14 +23,18 @@ function colours(name,alpha)
 	return {colList[name][1],colList[name][2],colList[name][3],alpha}
 end
 
-fon = love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)
-font = love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale)
-fontt = love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale)
-fonttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)
-fontttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)
-fontttttS = love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale)
-fonttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale) -- aka big font
-fonttttttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale)
+function deffonts()
+	fon = love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)
+	font = love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale)
+	fontt = love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale)
+	fonttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)
+	fontttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)
+	fontttttS = love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale)
+	fonttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale) -- aka big font
+	fonttttttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale)
+end
+
+deffonts()
 
 --[[ NOTE TO SELF: order of heiroglyphs is
 Reeds, Lion, Twisted,
