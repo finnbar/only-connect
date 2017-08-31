@@ -1,10 +1,10 @@
 show = {}
-konamiii = {"up","up","down","down","left","right","left","right","b","a","space"}
-infinity = {"i","n","f","i","n","i","t","y","space"} --infinity
-glitch = {"g","l","t","h","r","space"} --glthr
-currentCode = konamiii
-position = 1
-codeString = ""
+local konamiii = {"up","up","down","down","left","right","left","right","b","a","space"}
+local infinity = {"i","n","f","i","n","i","t","y","space"} --infinity
+local glitch = {"g","l","t","h","r","space"} --glthr
+local currentCode = konamiii
+local position = 1
+local codeString = ""
 
 function show.load()
 	-- a thing

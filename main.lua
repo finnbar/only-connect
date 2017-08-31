@@ -5,7 +5,7 @@
 --[[ RIGHT.
 I'm going to try and explain everything I've done in this code, in an attempt to understand it better myself. Also, it means other coders can learn what (not) to do!
 ]]
-w, h, f = love.window.getMode()
+local w, h, f = love.window.getMode()
 
 scale = h/650
 xscale = w/800 -- this is purely for large background elements, just to make sure they fit in the event of odd proportions
@@ -274,4 +274,8 @@ end
 
 function swoosh()
 	love.audio.play(slideLong)
+end
+
+function jingle()
+	love.audio.play(musicRoundGo)
 end

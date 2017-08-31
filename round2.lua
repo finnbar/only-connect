@@ -1,20 +1,57 @@
 r2 = {}
 
-questionMark = love.graphics.newImage("assets/questionMark.png")
+local questionMark = love.graphics.newImage("assets/questionMark.png")
 
-selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
-selected = {false,false,false,false,false,false}
-tweening = 0 -- animations until certainly pressed
-numberOfClues = 0 -- 1=5pts, 2=3pts...
-timerPos = 0
-revealedAnswer = false
-locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}}
-timer = 45
-alert = false
+local selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
+local selected = {false,false,false,false,false,false}
+local tweening = 0 -- animations until certainly pressed
+local numberOfClues = 0 -- 1=5pts, 2=3pts...
+local timerPos = 0
+local revealedAnswer = false
+local locs = {{100*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{100*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}}
+local timer = 45
+local alert = false
 
---[[
-THIS IS PRETTY MUCH THE SAME AS ROUND 1, SO I'M GONNA LEAVE IT FOR NOW. As James Robson - my Mechanics teacher - would say: whatevs.
-]]
+local function drawTheImage2(n) -- fix for 1st, gliding image
+	if revealedAnswer then
+		love.graphics.setColor(255,255,255,100)
+	else
+		love.graphics.setColor(255,255,255,255)
+	end
+	if n ~= 1 then
+		if n == numberOfClues then
+			love.graphics.draw(picturesR2[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,val(s)*3.2*scale)
+		else
+			love.graphics.draw(picturesR2[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,0.8*scale)
+		end
+	else
+		love.graphics.draw(picturesR2[n],(val(pX)+32+(190*(n-1)))*scale+xshift,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
+	end
+end
+
+local function highlighting(p)
+	colour = colours("unselected")
+	if selected[p] then
+		colour = colours("selected")
+	end
+	if tweening == p then
+		colour = {val(r),val(g),val(b),255}
+	end
+	return colour
+end
+
+local function commenceRound2(n)
+	selected[n]=true
+	selection=n
+	numberOfClues=1
+	s = newTween(0,0.25,0.1)
+	pX = newTween(locs[n][1],15,0.2)
+	pY = newTween(locs[n][2],230,0.2)
+	timer = 45
+	timerPos = 1
+	swoosh()
+	alert = false
+end
 
 function r2.load()
 	-- a thing
@@ -31,26 +68,13 @@ function r2.draw()
 	love.graphics.setFont(fonts[4])
 	love.graphics.setColor(255,255,255)
 	if selection == 0 then
-		highlighting(1)
-		love.graphics.draw(rd,100*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(2)
-		love.graphics.draw(rd,300*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(3)
-		love.graphics.draw(rd,500*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(4)
-		love.graphics.draw(rd,100*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		highlighting(5)
-		love.graphics.draw(rd,300*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		highlighting(6)
-		love.graphics.draw(rd,500*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		-- then after all of the squares are drawn
-		love.graphics.setColor(255,255,255)
-		love.graphics.draw(heiroglyphs["reeds"],100*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["lion"],300*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["twisted"],500*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["viper"],100*scale+xshift,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["water"],300*scale+xshift,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["eye"],500*scale+xshift,300*scale,0,scale,scale)
+		glyph = {hieroglyphs["reeds"], hieroglyphs["lion"], hieroglyphs["twisted"], hieroglyphs["viper"], hieroglyphs["water"], hieroglyphs["eye"]}
+		for i=1,6 do
+			love.graphics.setColor(highlighting(i))
+			love.graphics.draw(rd, locs[i][1]*scale+xshift, locs[i][2]*scale, 0, 0.25*scale, 0.25*scale)
+			love.graphics.setColor(255,255,255)
+			love.graphics.draw(glyph[i], locs[i][1]*scale+xshift, locs[i][2]*scale, 0, scale, scale)
+		end
 	else
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
@@ -167,34 +191,6 @@ function r2.draw()
 	end
 end
 
-function drawTheImage2(n) -- fix for 1st, gliding image
-	if revealedAnswer then
-		love.graphics.setColor(255,255,255,100)
-	else
-		love.graphics.setColor(255,255,255,255)
-	end
-	if n ~= 1 then
-		if n == numberOfClues then
-			love.graphics.draw(picturesR2[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,val(s)*3.2*scale)
-		else
-			love.graphics.draw(picturesR2[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,0.8*scale)
-		end
-	else
-		love.graphics.draw(picturesR2[n],(val(pX)+32+(190*(n-1)))*scale+xshift,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
-	end
-end
-
-function highlighting(p)
-	if selected[p] then
-		love.graphics.setColor(colours("selected"))
-	else
-		love.graphics.setColor(colours("unselected"))
-	end
-	if tweening == p then
-		love.graphics.setColor(val(r),val(g),val(b))
-	end
-end
-
 function r2.update(dt)
 	if tweening ~= 0 then
 		updateTween(r,dt)
@@ -249,13 +245,11 @@ function r2.keypressed(key)
 				end
 			end
 		end
-		if key==teamakey and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer)then
-			highlightingBg = 1
-			buzzIn(1)
-		end
-		if key==teambkey and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
-			highlightingBg = 2
-			buzzIn(2)
+		local currentTeamKey = teamakey
+		if currentTeam == 2 then currentTeamKey = teambkey end
+		if key==currentTeamKey and highlightingBg==0 and (not revealedAnswer) then
+			highlightingBg = currentTeam
+			buzzIn(currentTeam)
 		end
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
@@ -291,75 +285,17 @@ function r2.keypressed(key)
 	end
 end
 
-function commenceRound2(n)
-	selected[n]=true
-	selection=n
-	numberOfClues=1
-	s = newTween(0,0.25,0.1)
-	pX = newTween(locs[n][1],15,0.2)
-	pY = newTween(locs[n][2],230,0.2)
-	timer = 45
-	timerPos = 1
-	swoosh()
-	alert = false
-end
-
-
 function r2.mousepressed(x,y,b)
 	-- bounding boxes time! yaaaaaaaay.
 	if selection == 0 then
-		if x>=150*scale+xshift and x<300*scale+xshift and y>=150*scale and y<300*scale and (not selected[1]) then
-			if tweening == 1 then
-				commenceRound2(1)
-				--go go go!
-			else
-				tweening = 1 -- tween tween tween!
-				slide()
-			end
-		end
-		if x>=300*scale+xshift and x<500*scale+xshift and y>=150*scale and y<300*scale and (not selected[2]) then
-			if tweening == 2 then
-				commenceRound2(2)
-				--go go go!
-			else
-				tweening = 2 -- tween tween tween!
-				slide()
-			end
-		end
-		if x>=500*scale+xshift and x<650*scale+xshift and y>=150*scale and y<300*scale and (not selected[3]) then
-			if tweening == 3 then
-				commenceRound2(3)
-				--go go go!
-			else
-				tweening = 3 -- tween tween tween!
-				slide()
-			end
-		end
-		if x>=150*scale+xshift and x<300*scale+xshift and y>=300*scale and y<450*scale and (not selected[4]) then
-			if tweening == 4 then
-				commenceRound2(4)
-				--go go go!
-			else
-				tweening = 4 -- tween tween tween!
-				slide()
-			end
-		end
-		if x>=300*scale+xshift and x<500*scale+xshift and y>=300*scale and y<450*scale and (not selected[5]) then
-			if tweening == 5 then
-				commenceRound2(5)
-				--go go go!
-			else
-				tweening = 5 -- tween tween tween!
-				slide()
-			end
-		end
-		if x>=500*scale+xshift and x<650*scale+xshift and y>=300*scale and y<450*scale and (not selected[6]) then
-			if tweening == 6 then
-				commenceRound2(6)
-				--go go go!
-			else
-				tweening = 6 -- tween tween tween!
-				slide()
+		for i=1,6 do
+			if x>=locs[i][1]*scale+xshift and x<(locs[i][1]+200)*scale+xshift and y>=locs[i][2]*scale and y<(locs[i][2]+150)*scale and (not selected[i]) then
+				if tweening == i then
+					commenceRound2(i)
+				else
+					tweening = i
+					slide()
+				end
 			end
 		end
 	end

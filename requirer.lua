@@ -25,24 +25,24 @@ end
 
 function deffonts()
 	fonts = {}
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)) -- fon (1)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale)) -- font (2)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale)) -- fontt (3)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)) -- fonttt (4)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)) -- fontttt (5)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale)) -- fonttttS (6)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale)) -- fonttttt (7)
-	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale)) -- fontttttt (8)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale))
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale))
 end
 
 deffonts()
 
---[[ NOTE TO SELF: order of heiroglyphs is
+--[[ NOTE TO SELF: order of hieroglyphs is
 Reeds, Lion, Twisted,
 Viper, Water, Eye.
 ]]
 
-heiroglyphs = {reeds=love.graphics.newImage("assets/reeds.png"),lion=love.graphics.newImage("assets/lion.png"),twisted=love.graphics.newImage("assets/twisted.png"),viper=love.graphics.newImage("assets/viper.png"),water=love.graphics.newImage("assets/water.png"),eye=love.graphics.newImage("assets/eye.png")}
+hieroglyphs = {reeds=love.graphics.newImage("assets/reeds.png"),lion=love.graphics.newImage("assets/lion.png"),twisted=love.graphics.newImage("assets/twisted.png"),viper=love.graphics.newImage("assets/viper.png"),water=love.graphics.newImage("assets/water.png"),eye=love.graphics.newImage("assets/eye.png")}
 
 buzzer1 = love.audio.newSource("assets/onlyConnect1buzz.mp3")
 buzzer2 = love.audio.newSource("assets/onlyConnect2buzz.mp3")

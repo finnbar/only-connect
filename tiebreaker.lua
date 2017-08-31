@@ -1,8 +1,8 @@
 tie = {}
 
-round4Continued = love.graphics.newImage("assets/round4.png")
-panic = true
-state = 0 -- 0: "Tiebreaker", 1: Question, 2: Answered
+local round4Continued = love.graphics.newImage("assets/round4.png")
+local panic = true
+local state = 0 -- 0: "Tiebreaker", 1: Question, 2: Answered
 
 -- pretty much round 4 but much simpler
 

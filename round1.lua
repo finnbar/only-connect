@@ -1,27 +1,76 @@
 r1 = {}
 
---[[ NOTE TO SELF: order of heiroglyphs is
+--[[ NOTE TO SELF: order of hieroglyphs is
 Reeds, Lion, Twisted,
 Viper, Water, Eye.
 ]]
 
-musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
+local musicNoteImageDotPng = love.graphics.newImage("assets/musicRound.png")
 
-selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
-selected = {false,false,false,false,false,false} -- which questions are done?
-tweening = 0 -- animations until certainly pressed
-numberOfClues = 0 -- 1=5pts, 2=3pts...
-timerPos = 0 -- what clue is the timer hovering over?
-revealedAnswer = false -- as the name suggests, is the answer revealed?
-locs = {{150*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{150*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}} -- where clues glide from
-timer = 45 -- TIMER, duh.
-alert = false -- tells the host that there's only THREE SECONDS LEFT WHAT
+local selection = 0 -- 0 = selecting..., 1=reeds, 2=lion etc.
+local selected = {false,false,false,false,false,false} -- which questions are done?
+local tweening = 0 -- animations until certainly pressed
+local numberOfClues = 0 -- 1=5pts, 2=3pts...
+local timerPos = 0 -- what clue is the timer hovering over?
+local revealedAnswer = false -- as the name suggests, is the answer revealed?
+local locs = {{100*scale,150*scale},{300*scale,150*scale},{500*scale,150*scale},{100*scale,300*scale},{300*scale,300*scale},{500*scale,300*scale}} -- where clues glide from
+local timer = 45 -- TIMER, duh.
+local alert = false -- tells the host that there's only THREE SECONDS LEFT WHAT
+
+local function drawTheImage1(n) -- guess what this does!
+	if revealedAnswer then
+		love.graphics.setColor(255,255,255,100)
+	else
+		love.graphics.setColor(255,255,255,255)
+	end
+	if n ~= 1 then
+		if n == numberOfClues then
+			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,val(s)*3.2*scale)
+		else
+			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,0.8*scale)
+		end
+	else
+		love.graphics.draw(picturesR1[n],(val(pX)+32+(190*(n-1)))*scale+xshift,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
+	end
+end
+
+local function highlighting(p) -- fill it in (the hieroglyphs at the main screen)
+	colour = colours("unselected")
+	if selected[p] then
+		colour = colours("selected")
+	end
+	if tweening == p then
+		colour = {val(r),val(g),val(b),255}
+	end
+	return colour
+end
+
+--reset for the next round
+local function commenceRound1(n)
+	selected[n]=true
+	selection=n
+	numberOfClues=1
+	s = newTween(0,0.25,0.1)
+	pX = newTween(locs[n][1],15,0.2)
+	pY = newTween(locs[n][2],230,0.2)
+	timer = 45
+	swoosh()
+	alert = false
+	if musicR1 == n then
+		audioR1[1]:play()
+	end
+end
+
+local function playTheChosenSound(r)
+	-- when selected, chime or slide (sfx)
+	if r == musicR1 then
+		jingle()
+	else
+		slide()
+	end
+end
 
 function r1.load()
-	--[[ As you might have noticed, a new library has appeared!
-		*pokemon encounter music plays*
-		See tween.lua for more details.
-	]]
 	selected = {false,false,false,false,false,false}
 	r = newTween(119,183,1,0)
 	g = newTween(197,214,1,0)
@@ -34,35 +83,23 @@ function r1.load()
 end
 
 function r1.draw()
-	if selection==0 then
-		-- draw the boxes, heiroglyphs etc.
-		highlighting(1)
-		love.graphics.draw(rd,100*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(2)
-		love.graphics.draw(rd,300*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(3)
-		love.graphics.draw(rd,500*scale+xshift,150*scale,0,0.25*scale,0.25*scale)
-		highlighting(4)
-		love.graphics.draw(rd,100*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		highlighting(5)
-		love.graphics.draw(rd,300*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		highlighting(6)
-		love.graphics.draw(rd,500*scale+xshift,300*scale,0,0.25*scale,0.25*scale)
-		-- then after all of the squares are drawn
-		love.graphics.setColor(255,255,255)
-		love.graphics.draw(heiroglyphs["reeds"],100*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["lion"],300*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["twisted"],500*scale+xshift,150*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["viper"],100*scale+xshift,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["water"],300*scale+xshift,300*scale,0,scale,scale)
-		love.graphics.draw(heiroglyphs["eye"],500*scale+xshift,300*scale,0,scale,scale)
+	if selection == 0 then
+		-- draw the boxes, hieroglyphs etc.
+		glyph = {hieroglyphs["reeds"], hieroglyphs["lion"], hieroglyphs["twisted"], hieroglyphs["viper"], hieroglyphs["water"], hieroglyphs["eye"]}
+		for i=1,6 do
+			love.graphics.setColor(highlighting(i))
+			love.graphics.draw(rd, locs[i][1]*scale+xshift, locs[i][2]*scale, 0, 0.25*scale, 0.25*scale)
+			love.graphics.setColor(255,255,255)
+			love.graphics.draw(glyph[i], locs[i][1]*scale+xshift, locs[i][2]*scale, 0, scale, scale)
+		end
 	else
 		-- a question has been selected!
+		local question = questionsR1[selection]
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
-			if #(questionsR1[selection][i])<=25 then -- word wrap, shrink the clue if it's too long.
+			if #(question[i])<=25 then -- word wrap, shrink the clue if it's too long.
 				love.graphics.setFont(fonts[4])
-			elseif #(questionsR1[selection][i])<=45 then
+			elseif #(question[i])<=45 then
 				love.graphics.setFont(fonts[3])
 			else
 				love.graphics.setFont(fonts[2])
@@ -77,7 +114,7 @@ function r1.draw()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],25*scale+xshift,260*scale,180*scale,"center")
+						love.graphics.printf(question[i],25*scale+xshift,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					-- same rules apply
@@ -89,11 +126,11 @@ function r1.draw()
 					love.graphics.draw(musicNoteImageDotPng,(val(pX)+5)*scale+xshift,val(pY)*scale,0,scale,scale) -- draw that clef thing (treble clef, I know)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],25*scale+xshift,240*scale,180*scale,"center")
+						love.graphics.printf(question[i],25*scale+xshift,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(val(pX)+10)*scale+xshift,(val(pY)+9)*scale,180*scale,"center")
+					love.graphics.printf(question[i],(val(pX)+10)*scale+xshift,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
 					-- THIS DRAWS THE TIMER
@@ -128,9 +165,9 @@ function r1.draw()
 						love.graphics.print(points[timerPos].." Point",(55+(190*(i-1)))*scale+xshift,180*scale)
 					end
 				end
-				if #(questionsR1[selection][i])<=25 then -- WORD WRAP
+				if #(question[i])<=25 then -- WORD WRAP
 					love.graphics.setFont(fonts[4])
-				elseif #(questionsR1[selection][i])<=45 then
+				elseif #(question[i])<=45 then
 					love.graphics.setFont(fonts[3])
 				else
 					love.graphics.setFont(fonts[2])
@@ -139,7 +176,7 @@ function r1.draw()
 					drawTheImage1(i)
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,260*scale,180*scale,"center")
+						love.graphics.printf(question[i],(25+(190*(i-1)))*scale+xshift,260*scale,180*scale,"center")
 					end
 				elseif musicR1 == selection then
 					if revealedAnswer then
@@ -154,11 +191,11 @@ function r1.draw()
 					end
 					if revealedAnswer then
 						love.graphics.setColor(0,0,0)
-						love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
+						love.graphics.printf(question[i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
 					end
 				else
 					love.graphics.setColor(0,0,0)
-					love.graphics.printf(questionsR1[selection][i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
+					love.graphics.printf(question[i],(25+(190*(i-1)))*scale+xshift,240*scale,180*scale,"center")
 				end
 			end
 		end
@@ -169,34 +206,6 @@ function r1.draw()
 			love.graphics.setColor(255,255,255)
 			love.graphics.printf(groupsR1[selection],30*scale+xshift,385*scale,730*scale,"center")
 		end
-	end
-end
-
-function drawTheImage1(n) -- guess what this does!
-	if revealedAnswer then
-		love.graphics.setColor(255,255,255,100)
-	else
-		love.graphics.setColor(255,255,255,255)
-	end
-	if n ~= 1 then
-		if n == numberOfClues then
-			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,val(s)*3.2*scale)
-		else
-			love.graphics.draw(picturesR1[n],(42+(190*(n-1)))*scale+xshift,250*scale,0,0.8*scale,0.8*scale)
-		end
-	else
-		love.graphics.draw(picturesR1[n],(val(pX)+32+(190*(n-1)))*scale+xshift,(val(pY)+20)*scale,0,0.8*scale,0.8*scale)
-	end
-end
-
-function highlighting(p) -- fill it in (the heiroglyphs at the main screen)
-	if selected[p] then
-		love.graphics.setColor(colours("selected"))
-	else
-		love.graphics.setColor(colours("unselected"))
-	end
-	if tweening == p then
-		love.graphics.setColor(val(r),val(g),val(b))
 	end
 end
 
@@ -258,24 +267,18 @@ function r1.keypressed(key)
 			end -- if the answer's not revealed then do nothing space. We want a buzz in.
 		end
 		-- buzz!
-		if key==teamakey and highlightingBg==0 and currentTeam == 1 and (not revealedAnswer) then
-			highlightingBg = 1
+		local currentTeamKey = teamakey
+		if currentTeam == 2 then currentTeamKey = teambkey end
+		if key==currentTeamKey and highlightingBg==0 and (not revealedAnswer) then
+			highlightingBg = currentTeam
 			if musicR1 == selection then audioR1[numberOfClues]:stop() end
-			buzzIn(1)
-		end
-		-- buzz!
-		if key==teambkey and highlightingBg==0 and currentTeam == 2 and (not revealedAnswer)then
-			highlightingBg = 2
-			if musicR1 == selection then audioR1[numberOfClues]:stop() end
-			buzzIn(2)
+			buzzIn(currentTeam)
 		end
 		-- they got it right!
 		if key=="up" and highlightingBg~=0 then
 			if highlightingBg == 1 then
-				-- team 1 gets points!
 				teama = teama + points[numberOfClues]
 			else
-				-- team 2 gets points!
 				teamb = teamb + points[numberOfClues]
 			end
 			debugScorePrint()
@@ -313,87 +316,17 @@ function r1.keypressed(key)
 	end
 end
 
---reset for the next round
-function commenceRound1(n)
-	selected[n]=true
-	selection=n
-	numberOfClues=1
-	s = newTween(0,0.25,0.1)
-	pX = newTween(locs[n][1],15,0.2)
-	pY = newTween(locs[n][2],230,0.2)
-	timer = 45
-	swoosh()
-	alert = false
-	if musicR1 == n then
-		audioR1[1]:play()
-	end
-end
-
-
-function playTheChosenSound(r)
-	-- when selected, chime or slide (sfx)
-	if r == musicR1 then
-		love.audio.play(musicRoundGo)
-	else
-		slide()
-	end
-end
-
 function r1.mousepressed(x,y,b)
 	-- bounding boxes time! yaaaaaaaay.
 	if selection == 0 then
-		if x>=100*scale+xshift and x<300*scale+xshift and y>=100*scale and y<300*scale and (not selected[1]) then
-			if tweening == 1 then
-				commenceRound1(1)
-				--go go go!
-			else
-				tweening = 1 -- tween tween tween!
-				playTheChosenSound(1)
-			end
-		end
-		if x>=300*scale+xshift and x<500*scale+xshift and y>=100*scale and y<300*scale and (not selected[2]) then
-			if tweening == 2 then
-				commenceRound1(2)
-				--go go go!
-			else
-				tweening = 2 -- tween tween tween!
-				playTheChosenSound(2)
-			end
-		end
-		if x>=500*scale+xshift and x<700*scale+xshift and y>=150*scale and y<300*scale and (not selected[3]) then
-			if tweening == 3 then
-				commenceRound1(3)
-				--go go go!
-			else
-				tweening = 3 -- tween tween tween!
-				playTheChosenSound(3)
-			end
-		end
-		if x>=100*scale+xshift and x<300*scale+xshift and y>=300*scale and y<450*scale and (not selected[4]) then
-			if tweening == 4 then
-				commenceRound1(4)
-				--go go go!
-			else
-				tweening = 4 -- tween tween tween!
-				playTheChosenSound(4)
-			end
-		end
-		if x>=300*scale+xshift and x<500*scale+xshift and y>=300*scale and y<450*scale and (not selected[5]) then
-			if tweening == 5 then
-				commenceRound1(5)
-				--go go go!
-			else
-				tweening = 5 -- tween tween tween!
-				playTheChosenSound(5)
-			end
-		end
-		if x>=500*scale+xshift and x<700*scale+xshift and y>=300*scale and y<450*scale and (not selected[6]) then
-			if tweening == 6 then
-				commenceRound1(6)
-				--go go go!
-			else
-				tweening = 6 -- tween tween tween!
-				playTheChosenSound(6)
+		for i=1,6 do
+			if x>=locs[i][1]*scale+xshift and x<(locs[i][1]+200)*scale+xshift and y>=locs[i][2]*scale and y<(locs[i][2]+150)*scale and (not selected[i]) then
+				if tweening == i then
+					commenceRound1(i)
+				else
+					tweening = i
+					playTheChosenSound(i)
+				end
 			end
 		end
 	end

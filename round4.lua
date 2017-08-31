@@ -1,13 +1,35 @@
 r4 = {}
 
-round4 = love.graphics.newImage("assets/round4.png") -- I wrote this round before thinking of the rounded rectangle method, so we have this instead
-questionNum = 1
-answersR4 = {}
-answered = false
-timerR4 = 10
-newTopic = true
+local round4 = love.graphics.newImage("assets/round4.png") -- I wrote this round before thinking of the rounded rectangle method, so we have this instead
+local questionNum = 1
+local answersR4 = {}
+local answered = false
+local timerR4 = 10
+local newTopic = true
 
--- This round was surprisingly painless to write. But buggy. Greeeeeeat.
+local function moveOn(force)
+	if force==nil then force=false end
+	if newTopic then
+		newTopic = false
+	else
+		if answered then
+			questionNum = questionNum + 1
+			answered = false
+			if questionNum%4 == 1 then
+				newTopic = true
+			end
+			slide()
+		elseif force then
+			answered = true
+			highlightingBg = 0
+			slide()
+		end
+	end
+	if questionNum > #questionsR4 then
+		return true
+	end
+	return false
+end
 
 function r4.load()
 	for q in pairs(questionsR4) do
@@ -125,28 +147,4 @@ function r4.keypressed(key)
 			timerR4 = 10
 		end
 	end
-end
-
-function moveOn(force)
-	if force==nil then force=false end
-	if newTopic then
-		newTopic = false
-	else
-		if answered then
-			questionNum = questionNum + 1
-			answered = false
-			if questionNum%4 == 1 then
-				newTopic = true
-			end
-			slide()
-		elseif force then
-			answered = true
-			highlightingBg = 0
-			slide()
-		end
-	end
-	if questionNum > #questionsR4 then
-		return true
-	end
-	return false
 end
