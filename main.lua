@@ -2,9 +2,6 @@
 -- THE ONLY SHOW ABOUT CONNECTING
 -- YEAH
 
---[[ RIGHT.
-I'm going to try and explain everything I've done in this code, in an attempt to understand it better myself. Also, it means other coders can learn what (not) to do!
-]]
 local w, h, f = love.window.getMode()
 
 scale = h/650
@@ -254,7 +251,11 @@ function whatTeam()
 	end
 end
 
--- these exist purely so that I can mess with their global volume without editing every individual love.audio.play() call
+function withinBox(x,y,xstart,ystart,width,height)
+	return (x>=xstart) and (x<xstart+width) and (y>=ystart) and (y<ystart+height)
+end
+
+-- These exist purely so that I can mess with their global volume without editing every individual love.audio.play() call
 
 function buzzIn(a)
 	if a==1 then
