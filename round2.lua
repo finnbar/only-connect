@@ -226,7 +226,7 @@ end
 function r2.keypressed(key)
 	--temp
 	if selection~=0 then
-		if key==" " then
+		if key=="space" then
 			if numberOfClues<3 and highlightingBg == 0 then
 				numberOfClues = numberOfClues + 1
 				timerPos = numberOfClues

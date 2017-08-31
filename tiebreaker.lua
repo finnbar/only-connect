@@ -71,7 +71,7 @@ end
 
 function tie.keypressed(key)
 	if not panic then
-		if key==" " then
+		if key=="space" then
 			if state==2 then return true end
 			state = 1
 			slide()

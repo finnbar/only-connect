@@ -3,7 +3,7 @@ r3 = {}
 -- THE BIG BIG ONE
 -- IT'S SO BIG THAT IT'S... I DUNNO
 
---[[ 
+--[[
 Now, this round was tough.
 So the code looks generally horrible. Tread with care.
 Admittedly it's actually split up quite well, and doesn't use many "one off" cases.
@@ -66,15 +66,15 @@ end
 
 function randSort(t) -- THANKS THE INTERNET! ("no problem" - The Internet)
 	for i = #t, 2, -1 do -- backwards
-	    local r = love.math.random(i) -- select a random number between 1 and i
-	    t[i], t[r] = t[r], t[i] -- swap the randomly selected item to position i
+		local r = love.math.random(i) -- select a random number between 1 and i
+		t[i], t[r] = t[r], t[i] -- swap the randomly selected item to position i
 	end
 	return t
 end
 
 function r3.draw()
 	love.graphics.setFont(fonttt)
-	-- always have the background highlighted with the current team 
+	-- always have the background highlighted with the current team
 	highlightingBg = currentTeam
 	-- OK, so if no wall is selected:
 	if chosenWall == 0 then
@@ -234,7 +234,7 @@ end
 function r3.keypressed(key)
 	if isItDone then
 		-- cycle through the groups, asking for the connections
-		if key==" " then
+		if key=="space" then
 			--print(toRes)
 			if revealedAnswer then
 				--print(resolveTheWall)

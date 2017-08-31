@@ -234,7 +234,7 @@ end
 function r1.keypressed(key)
 	-- Accept standard keypresses, space to move on etc.
 	if selection ~= 0 then
-		if key==" " then
+		if key=="space" then
 			if numberOfClues<4 and highlightingBg == 0 then
 				numberOfClues=numberOfClues+1
 				s = newTween(0,0.25,0.1)
@@ -280,7 +280,7 @@ function r1.keypressed(key)
 			end
 			debugScorePrint()
 			if musicR1 == selection then
-				audioR1[numberOfClues]:stop() 
+				audioR1[numberOfClues]:stop()
 			end
 			-- reveal it all!
 			numberOfClues = 4
@@ -305,7 +305,7 @@ function r1.keypressed(key)
 				highlightingBg = 0
 				swapped = false
 				if musicR1 == selection then
-					audioR1[numberOfClues]:stop() 
+					audioR1[numberOfClues]:stop()
 				end
 				slide()
 			end

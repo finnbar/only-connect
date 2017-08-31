@@ -45,7 +45,11 @@ end
 function r4.draw()
 	love.graphics.setFont(fontttt)
 	love.graphics.draw(round4,xshift,0,0,scale,scale) -- this is the backdrop, essentially
-	love.graphics.printf(groupsR4[math.ceil((questionNum)/4)],50*scale+xshift,130*scale,700*scale,"center") -- this is the heading, essentially
+	groupname = groupsR4[math.ceil((questionNum)/4)]
+	if groupname == nil then
+		return true
+	end
+	love.graphics.printf(groupname,50*scale+xshift,130*scale,700*scale,"center") -- this is the heading, essentially
 	-- print the answer/questions
 	if answered then
 		love.graphics.printf(answersR4[questionNum],50*scale+xshift,210*scale,700*scale,"center")
@@ -115,7 +119,7 @@ function r4.keypressed(key)
 		end
 	end
 	-- continuing on!
-	if key==" " then
+	if key=="space" then
 		if moveOn() then return true end
 		if highlightingBg==0 and (not answered) then
 			timerR4 = 10
@@ -140,23 +144,9 @@ function moveOn(force)
 			highlightingBg = 0
 			slide()
 		end
-		if questionNum > #questionsR4 then
-			return true
-		end
+	end
+	if questionNum > #questionsR4 then
+		return true
 	end
 	return false
-end
-
-function r4.mousepressed(x,y,button)
-	-- if button == "l" then
-	-- 	if answered then
-	-- 		questionNum = questionNum + 1
-	-- 		answered = false
-	-- 	else
-	-- 		answered = true
-	-- 	end
-	-- 	if questionNum > #questionsR4 then
-	-- 		return true
-	-- 	end
-	-- end
 end
