@@ -52,7 +52,7 @@ function tie.draw()
 		--above: directly messing with the tween lib there as tween[2] == end of tween
 	else
 		love.graphics.setFont(fonts[5])
-		love.graphics.draw(round4,xshift,0,0,scale,scale)
+		love.graphics.draw(round4Continued,xshift,0,0,scale,scale)
 		love.graphics.printf(tiebreakerTopic,50*scale+xshift,130*scale,700*scale,"center")
 		love.graphics.setFont(fonts[4])
 		if state == 1 then
