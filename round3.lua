@@ -73,7 +73,7 @@ function randSort(t) -- THANKS THE INTERNET! ("no problem" - The Internet)
 end
 
 function r3.draw()
-	love.graphics.setFont(fonttt)
+	love.graphics.setFont(fontt)
 	-- always have the background highlighted with the current team
 	highlightingBg = currentTeam
 	-- OK, so if no wall is selected:
