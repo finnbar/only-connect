@@ -59,7 +59,7 @@ Round 3 is all tapping
 
 function love.load()
 	-- a thing
-	love.graphics.setFont(fontttt)
+	love.graphics.setFont(fonts[5])
 	if roundIndex == 0 then filename=""
 		else importer(filename) end -- the importer is Important.
 	if rounds[roundIndex] then rounds[roundIndex].load() end
@@ -73,7 +73,7 @@ function love.textinput(t)
 end
 
 function love.draw()
-	love.graphics.setFont(fontttt)
+	love.graphics.setFont(fonts[5])
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(bg,0,0,0,1.2*xscale,1.2*scale) -- standard background stuff. Set to 1.2 scale (despite the size of the image) because it wasn't working last minute.
 	-- some translucent rectangles to draw the highlighting:
@@ -99,7 +99,7 @@ function love.draw()
 		if calibrating == 0 then
 			--main menu jazz
 			love.graphics.printf("Please type in the name of the folder of the game you'd like to play",10*scale+xshift,10*scale,780*scale,"center")
-			love.graphics.setFont(fonttttt)
+			love.graphics.setFont(fonts[7])
 			love.graphics.printf(filename,10*scale+xshift,250*scale,780*scale,"center")
 		elseif calibrating == 1 or calibrating == 2 then
 			love.graphics.printf(teamaname..", please buzz in now.",10*scale+xshift,100*scale,780*scale,"center")
@@ -112,11 +112,11 @@ function love.draw()
 				love.graphics.printf("Thanks! \""..teambkey.."\" has been selected.",10*scale+xshift,300*scale,780*scale,"center")
 			end
 		end
-		love.graphics.setFont(fon)
+		love.graphics.setFont(fonts[1])
 		love.graphics.printf("Disclaimer: Only Connect is owned by the BBC, and some of the assets have been directly taken and modified from the show (such as some of the sounds and heiroglyphs). These are being used fairly for educational and other purposes limited to non-commercial projects. Also, this project is written by one student without a lot of testing so it could be problematic. Please don't sue me.",10*scale+xshift,590*scale,780*scale,"left")
 	end
 	if debug then
-		love.graphics.setFont(font)
+		love.graphics.setFont(fonts[2])
 		love.graphics.print(love.mouse.getX()..","..love.mouse.getY(),0,0)
 	end
 end

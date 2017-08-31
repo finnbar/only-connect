@@ -23,25 +23,25 @@ function show.draw()
 	love.graphics.setColor(255,255,255)
 	-- scaling
 	if #teamaname<=8 then
-		love.graphics.setFont(fonttttt)
+		love.graphics.setFont(fonts[7])
 		love.graphics.print(teamaname,50*scale+xshift,130*scale)
 	else
-		love.graphics.setFont(fontttttS)
+		love.graphics.setFont(fonts[6])
 		love.graphics.print(teamaname,50*scale+xshift,150*scale)
 	end
-	love.graphics.setFont(fonttttt)
+	love.graphics.setFont(fonts[7])
 	love.graphics.print(teama,600*scale+xshift,130*scale)
 	-- MORE scaling
 	if #teambname<=8 then
-		love.graphics.setFont(fonttttt)
+		love.graphics.setFont(fonts[7])
 		love.graphics.print(teambname,50*scale+xshift,330*scale)
 	else
-		love.graphics.setFont(fontttttS)
+		love.graphics.setFont(fonts[6])
 		love.graphics.print(teambname,50*scale+xshift,350*scale)
 	end
-	love.graphics.setFont(fonttttt)
+	love.graphics.setFont(fonts[7])
 	love.graphics.print(teamb,600*scale+xshift,330*scale)
-	love.graphics.setFont(fontttt)
+	love.graphics.setFont(fonts[5])
 	-- KONAMICODE! see below
 	love.graphics.printf(codeString,200*scale+xshift,500*scale,400*scale,"center")
 end

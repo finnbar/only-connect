@@ -61,11 +61,11 @@ function r1.draw()
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
 			if #(questionsR1[selection][i])<=25 then -- word wrap, shrink the clue if it's too long.
-				love.graphics.setFont(fonttt)
+				love.graphics.setFont(fonts[4])
 			elseif #(questionsR1[selection][i])<=45 then
-				love.graphics.setFont(fontt)
+				love.graphics.setFont(fonts[3])
 			else
-				love.graphics.setFont(font)
+				love.graphics.setFont(fonts[2])
 			end
 			if i == 1 then -- a special case for the first clue as it glides in, so the val()s of the tweens need to be taken into account
 				if i == numberOfClues then
@@ -97,7 +97,7 @@ function r1.draw()
 				end
 				if i == timerPos then
 					-- THIS DRAWS THE TIMER
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale+xshift,(val(pY)-50)*scale,timerLength*scale,40*scale)
@@ -115,7 +115,7 @@ function r1.draw()
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale+xshift,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale+xshift,180*scale,timerLength*scale,40*scale)
@@ -129,11 +129,11 @@ function r1.draw()
 					end
 				end
 				if #(questionsR1[selection][i])<=25 then -- WORD WRAP
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 				elseif #(questionsR1[selection][i])<=45 then
-					love.graphics.setFont(fontt)
+					love.graphics.setFont(fonts[3])
 				else
-					love.graphics.setFont(font)
+					love.graphics.setFont(fonts[2])
 				end
 				if pictureR1 == selection then
 					drawTheImage1(i)
@@ -162,7 +162,7 @@ function r1.draw()
 				end
 			end
 		end
-		love.graphics.setFont(fonttt)
+		love.graphics.setFont(fonts[4])
 		if revealedAnswer then
 			love.graphics.setColor(colours("blue"))
 			love.graphics.draw(rd,5*scale+xshift,380*scale,0,0.98*scale,val(answerTween)*scale)

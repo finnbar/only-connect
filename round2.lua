@@ -28,7 +28,7 @@ function r2.load()
 end
 
 function r2.draw()
-	love.graphics.setFont(fonttt)
+	love.graphics.setFont(fonts[4])
 	love.graphics.setColor(255,255,255)
 	if selection == 0 then
 		highlighting(1)
@@ -55,11 +55,11 @@ function r2.draw()
 		for i=1,numberOfClues do
 			love.graphics.setColor(colours("background"))
 			if #(questionsR2[selection][i])<=25 then
-				love.graphics.setFont(fonttt)
+				love.graphics.setFont(fonts[4])
 			elseif #(questionsR2[selection][i])<=45 then
-				love.graphics.setFont(fontt)
+				love.graphics.setFont(fonts[3])
 			else
-				love.graphics.setFont(font)
+				love.graphics.setFont(fonts[2])
 			end
 			if i==1 then
 				if i == numberOfClues then
@@ -79,7 +79,7 @@ function r2.draw()
 					love.graphics.printf(questionsR2[selection][i],(val(pX)+10)*scale+xshift,(val(pY)+9)*scale,180*scale,"center")
 				end
 				if i == timerPos then
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(val(pX)+5+(190*(i-1)))*scale+xshift,(val(pY)-50)*scale,timerLength*scale,40*scale)
@@ -95,7 +95,7 @@ function r2.draw()
 					love.graphics.draw(rd,(15+(190*(i-1)))*scale+xshift,230*scale,0,0.25*scale,0.25*scale)
 				end
 				if i == timerPos then
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 					timerLength = ((45-timer)/45)*190
 					love.graphics.setColor(colours("selected"))
 					love.graphics.rectangle("fill",(20+(190*(i-1)))*scale+xshift,180*scale,timerLength*scale,40*scale)
@@ -109,11 +109,11 @@ function r2.draw()
 					end
 				end
 				if #(questionsR2[selection][i])<=25 then
-					love.graphics.setFont(fonttt)
+					love.graphics.setFont(fonts[4])
 				elseif #(questionsR2[selection][i])<=45 then
-					love.graphics.setFont(fontt)
+					love.graphics.setFont(fonts[3])
 				else
-					love.graphics.setFont(font)
+					love.graphics.setFont(fonts[2])
 				end
 				if pictureR2 == selection then
 					drawTheImage2(i)
@@ -144,7 +144,7 @@ function r2.draw()
 				end
 			end
 		end
-		love.graphics.setFont(fonttt)
+		love.graphics.setFont(fonts[4])
 		if 4 == timerPos then
 			timerLength = ((45-timer)/45)*190
 			love.graphics.setColor(colours("selected"))

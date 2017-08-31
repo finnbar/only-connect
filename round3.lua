@@ -73,7 +73,7 @@ function randSort(t) -- THANKS THE INTERNET! ("no problem" - The Internet)
 end
 
 function r3.draw()
-	love.graphics.setFont(fontt)
+	love.graphics.setFont(fonts[3])
 	-- always have the background highlighted with the current team
 	highlightingBg = currentTeam
 	-- OK, so if no wall is selected:
@@ -117,11 +117,11 @@ function r3.draw()
 					if chosenWall==1 then
 						-- word wrap
 						if #(wall1[current])<=25 then
-							love.graphics.setFont(fonttt)
+							love.graphics.setFont(fonts[4])
 						elseif #(wall1[current])<=45 then
-							love.graphics.setFont(fontt)
+							love.graphics.setFont(fonts[3])
 						else
-							love.graphics.setFont(font)
+							love.graphics.setFont(fonts[2])
 						end
 						-- if it should be moving, then move it! Also print the clue itself
 						if movementTweens[current]~=0 then
@@ -132,11 +132,11 @@ function r3.draw()
 					else
 						--same as for wall1, except for the second wall, duh
 						if #(wall2[current])<=25 then
-							love.graphics.setFont(fonttt)
+							love.graphics.setFont(fonts[4])
 						elseif #(wall2[current])<=45 then
-							love.graphics.setFont(fontt)
+							love.graphics.setFont(fonts[3])
 						else
-							love.graphics.setFont(font)
+							love.graphics.setFont(fonts[2])
 						end
 						if movementTweens[current]~=0 then
 							love.graphics.printf(wall2[current],((65+(190*(i-1)))+val(movementTweens[current][1]))*scale+xshift,((20+(145*(j-1)))+val(movementTweens[current][2]))*scale,100*scale,"center")

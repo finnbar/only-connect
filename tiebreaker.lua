@@ -35,9 +35,9 @@ function tie.draw()
 		love.graphics.setColor(0,0,0)
 		love.graphics.rectangle("fill",0,0,1000*xscale,1000*scale)
 		love.graphics.setColor(255,255,255)
-		love.graphics.setFont(fonttttttttt)
+		love.graphics.setFont(fonts[8])
 		love.graphics.print("TIEBREAKER!!!",(300-val(panicTween))*scale,10*scale)
-		love.graphics.setFont(fontttt)
+		love.graphics.setFont(fonts[5])
 		love.graphics.print("TIES",(700-(val(panicTween)*0.5)*scale),5*scale)
 		love.graphics.print("BREAKING THINGS",(1000-(val(panicTween)*0.7)*scale),60*scale)
 		love.graphics.print("KNOTS",(2200-(val(panicTween)*0.8)*scale),530*scale)
@@ -51,10 +51,10 @@ function tie.draw()
 		if val(panicTween)>=panicTween[2] then panic = false end
 		--above: directly messing with the tween lib there as tween[2] == end of tween
 	else
-		love.graphics.setFont(fontttt)
+		love.graphics.setFont(fonts[5])
 		love.graphics.draw(round4,xshift,0,0,scale,scale)
 		love.graphics.printf(tiebreakerTopic,50*scale+xshift,130*scale,700*scale,"center")
-		love.graphics.setFont(fonttt)
+		love.graphics.setFont(fonts[4])
 		if state == 1 then
 			love.graphics.printf(tiebreakerQuestion,50*scale+xshift,220*scale,700*scale,"center")
 		elseif state == 2 then

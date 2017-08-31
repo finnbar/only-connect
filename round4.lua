@@ -43,7 +43,7 @@ function r4.load()
 end
 
 function r4.draw()
-	love.graphics.setFont(fontttt)
+	love.graphics.setFont(fonts[5])
 	love.graphics.draw(round4,xshift,0,0,scale,scale) -- this is the backdrop, essentially
 	groupname = groupsR4[math.ceil((questionNum)/4)]
 	if groupname == nil then

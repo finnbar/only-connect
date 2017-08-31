@@ -24,14 +24,15 @@ function colours(name,alpha)
 end
 
 function deffonts()
-	fon = love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)
-	font = love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale)
-	fontt = love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale)
-	fonttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)
-	fontttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)
-	fontttttS = love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale)
-	fonttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale) -- aka big font
-	fonttttttttt = love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale)
+	fonts = {}
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",12*scale)) -- fon (1)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",20*scale)) -- font (2)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",30*scale)) -- fontt (3)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",40*scale)) -- fonttt (4)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",50*scale)) -- fontttt (5)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",75*scale)) -- fonttttS (6)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",100*scale)) -- fonttttt (7)
+	table.insert(fonts,love.graphics.newFont("assets/RopaSans-Regular.ttf",600*scale)) -- fontttttt (8)
 end
 
 deffonts()
